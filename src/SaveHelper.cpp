@@ -1,14 +1,14 @@
 /**
- * @file Utils.cpp
+ * @file SaveHelper.cpp
  * @author Alexandre Augusto de Sá dos Santos (150056940@aluno.unb.br)
- * @brief Utils class implementation file
+ * @brief SaveHelper class implementation file
  * @version 0.1
  * @date 2022-07-16
  *
  * @copyright Copyright (c) 2022
  *
  */
-#include "Utils.h"
+#include "SaveHelper.h"
 
 // Save file has the following structure.
 // Currently doesn't check for existing saved games.
@@ -19,7 +19,7 @@
 // dayInGame: {int}
 // gameVersion: {float}
 //
-void Utils::Save(int saveNumber, int dayInGame)
+void SaveHelper::Save(int saveNumber, int dayInGame)
 {
     std::ofstream SaveFile("savegame", std::ios::app);
 

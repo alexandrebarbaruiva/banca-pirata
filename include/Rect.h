@@ -33,6 +33,7 @@ public:
     static float Distance(Rect r1, Rect r2);
     Rect operator+(const Vec2 &vector) const;
     Rect operator+=(const Vec2 &vector) const;
+    bool IsInside(Vec2 vector);
 };
 
 #endif

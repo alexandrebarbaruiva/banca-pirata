@@ -20,11 +20,11 @@
 #include <stack>
 #include <ctime>
 #include <iostream>
-#define ALIEN_HP 100
-#define PENGUIN_HP 100
+#define ALIEN_HP 500000
+#define PENGUIN_HP 1000000
 #define HEALTH_BOX 20
-#define GAME_SCREEN_WIDTH 1024
-#define GAME_SCREEN_HEIGHT 600
+#define GAME_SCREEN_WIDTH 1280
+#define GAME_SCREEN_HEIGHT 720
 
 // Game class using the Singleton's design pattern, which allows
 // only one instance to exist at any given moment. For that to be

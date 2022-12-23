@@ -9,6 +9,7 @@
  *
  */
 #include "Rect.h"
+#include <iostream>
 
 Rect::Rect()
 {
@@ -66,4 +67,11 @@ Rect Rect::operator+=(const Vec2 &vector) const
 float Rect::Distance(Rect r1, Rect r2)
 {
     return Vec2::Distance(r1.Center(), r2.Center());
+}
+
+bool Rect::IsInside(Vec2 vector)
+{
+    bool insideX = (this->x < vector.x) && (vector.x < (this->w + this->x));
+    bool insideY = (this->y < vector.y) && (vector.y < (this->h + this->y));
+    return insideX && insideY;
 }

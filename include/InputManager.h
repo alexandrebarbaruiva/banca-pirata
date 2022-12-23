@@ -25,6 +25,7 @@
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
 #include "SDL_include.h"
+#include "Vec2.h"
 #include <unordered_map>
 
 class InputManager
@@ -55,6 +56,7 @@ public:
     bool MouseRelease(int button);
     bool IsMouseDown(int button);
 
+    Vec2 GetMousePosition();
     int GetMouseX();
     int GetMouseY();
 
