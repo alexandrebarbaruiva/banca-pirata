@@ -1,3 +1,13 @@
+/**
+ * @file StageState.cpp
+ * @author Alexandre Augusto de Sá dos Santos (150056940@aluno.unb.br)
+ * @brief StageState class implementation file. Where happens the first part of the game.
+ * @version 0.1
+ * @date 2022-06-26
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include "StageState.h"
 #include "Sound.h"
 #include "TileMap.h"
@@ -18,7 +28,7 @@ StageState::StageState() : State(), backgroundMusic("assets/audio/stageState.ogg
 {
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/ocean.jpg", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, "assets/img/store.png", 1, 1.0));
 	bg->AddComponent(new CameraFollower(*bg));
 	bg->box.x = 0;
 	bg->box.y = 0;
@@ -106,11 +116,6 @@ void StageState::Update(float dt)
 	// Update every object
 	UpdateArray(dt);
 
-	// if (newPos.x > 0 && newPos.x < 1408 && newPos.y > 0 && newPos.y < 1280)
-	// {
-	//     associated.box = newPos;
-	// }
-	// (rand() / RAND_MAX) * (maxScale - minScale) + minScale
 	srand(time(NULL));
 	float chance = ((float)rand() / RAND_MAX) * 10;
 	if (chance > 7 && QueryObjectsBy("HealthBox").size() < 1)

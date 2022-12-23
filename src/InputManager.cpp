@@ -113,6 +113,13 @@ bool InputManager::IsMouseDown(int button)
     return mouseState[button];
 }
 
+/// @brief Get mouse position relative to screen
+/// @return Vec2 with (x,y)
+Vec2 InputManager::GetMousePosition()
+{
+    return Vec2(this->mouseX, this->mouseY);
+}
+
 int InputManager::GetMouseX()
 {
     return this->mouseX;

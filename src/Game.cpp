@@ -133,7 +133,7 @@ Game &Game::GetInstance()
 {
     if (instance == nullptr)
     {
-        new Game("Alexandre Augusto de Sá dos Santos 15/00156940", GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+        new Game("Banca Pirata", GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
     }
 
     return *instance;

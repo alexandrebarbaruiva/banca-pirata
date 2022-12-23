@@ -38,11 +38,12 @@ void PenguinBody::Start()
 
 void PenguinBody::Update(float dt)
 {
-    if (InputManager::GetInstance().IsKeyDown(W_KEY))
+    InputManager input = InputManager::GetInstance();
+    if (input.IsKeyDown(W_KEY))
     {
         linearSpeed = std::min(linearSpeed + 5, float(300));
     }
-    else if (InputManager::GetInstance().IsKeyDown(S_KEY))
+    else if (input.IsKeyDown(S_KEY))
     {
         linearSpeed = std::max(linearSpeed - 5, float(-300));
     }
@@ -50,13 +51,21 @@ void PenguinBody::Update(float dt)
     {
         linearSpeed = std::max(linearSpeed - 5, float(0));
     }
-    if (InputManager::GetInstance().IsKeyDown(A_KEY))
+    if (input.IsKeyDown(A_KEY))
     {
         speed = Vec2::Rotate(speed, -PI / 64);
     }
-    if (InputManager::GetInstance().IsKeyDown(D_KEY))
+    if (input.IsKeyDown(D_KEY))
     {
         speed = Vec2::Rotate(speed, PI / 64);
+    }
+    if (input.MousePress(LEFT_MOUSE_BUTTON))
+    {
+        // bool mouseInPenguin = associated.box.IsInside(input.GetMousePosition());
+
+        Sound *sound = new Sound(associated, "assets/audio/quack.mp3");
+        sound->Play();
+        associated.AddComponent(sound);
     }
 
     Rect newPos = associated.box + (speed * (linearSpeed * dt));
