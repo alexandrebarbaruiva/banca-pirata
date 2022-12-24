@@ -2,9 +2,9 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ dev ]
   pull_request:
-    branches: [ main, dev ]
+    branches: [ dev ]
 
 jobs:
   build:
@@ -19,9 +19,3 @@ jobs:
 
       - name: make
         run: make
-
-      - name: Upload Artifact GitHub Action
-        uses: actions/upload-artifact@v2
-        with: 
-          name: JOGO
-          path: JOGO
