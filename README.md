@@ -1,17 +1,19 @@
-# intro-desenvolvimento-jogos
+# Banca Pirata
 
-## Entregas
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/79bb2ffd3268423d872a49e85c7ae4f5)](https://www.codacy.com/gh/alexandrebarbaruiva/banca-pirata/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexandrebarbaruiva/banca-pirata&amp;utm_campaign=Badge_Grade)
 
-✅ Projeto 1: 04/07/2022
+## How to run
 
-✅ Projeto 2: 04/07/2022
+### On Linux
 
-❎ Projeto 3: 18/07/2022
+Go to game's folder and run the following command:
 
-❎ Projeto 4: 01/08/2022
+```shell
+make
+```
 
-❎ Projeto 5: 15/08/2022
+On Windows?
 
-❎ Projeto 6: 29/08/2022
+## Interesting links
 
-❎ Projeto 7: 12/09/2022
+<https://gist.github.com/NickNaso/0d478f1481686d5bcc868cac06620a60>

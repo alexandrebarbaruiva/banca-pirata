@@ -77,7 +77,7 @@ void Alien::Update(float dt)
 void Alien::NotifyCollision(GameObject &other)
 {
     Bullet *bullet = (Bullet *)other.GetComponent("Bullet");
-    if (bullet != nullptr && !bullet->targetsPlayer)
+    if (bullet != nullptr and !bullet->targetsPlayer)
     {
         this->hp -= bullet->GetDamage();
         if (this->hp <= 0)

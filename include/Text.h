@@ -14,6 +14,7 @@
 #define INCLUDE_SDL_IMAGE
 #include "SDL_include.h"
 #include "Component.h"
+#include "Collider.h"
 #include "Timer.h"
 #include <memory>
 

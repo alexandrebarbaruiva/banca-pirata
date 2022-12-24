@@ -25,6 +25,9 @@ Text::Text(GameObject &associated, std::string fontFile, int fontSize, TextStyle
     this->blinkTime = blinkTime;
     this->secondsToSelfDestruct = secondsToSelfDestruct;
     ResetTexture();
+#ifdef DEBUG
+    associated.AddComponent(new Collider(associated));
+#endif
 }
 
 Text::~Text()
@@ -38,7 +41,7 @@ Text::~Text()
 void Text::Update(float dt)
 {
     cooldown.Update(dt);
-    if (cooldown.Get() > blinkTime && blinkTime != 0)
+    if (cooldown.Get() > blinkTime and blinkTime != 0)
     {
         showText = !showText;
         cooldown.Restart();
@@ -55,7 +58,7 @@ void Text::Update(float dt)
 
 void Text::Render()
 {
-    if (texture != nullptr && showText)
+    if (texture != nullptr and showText)
     {
         SDL_Rect src;
         SDL_Rect dst;

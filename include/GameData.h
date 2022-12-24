@@ -10,6 +10,7 @@
  */
 #ifndef GAMEDATA_HEADER
 #define GAMEDATA_HEADER
+#include <string>
 
 class GameData
 {

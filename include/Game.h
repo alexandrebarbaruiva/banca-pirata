@@ -16,15 +16,13 @@
 #include "SDL_include.h"
 #include "State.h"
 #include "InputManager.h"
+#include "InputManager.h"
+#include "Constants.h"
 #include "Resources.h"
 #include <stack>
 #include <ctime>
 #include <iostream>
-#define ALIEN_HP 500000
-#define PENGUIN_HP 1000000
-#define HEALTH_BOX 20
-#define GAME_SCREEN_WIDTH 1280
-#define GAME_SCREEN_HEIGHT 720
+
 
 // Game class using the Singleton's design pattern, which allows
 // only one instance to exist at any given moment. For that to be

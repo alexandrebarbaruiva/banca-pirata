@@ -12,6 +12,7 @@
 #define TITLESTATE_HEADER
 #include "State.h"
 #include "Sprite.h"
+#include "Button.h"
 #include "Text.h"
 #include "InputManager.h"
 #include "StageState.h"

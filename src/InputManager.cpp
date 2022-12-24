@@ -85,12 +85,12 @@ void InputManager::Update()
 
 bool InputManager::KeyPress(int key)
 {
-    return keyState[key] == true && keyUpdate[key] == updateCounter;
+    return keyState[key] == true and keyUpdate[key] == updateCounter;
 }
 
 bool InputManager::KeyRelease(int key)
 {
-    return keyState[key] == false && keyUpdate[key] == updateCounter;
+    return keyState[key] == false and keyUpdate[key] == updateCounter;
 }
 
 bool InputManager::IsKeyDown(int key)
@@ -100,12 +100,12 @@ bool InputManager::IsKeyDown(int key)
 
 bool InputManager::MousePress(int button)
 {
-    return mouseState[button] == true && mouseUpdate[button] == updateCounter;
+    return mouseState[button] == true and mouseUpdate[button] == updateCounter;
 }
 
 bool InputManager::MouseRelease(int button)
 {
-    return mouseState[button] == false && mouseUpdate[button] == updateCounter;
+    return mouseState[button] == false and mouseUpdate[button] == updateCounter;
 }
 
 bool InputManager::IsMouseDown(int button)

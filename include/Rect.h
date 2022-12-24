@@ -11,6 +11,7 @@
 #ifndef RECT_HEADER
 #define RECT_HEADER
 #include "Vec2.h"
+#include "Constants.h"
 
 class Rect
 {

@@ -71,7 +71,17 @@ float Rect::Distance(Rect r1, Rect r2)
 
 bool Rect::IsInside(Vec2 vector)
 {
-    bool insideX = (this->x < vector.x) && (vector.x < (this->w + this->x));
-    bool insideY = (this->y < vector.y) && (vector.y < (this->h + this->y));
-    return insideX && insideY;
+    bool insideX = (this->x < vector.x) and (vector.x < (this->w + this->x));
+    bool insideY = (this->y < vector.y) and (vector.y < (this->h + this->y));
+#ifdef DEBUG
+    std::cout << BLUE;
+    std::cout << "Check if vector is inside Rect\n";
+    std::cout << RESET;
+    std::cout << "Rect\n";
+    std::cout << "X = " << this->x << " Y = " << this->y << "\n";
+    std::cout << "W = " << this->x + this->w << " H = " << this->y + this->h << "\n";
+    std::cout << "Vector\n";
+    std::cout << "X = " << vector.x << " Y = " << vector.y << "\n";
+#endif
+    return insideX and insideY;
 }
