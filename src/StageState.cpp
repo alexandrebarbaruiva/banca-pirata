@@ -21,15 +21,53 @@
 #include "EndState.h"
 #include "GameData.h"
 
-StageState::StageState() : State(), backgroundMusic("assets/audio/stageState.ogg")
+StageState::StageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/background-screen-1.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/background.png", 1, 1.0));
 	bg->AddComponent(new CameraFollower(*bg));
-	bg->box.x = 0;
-	bg->box.y = 0;
+	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
+
+	// HUD
+	GameObject *hudGO = new GameObject();
+	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/hud.png"));
+	hudGO->box.SetOrigin(0, 0);
+	AddObject(hudGO);
+
+	// Counter
+	GameObject *counterGO = new GameObject();
+	counterGO->AddComponent(new GameItem(*counterGO, "assets/img/placeholders/counter.png"));
+	counterGO->box.SetOrigin(0, 450);
+	AddObject(counterGO);
+
+	// Client
+	GameObject *clientGO = new GameObject();
+	clientGO->AddComponent(new GameItem(*clientGO, "assets/img/placeholders/client.png"));
+	clientGO->box.SetOrigin(100, 300);
+	AddObject(clientGO);
+
+	// Player
+	GameObject *playerGO = new GameObject();
+	playerGO->AddComponent(new GameItem(*playerGO, "assets/img/placeholders/player.png"));
+	playerGO->box.SetOrigin(800, 215);
+	AddObject(playerGO);
+
+	// PC
+	GameObject *pcGO = new GameObject();
+	pcGO->AddComponent(new GameItem(*pcGO, "assets/img/placeholders/pc.png"));
+	pcGO->box.SetOrigin(500, 290);
+	AddObject(pcGO);
+
+	// Cases
+	for (int i = 0; i < 5; i++)
+	{
+		GameObject *gameCaseGO = new GameObject();
+		gameCaseGO->AddComponent(new GameItem(*gameCaseGO, "assets/img/placeholders/gamecase.png"));
+		gameCaseGO->box.SetOrigin((430 + (100 * i)), 485);
+		AddObject(gameCaseGO);
+	}
 
 	// GameObject *tileMap = new GameObject();
 	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
@@ -98,16 +136,25 @@ void StageState::Update(float dt)
 	// update camera
 	Camera::Update(dt);
 
+	InputManager input = InputManager::GetInstance();
+
 	// check if quit was requested
-	if (InputManager::GetInstance().QuitRequested())
+	if (input.QuitRequested())
 	{
 		quitRequested = true;
 	}
 
-	if (InputManager::GetInstance().KeyPress(ESCAPE_KEY))
+	if (input.KeyPress(ESCAPE_KEY))
 	{
 		this->Pause();
 		popRequested = true;
+	}
+
+	if (input.MousePress(LEFT_MOUSE_BUTTON))
+	{
+		#ifdef DEBUG
+		std::cout << "X:" << input.GetMouseX() << " Y:" << input.GetMouseY() << "\n";
+		#endif
 	}
 
 	// Update every object
@@ -117,29 +164,29 @@ void StageState::Update(float dt)
 
 	// check collidable objects
 	// TODO: improve here
-	std::vector<std::weak_ptr<GameObject>> collidable = QueryObjectsBy("Collider");
-	for (unsigned i = 0; i < collidable.size(); i++)
-	{
-		for (unsigned j = i + 1; j < collidable.size(); j++)
-		{
-			if (Collision::IsColliding(collidable[i].lock()->box, collidable[j].lock()->box, collidable[i].lock()->angleDeg * PI / 180, collidable[j].lock()->angleDeg * PI / 180))
-			{
-				GameObject *g1 = collidable[i].lock().get();
-				GameObject *g2 = collidable[j].lock().get();
-				g1->NotifyCollision(*g2);
-				g2->NotifyCollision(*g1);
-			}
-		}
-	}
+	// std::vector<std::weak_ptr<GameObject>> collidable = QueryObjectsBy("Collider");
+	// for (unsigned i = 0; i < collidable.size(); i++)
+	// {
+	// 	for (unsigned j = i + 1; j < collidable.size(); j++)
+	// 	{
+	// 		if (Collision::IsColliding(collidable[i].lock()->box, collidable[j].lock()->box, collidable[i].lock()->angleDeg * PI / 180, collidable[j].lock()->angleDeg * PI / 180))
+	// 		{
+	// 			GameObject *g1 = collidable[i].lock().get();
+	// 			GameObject *g2 = collidable[j].lock().get();
+	// 			g1->NotifyCollision(*g2);
+	// 			g2->NotifyCollision(*g1);
+	// 		}
+	// 	}
+	// }
 
 	// Check if object is dead
-	for (unsigned i = 0; i < objectArray.size(); i++)
-	{
-		if (objectArray[i]->IsDead())
-		{
-			objectArray.erase(objectArray.begin() + i);
-		}
-	}
+	// for (unsigned i = 0; i < objectArray.size(); i++)
+	// {
+	// 	if (objectArray[i]->IsDead())
+	// 	{
+	// 		objectArray.erase(objectArray.begin() + i);
+	// 	}
+	// }
 
 	// if (Alien::alienCount <= 0)
 	// {

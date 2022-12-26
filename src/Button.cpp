@@ -38,11 +38,11 @@ void Button::Update(float dt)
         bool mouseInButton = associated.box.IsInside(input.GetMousePosition());
         if (mouseInButton)
         {
-            Sound *sound = new Sound(associated, "assets/audio/quack.mp3");
-            sound->Play();
             this->isClicked = true;
             this->timesClicked++;
 #ifdef DEBUG
+            Sound *sound = new Sound(associated, "assets/audio/quack.mp3");
+            sound->Play();
             std::cout << GREEN;
             std::cout << this->name;
             std::cout << RESET;
