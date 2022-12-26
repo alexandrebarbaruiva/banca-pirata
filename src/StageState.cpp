@@ -36,6 +36,16 @@ StageState::StageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 	hudGO->box.SetOrigin(0, 0);
 	AddObject(hudGO);
 
+	GameObject *dayHudText = new GameObject();
+    dayHudText->AddComponent(new Text(*dayHudText, "assets/font/Call me maybe.ttf", 30, Text::SOLID, "Day 3", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+    dayHudText->box.SetOrigin(115, 0);
+    AddObject(dayHudText);
+
+	GameObject *hudText = new GameObject();
+    hudText->AddComponent(new Text(*hudText, "assets/font/Call me maybe.ttf", 30, Text::SOLID, "R$ 5000", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+    hudText->box.SetOrigin(380, 0);
+    AddObject(hudText);
+
 	// Counter
 	GameObject *counterGO = new GameObject();
 	counterGO->AddComponent(new GameItem(*counterGO, "assets/img/placeholders/counter.png"));
