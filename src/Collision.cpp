@@ -49,7 +49,7 @@ public:
 			float minB = *std::min_element(P, P + 4);
 			float maxB = *std::max_element(P, P + 4);
 
-			if (maxA < minB || minA > maxB)
+			if (maxA < minB or minA > maxB)
 				return false;
 		}
 

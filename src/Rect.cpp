@@ -48,10 +48,20 @@ void Rect::SetOrigin(Vec2 vector)
     this->y = vector.y;
 }
 
+void Rect::SetOrigin(float x, float y)
+{
+    Rect::SetOrigin(Vec2(x, y));
+}
+
 void Rect::SetCenter(Vec2 vector)
 {
     this->x = vector.x - this->w / 2;
     this->y = vector.y - this->h / 2;
+}
+
+void Rect::SetCenter(float x, float y)
+{
+    Rect::SetCenter(Vec2(x, y));
 }
 
 Rect Rect::operator+(const Vec2 &vector) const

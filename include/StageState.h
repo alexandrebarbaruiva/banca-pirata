@@ -13,6 +13,7 @@
 #include "Sprite.h"
 #include "State.h"
 #include "TileSet.h"
+#include "GameItem.h"
 #include "Music.h"
 
 class StageState : public State
@@ -22,7 +23,7 @@ private:
     TileSet *tileSet;
 
 public:
-    StageState();
+    StageState(bool loadGame = false);
     ~StageState();
 
     void LoadAssets();

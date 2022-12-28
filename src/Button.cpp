@@ -33,16 +33,16 @@ Button::Button(GameObject &associated, std::string name, std::string sprite, boo
 void Button::Update(float dt)
 {
     InputManager input = InputManager::GetInstance();
-    if (input.MousePress(LEFT_MOUSE_BUTTON) && this->clickable)
+    if (input.MousePress(LEFT_MOUSE_BUTTON) and this->clickable)
     {
         bool mouseInButton = associated.box.IsInside(input.GetMousePosition());
         if (mouseInButton)
         {
-            Sound *sound = new Sound(associated, "assets/audio/quack.mp3");
-            sound->Play();
             this->isClicked = true;
             this->timesClicked++;
 #ifdef DEBUG
+            Sound *sound = new Sound(associated, "assets/audio/quack.mp3");
+            sound->Play();
             std::cout << GREEN;
             std::cout << this->name;
             std::cout << RESET;
