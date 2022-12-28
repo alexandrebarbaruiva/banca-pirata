@@ -21,8 +21,17 @@
 #include "EndState.h"
 #include "GameData.h"
 
-StageState::StageState() : State(), backgroundMusic("assets/audio/chill.ogg")
+StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
 {
+	// Initialize game session variables
+	int currentMoney = 0;
+	int currentDay = 0;
+	if (loadGame)
+	{
+		currentMoney = 300;
+		currentDay = 2;
+	}
+	
 	// Background
 	GameObject *bg = new GameObject();
 	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/background.png", 1, 1.0));
@@ -37,12 +46,12 @@ StageState::StageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 	AddObject(hudGO);
 
 	GameObject *dayHudText = new GameObject();
-    dayHudText->AddComponent(new Text(*dayHudText, "assets/font/Call me maybe.ttf", 30, Text::SOLID, "Day 3", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+    dayHudText->AddComponent(new Text(*dayHudText, "assets/font/Call me maybe.ttf", 30, Text::SOLID, ("Day " + std::to_string(currentDay)), {0, 0, 0, SDL_ALPHA_OPAQUE}));
     dayHudText->box.SetOrigin(115, 0);
     AddObject(dayHudText);
 
 	GameObject *hudText = new GameObject();
-    hudText->AddComponent(new Text(*hudText, "assets/font/Call me maybe.ttf", 30, Text::SOLID, "R$ 5000", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+    hudText->AddComponent(new Text(*hudText, "assets/font/Call me maybe.ttf", 30, Text::SOLID, ("R$ " + std::to_string(currentMoney)), {0, 0, 0, SDL_ALPHA_OPAQUE}));
     hudText->box.SetOrigin(380, 0);
     AddObject(hudText);
 
@@ -174,7 +183,7 @@ void StageState::Update(float dt)
 
 	// check collidable objects
 	// TODO: improve here
-	// std::vector<std::weak_ptr<GameObject>> collidable = QueryObjectsBy("Collider");
+	// std::vector<std::weak_ptr<GameObject>> collidable = QueryObjectsByComponent("Collider");
 	// for (unsigned i = 0; i < collidable.size(); i++)
 	// {
 	// 	for (unsigned j = i + 1; j < collidable.size(); j++)

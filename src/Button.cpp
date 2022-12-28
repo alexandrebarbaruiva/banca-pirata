@@ -33,7 +33,7 @@ Button::Button(GameObject &associated, std::string name, std::string sprite, boo
 void Button::Update(float dt)
 {
     InputManager input = InputManager::GetInstance();
-    if (input.MousePress(LEFT_MOUSE_BUTTON) && this->clickable)
+    if (input.MousePress(LEFT_MOUSE_BUTTON) and this->clickable)
     {
         bool mouseInButton = associated.box.IsInside(input.GetMousePosition());
         if (mouseInButton)

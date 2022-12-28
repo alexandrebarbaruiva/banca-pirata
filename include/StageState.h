@@ -23,7 +23,7 @@ private:
     TileSet *tileSet;
 
 public:
-    StageState();
+    StageState(bool loadGame = false);
     ~StageState();
 
     void LoadAssets();

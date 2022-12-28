@@ -109,7 +109,7 @@ void TitleState::Update(float dt)
 {
     UpdateArray(dt);
     std::string pressedButton;
-    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsBy("Button");
+    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
     for (unsigned i = 0; i < buttons.size(); i++)
     {
         Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
@@ -128,6 +128,12 @@ void TitleState::Update(float dt)
     if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "startButton")
     {
         State *stage = new StageState();
+        Game::GetInstance().Push(stage);
+    }
+
+    if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "continueButton")
+    {
+        State *stage = new StageState(true);
         Game::GetInstance().Push(stage);
     }
 }

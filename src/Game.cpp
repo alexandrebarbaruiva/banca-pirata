@@ -145,7 +145,7 @@ void Game::Run()
     stateStack.top()->Start();
     storedState = nullptr;
 
-    while (!(stateStack.empty()) && !(stateStack.top()->QuitRequested()))
+    while (!(stateStack.empty()) and !(stateStack.top()->QuitRequested()))
     {
         if (stateStack.top()->PopRequested())
         {

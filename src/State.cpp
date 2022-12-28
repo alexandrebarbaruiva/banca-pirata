@@ -82,7 +82,7 @@ std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go)
 	return {};
 }
 
-std::vector<std::weak_ptr<GameObject>> State::QueryObjectsBy(std::string component)
+std::vector<std::weak_ptr<GameObject>> State::QueryObjectsByComponent(std::string component)
 {
 	std::vector<std::weak_ptr<GameObject>> gameObjects;
 	for (unsigned i = 0; i < objectArray.size(); i++)

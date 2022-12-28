@@ -44,7 +44,7 @@ EndState::EndState()
 void EndState::Update(float dt)
 {
     UpdateArray(dt);
-    if (InputManager::GetInstance().KeyPress(ESCAPE_KEY) || InputManager::GetInstance().QuitRequested())
+    if (InputManager::GetInstance().KeyPress(ESCAPE_KEY) or InputManager::GetInstance().QuitRequested())
     {
         quitRequested = true;
     }
