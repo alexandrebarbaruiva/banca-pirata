@@ -64,8 +64,3 @@ bool Button::Is(std::string type)
 {
     return (type == Button::type);
 }
-
-int Button::GetHealth()
-{
-    return 0;
-}
