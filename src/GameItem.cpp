@@ -10,9 +10,11 @@
  */
 #include "GameItem.h"
 
-GameItem::GameItem(GameObject &associated, std::string sprite, float frameTime, int frameCount) : Component(associated)
+GameItem::GameItem(GameObject &associated, std::string sprite, float scaleX, float scaleY, bool moveable, float frameTime, int frameCount) : Component(associated), moveable(moveable)
 {
-    associated.AddComponent(new Sprite(associated, sprite, frameCount, frameTime));
+    Sprite *spriteItem = new Sprite(associated, sprite, frameCount, frameTime);
+    spriteItem->SetScale(scaleX, scaleY);
+    associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
 }
 
@@ -24,13 +26,14 @@ void GameItem::Update(float dt)
     }
 
     // Update associated box location correctly
-
-    // associated.box = associated.box + speed * dt;
-    // this->distanceLeft -= Vec2::Mag(speed * dt);
-    // if (this->distanceLeft <= 0)
-    // {
-    //     associated.RequestDelete();
-    // }
+    associated.box = associated.box + speed * dt;
+    this->currentPoint += (Vec2::Mag(speed * dt));
+    if (this->currentPoint >= endPoint)
+    {
+        this->endPoint = this->startPoint;
+        this->startPoint = this->currentPoint;
+        this->speed = (this->speed) * -1;
+    }
 }
 
 void GameItem::Render()

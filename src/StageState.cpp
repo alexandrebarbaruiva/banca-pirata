@@ -34,59 +34,136 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/background.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/CenarioPixel.png", 1, 1.0));
 	bg->AddComponent(new CameraFollower(*bg));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
 	// HUD
 	GameObject *hudGO = new GameObject();
-	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/hud.png"));
+	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 12, 12));
 	hudGO->box.SetOrigin(0, 0);
 	AddObject(hudGO);
 
+	GameObject *hudGO2 = new GameObject();
+	hudGO2->AddComponent(new GameItem(*hudGO2, "assets/img/placeholders/tela 1-Rep.png", 12, 12));
+	hudGO2->box.SetOrigin(960, 0);
+	AddObject(hudGO2);
+
+	GameObject *hudGO2Arrow = new GameObject();
+	hudGO2Arrow->AddComponent(new GameItem(*hudGO2Arrow, "assets/img/placeholders/tela 1-Rep_setalaranja.png", 12, 12, true));
+	hudGO2Arrow->box.SetOrigin(990, 60);
+	AddObject(hudGO2Arrow);
+
+	GameObject *hudGOPause = new GameObject();
+	hudGOPause->AddComponent(new GameItem(*hudGOPause, "assets/img/placeholders/Tela 1-Pause.png", 12, 12));
+	hudGOPause->box.SetOrigin(1800, 0);
+	AddObject(hudGOPause);
+
+	GameObject *hudGOSirene1 = new GameObject();
+	hudGOSirene1->AddComponent(new GameItem(*hudGOSirene1, "assets/img/placeholders/tela 1-sus-sirenevazio.png", 12, 12));
+	hudGOSirene1->box.SetOrigin(1800, 235);
+	AddObject(hudGOSirene1);
+
+	GameObject *hudGOSirene2 = new GameObject();
+	hudGOSirene2->AddComponent(new GameItem(*hudGOSirene2, "assets/img/placeholders/tela 1-sus-sirenevazio.png", 12, 12));
+	hudGOSirene2->box.SetOrigin(1800, 355);
+	AddObject(hudGOSirene2);
+
+	GameObject *hudGOSirene3 = new GameObject();
+	hudGOSirene3->AddComponent(new GameItem(*hudGOSirene3, "assets/img/placeholders/tela 1-sus-sirenevazio.png", 12, 12));
+	hudGOSirene3->box.SetOrigin(1800, 475);
+	AddObject(hudGOSirene3);
+
+	GameObject *hudGOSirene4 = new GameObject();
+	hudGOSirene4->AddComponent(new GameItem(*hudGOSirene4, "assets/img/placeholders/tela 1-sus-sirenevazio.png", 12, 12));
+	hudGOSirene4->box.SetOrigin(1800, 595);
+	AddObject(hudGOSirene4);
+
+	GameObject *hudGOSirene5 = new GameObject();
+	hudGOSirene5->AddComponent(new GameItem(*hudGOSirene5, "assets/img/placeholders/tela 1-sus-sirenecheio.png", 12, 12));
+	hudGOSirene5->box.SetOrigin(1800, 715);
+	AddObject(hudGOSirene5);
+
+	// GameObject *hudGOSirene1 = new GameObject();
+	// hudGOSirene1->AddComponent(new GameItem(*hudGOSirene1, "assets/img/placeholders/tela 1-Rep.png", 12, 12));
+	// hudGOSirene1->box.SetOrigin(960, 0);
+	// AddObject(hudGOSirene1);
+
+	// GameObject *hudGOSirene1 = new GameObject();
+	// hudGOSirene1->AddComponent(new GameItem(*hudGOSirene1, "assets/img/placeholders/tela 1-Rep.png", 12, 12));
+	// hudGOSirene1->box.SetOrigin(960, 0);
+	// AddObject(hudGOSirene1);
+
+	// GameObject *hudGOSirene1 = new GameObject();
+	// hudGOSirene1->AddComponent(new GameItem(*hudGOSirene1, "assets/img/placeholders/tela 1-Rep.png", 12, 12));
+	// hudGOSirene1->box.SetOrigin(960, 0);
+	// AddObject(hudGOSirene1);
+
+	// GameObject *hudGOSirene1 = new GameObject();
+	// hudGOSirene1->AddComponent(new GameItem(*hudGOSirene1, "assets/img/placeholders/tela 1-Rep.png", 12, 12));
+	// hudGOSirene1->box.SetOrigin(960, 0);
+	// AddObject(hudGOSirene1);
+	
+	
+
+	// GameObject *hudGO3 = new GameObject();
+	// hudGO3->AddComponent(new GameItem(*hudGO3, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 12, 12));
+	// hudGO3->box.SetOrigin(0, 0);
+	// AddObject(hudGO3);
+
+	// GameObject *hudGO4 = new GameObject();
+	// hudGO4->AddComponent(new GameItem(*hudGO4, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 12, 12));
+	// hudGO4->box.SetOrigin(0, 0);
+	// AddObject(hudGO4);
+
+	// GameObject *hudGO5 = new GameObject();
+	// hudGO5->AddComponent(new GameItem(*hudGO5, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 12, 12));
+	// hudGO5->box.SetOrigin(0, 0);
+	// AddObject(hudGO5);
+
 	GameObject *dayHudText = new GameObject();
-    dayHudText->AddComponent(new Text(*dayHudText, "assets/font/Call me maybe.ttf", 30, Text::SOLID, ("Day " + std::to_string(currentDay)), {0, 0, 0, SDL_ALPHA_OPAQUE}));
-    dayHudText->box.SetOrigin(115, 0);
+    dayHudText->AddComponent(new Text(*dayHudText, "assets/font/pixelated.ttf", 60, Text::SOLID, ("Day " + std::to_string(currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    dayHudText->box.SetOrigin(115, 35);
     AddObject(dayHudText);
 
 	GameObject *hudText = new GameObject();
-    hudText->AddComponent(new Text(*hudText, "assets/font/Call me maybe.ttf", 30, Text::SOLID, ("R$ " + std::to_string(currentMoney)), {0, 0, 0, SDL_ALPHA_OPAQUE}));
-    hudText->box.SetOrigin(380, 0);
+    hudText->AddComponent(new Text(*hudText, "assets/font/pixelated.ttf", 60, Text::SOLID, ("R$ " + std::to_string(currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    hudText->box.SetOrigin(600, 35);
     AddObject(hudText);
 
-	// Counter
-	GameObject *counterGO = new GameObject();
-	counterGO->AddComponent(new GameItem(*counterGO, "assets/img/placeholders/counter.png"));
-	counterGO->box.SetOrigin(0, 450);
-	AddObject(counterGO);
+	// // Counter
+	// GameObject *counterGO = new GameObject();
+	// counterGO->AddComponent(new GameItem(*counterGO, "assets/img/placeholders/counter.png"));
+	// counterGO->box.SetOrigin(0, 450);
+	// AddObject(counterGO);
 
-	// Client
-	GameObject *clientGO = new GameObject();
-	clientGO->AddComponent(new GameItem(*clientGO, "assets/img/placeholders/client.png"));
-	clientGO->box.SetOrigin(100, 300);
-	AddObject(clientGO);
+	// // Client
+	// GameObject *clientGO = new GameObject();
+	// clientGO->AddComponent(new GameItem(*clientGO, "assets/img/placeholders/client.png"));
+	// clientGO->box.SetOrigin(100, 300);
+	// AddObject(clientGO);
 
-	// Player
-	GameObject *playerGO = new GameObject();
-	playerGO->AddComponent(new GameItem(*playerGO, "assets/img/placeholders/player.png"));
-	playerGO->box.SetOrigin(800, 215);
-	AddObject(playerGO);
+	// // Player
+	// GameObject *playerGO = new GameObject();
+	// playerGO->AddComponent(new GameItem(*playerGO, "assets/img/placeholders/player.png"));
+	// playerGO->box.SetOrigin(800, 215);
+	// AddObject(playerGO);
 
-	// PC
-	GameObject *pcGO = new GameObject();
-	pcGO->AddComponent(new GameItem(*pcGO, "assets/img/placeholders/pc.png"));
-	pcGO->box.SetOrigin(500, 290);
-	AddObject(pcGO);
+	// // PC
+	// GameObject *pcGO = new GameObject();
+	// pcGO->AddComponent(new GameItem(*pcGO, "assets/img/placeholders/pc.png"));
+	// pcGO->box.SetOrigin(500, 290);
+	// AddObject(pcGO);
 
-	// Cases
-	for (int i = 0; i < 5; i++)
-	{
-		GameObject *gameCaseGO = new GameObject();
-		gameCaseGO->AddComponent(new GameItem(*gameCaseGO, "assets/img/placeholders/gamecase.png"));
-		gameCaseGO->box.SetOrigin((430 + (100 * i)), 485);
-		AddObject(gameCaseGO);
-	}
+	// // Cases
+	// for (int i = 0; i < 5; i++)
+	// {
+	// 	GameObject *gameCaseGO = new GameObject();
+	// 	gameCaseGO->AddComponent(new GameItem(*gameCaseGO, "assets/img/placeholders/gamecase.png"));
+	// 	gameCaseGO->box.SetOrigin((430 + (100 * i)), 485);
+	// 	AddObject(gameCaseGO);
+	// }
 
 	// GameObject *tileMap = new GameObject();
 	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");

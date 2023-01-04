@@ -12,9 +12,11 @@
 #include "Sprite.h"
 #include "Collider.h"
 
-Button::Button(GameObject &associated, std::string name, std::string sprite, bool clickable) : Component(associated)
+Button::Button(GameObject &associated, std::string name, float scaleX, float scaleY, std::string sprite, bool clickable) : Component(associated)
 {
-    associated.AddComponent(new Sprite(associated, sprite, 1, 1.0));
+    Sprite *spriteButton = new Sprite(associated, sprite, 1, 1.0);
+    spriteButton->SetScale(scaleX, scaleY);
+    associated.AddComponent(spriteButton);
 #ifdef DEBUG
     associated.AddComponent(new Collider(associated));
     std::cout << RED;
