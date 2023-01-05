@@ -20,18 +20,34 @@
 #include "TitleState.h"
 #include "EndState.h"
 #include "GameData.h"
+#include "SaveHelper.h"
+#include "ReputationArrow.h"
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
 {
 	// Initialize game session variables
-	int currentMoney = 0;
 	int currentDay = 0;
+	int currentMoney = 0;
+	int currentRep = 0;
+	int currentSus = 0;
+	// SaveHelper::Save(currentDay, currentMoney, currentRep, currentSus);
+
 	if (loadGame)
 	{
-		currentMoney = 300;
-		currentDay = 2;
+		// Load from save file
+		std::unordered_map<std::string, int> loadData = SaveHelper::Load();
+		currentDay = loadData["dayInGame"];
+		currentMoney = loadData["moneyInGame"];
+		currentRep = loadData["repInGame"];
+		currentSus = loadData["susInGame"];
+#ifdef DEBUG
+		std::cout << "loaded Day " << currentDay << "\n";
+		std::cout << "loaded Money " << currentMoney << "\n";
+		std::cout << "loaded Rep " << currentRep << "\n";
+		std::cout << "loaded Sus " << currentSus << "\n";
+#endif
 	}
-	
+
 	// Background
 	GameObject *bg = new GameObject();
 	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/CenarioPixel.png", 1, 1.0));
@@ -39,61 +55,69 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
-	// HUD
+	// HUD Dia + Dinheiro
 	GameObject *hudGO = new GameObject();
-	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 12, 12));
+	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 1, 1));
 	hudGO->box.SetOrigin(0, 0);
 	AddObject(hudGO);
 
-	GameObject *hudGO2 = new GameObject();
-	hudGO2->AddComponent(new GameItem(*hudGO2, "assets/img/placeholders/tela 1-Rep.png", 12, 12));
-	hudGO2->box.SetOrigin(960, 0);
-	AddObject(hudGO2);
+	GameObject *dayHudText = new GameObject();
+	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	dayHudText->box.SetOrigin(115, 35);
+	AddObject(dayHudText);
 
-	GameObject *hudGO2Arrow = new GameObject();
-	hudGO2Arrow->AddComponent(new GameItem(*hudGO2Arrow, "assets/img/placeholders/tela 1-Rep_setalaranja.png", 12, 12, true));
-	hudGO2Arrow->box.SetOrigin(990, 60);
-	AddObject(hudGO2Arrow);
+	GameObject *moneyHudText = new GameObject();
+	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	moneyHudText->box.SetOrigin(600, 35);
+	AddObject(moneyHudText);
 
-	GameObject *hudGOPause = new GameObject();
-	hudGOPause->AddComponent(new GameItem(*hudGOPause, "assets/img/placeholders/Tela 1-Pause.png", 12, 12));
-	hudGOPause->box.SetOrigin(1800, 0);
-	AddObject(hudGOPause);
+	// HUD Reputação
+	GameObject *hudReputationGO2 = new GameObject();
+	hudReputationGO2->AddComponent(new GameItem(*hudReputationGO2, "assets/img/placeholders/tela 1-Rep.png", 1, 1));
+	hudReputationGO2->box.SetOrigin(960, 0);
+	AddObject(hudReputationGO2);
 
+	// HUD Seta da Reputação
+	GameObject *hudReputationArrowGO = new GameObject();
+	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, "assets/img/placeholders/tela 1-Rep_seta.png", currentRep, 1, 1));
+	hudReputationArrowGO->box.SetOrigin(950, 60);
+	AddObject(hudReputationArrowGO);
+
+	// HUD Pause
+	GameObject *hudPauseGO = new GameObject();
+	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
+	hudPauseGO->box.SetOrigin(1800, 0);
+	AddObject(hudPauseGO);
+
+	// HUD Sirene 1
 	GameObject *hudGOSirene1 = new GameObject();
-	hudGOSirene1->AddComponent(new GameItem(*hudGOSirene1, "assets/img/placeholders/tela 1-sus-sirenevazio.png", 12, 12));
+	hudGOSirene1->AddComponent(new GameItem(*hudGOSirene1, "assets/img/placeholders/tela 1-sus-vazio.png", 1, 1));
 	hudGOSirene1->box.SetOrigin(1800, 235);
 	AddObject(hudGOSirene1);
 
+	// HUD Sirene 2
 	GameObject *hudGOSirene2 = new GameObject();
-	hudGOSirene2->AddComponent(new GameItem(*hudGOSirene2, "assets/img/placeholders/tela 1-sus-sirenevazio.png", 12, 12));
+	hudGOSirene2->AddComponent(new GameItem(*hudGOSirene2, "assets/img/placeholders/tela 1-sus-vazio.png", 1, 1));
 	hudGOSirene2->box.SetOrigin(1800, 355);
 	AddObject(hudGOSirene2);
 
+	// HUD Sirene 3
 	GameObject *hudGOSirene3 = new GameObject();
-	hudGOSirene3->AddComponent(new GameItem(*hudGOSirene3, "assets/img/placeholders/tela 1-sus-sirenevazio.png", 12, 12));
+	hudGOSirene3->AddComponent(new GameItem(*hudGOSirene3, "assets/img/placeholders/tela 1-sus-vazio.png", 1, 1));
 	hudGOSirene3->box.SetOrigin(1800, 475);
 	AddObject(hudGOSirene3);
 
+	// HUD Sirene 4
 	GameObject *hudGOSirene4 = new GameObject();
-	hudGOSirene4->AddComponent(new GameItem(*hudGOSirene4, "assets/img/placeholders/tela 1-sus-sirenevazio.png", 12, 12));
+	hudGOSirene4->AddComponent(new GameItem(*hudGOSirene4, "assets/img/placeholders/tela 1-sus-vazio.png", 1, 1));
 	hudGOSirene4->box.SetOrigin(1800, 595);
 	AddObject(hudGOSirene4);
 
+	// HUD Sirene 5
 	GameObject *hudGOSirene5 = new GameObject();
-	hudGOSirene5->AddComponent(new GameItem(*hudGOSirene5, "assets/img/placeholders/tela 1-sus-sirenecheio.png", 12, 12));
+	hudGOSirene5->AddComponent(new GameItem(*hudGOSirene5, "assets/img/placeholders/tela 1-sus.png", 1, 1));
 	hudGOSirene5->box.SetOrigin(1800, 715);
 	AddObject(hudGOSirene5);
-
-	GameObject *dayHudText = new GameObject();
-    dayHudText->AddComponent(new Text(*dayHudText, "assets/font/pixelated.ttf", 60, Text::SOLID, ("Day " + std::to_string(currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
-    dayHudText->box.SetOrigin(115, 35);
-    AddObject(dayHudText);
-
-	GameObject *hudText = new GameObject();
-    hudText->AddComponent(new Text(*hudText, "assets/font/pixelated.ttf", 60, Text::SOLID, ("R$ " + std::to_string(currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
-    hudText->box.SetOrigin(600, 35);
-    AddObject(hudText);
 
 	// GameObject *tileMap = new GameObject();
 	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
@@ -178,9 +202,9 @@ void StageState::Update(float dt)
 
 	if (input.MousePress(LEFT_MOUSE_BUTTON))
 	{
-		#ifdef DEBUG
+#ifdef DEBUG
 		std::cout << "X:" << input.GetMouseX() << " Y:" << input.GetMouseY() << "\n";
-		#endif
+#endif
 	}
 
 	// Update every object

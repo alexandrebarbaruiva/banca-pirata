@@ -21,55 +21,60 @@ TitleState::TitleState() : State()
     bg->box.y = 0;
     this->AddObject(bg);
 
+    GameObject *titleTex = new GameObject();
+    titleTex->AddComponent(new Text(*titleTex, "assets/font/up.ttf", 200, Text::BLENDED, "Banca Pirata", {255, 0, 0, SDL_ALPHA_OPAQUE}));
+    titleTex->box.SetCenter(GAME_SCREEN_WIDTH / 2, 200);
+    this->AddObject(titleTex);
+
     // Start Button
     Vec2 buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 500);
 
     GameObject *startButton = new GameObject();
-    startButton->AddComponent(new Button(*startButton, "startButton", 10, 10));
+    startButton->AddComponent(new Button(*startButton, "startButton"));
     startButton->box.SetCenter(buttonPosition);
     this->AddObject(startButton);
 
     GameObject *startText = new GameObject();
-    startText->AddComponent(new Text(*startText, "assets/font/pixelated.ttf", 50, Text::BLENDED, "Start", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+    startText->AddComponent(new Text(*startText, "assets/font/up.ttf", 50, Text::BLENDED, "Start", {0, 0, 0, SDL_ALPHA_OPAQUE}));
     startText->box.SetCenter(buttonPosition);
     this->AddObject(startText);
 
     // Continue Button
-    buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 620);
+    buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 640);
 
     GameObject *continueButton = new GameObject();
-    continueButton->AddComponent(new Button(*continueButton, "continueButton", 10, 10));
+    continueButton->AddComponent(new Button(*continueButton, "continueButton"));
     continueButton->box.SetCenter(buttonPosition);
     this->AddObject(continueButton);
 
     GameObject *continueText = new GameObject();
-    continueText->AddComponent(new Text(*continueText, "assets/font/pixelated.ttf", 50, Text::BLENDED, "Continue", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+    continueText->AddComponent(new Text(*continueText, "assets/font/up.ttf", 50, Text::BLENDED, "Continue", {0, 0, 0, SDL_ALPHA_OPAQUE}));
     continueText->box.SetCenter(buttonPosition);
     this->AddObject(continueText);
 
     // Settings Button
-    buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 740);
+    buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 780);
 
     GameObject *settingsButton = new GameObject();
-    settingsButton->AddComponent(new Button(*settingsButton, "settingsButton", 10, 10));
+    settingsButton->AddComponent(new Button(*settingsButton, "settingsButton"));
     settingsButton->box.SetCenter(buttonPosition);
     this->AddObject(settingsButton);
 
     GameObject *settingsText = new GameObject();
-    settingsText->AddComponent(new Text(*settingsText, "assets/font/pixelated.ttf", 50, Text::BLENDED, "Settings", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+    settingsText->AddComponent(new Text(*settingsText, "assets/font/up.ttf", 50, Text::BLENDED, "Settings", {0, 0, 0, SDL_ALPHA_OPAQUE}));
     settingsText->box.SetCenter(buttonPosition);
     this->AddObject(settingsText);
 
     // Exit Button
-    buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 860);
+    buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 920);
 
     GameObject *exitButton = new GameObject();
-    exitButton->AddComponent(new Button(*exitButton, "exitButton", 10, 10));
+    exitButton->AddComponent(new Button(*exitButton, "exitButton"));
     exitButton->box.SetCenter(buttonPosition);
     this->AddObject(exitButton);
 
     GameObject *exitText = new GameObject();
-    exitText->AddComponent(new Text(*exitText, "assets/font/pixelated.ttf", 50, Text::BLENDED, "Exit", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+    exitText->AddComponent(new Text(*exitText, "assets/font/up.ttf", 50, Text::BLENDED, "Exit", {0, 0, 0, SDL_ALPHA_OPAQUE}));
     exitText->box.SetCenter(buttonPosition);
     this->AddObject(exitText);
 }

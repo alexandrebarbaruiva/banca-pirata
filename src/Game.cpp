@@ -9,6 +9,7 @@
  *
  */
 #include "Game.h"
+#include "Game.h"
 
 Game *Game::instance;
 std::stack<std::unique_ptr<State>> Game::stateStack;

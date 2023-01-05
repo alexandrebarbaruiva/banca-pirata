@@ -19,32 +19,48 @@
 // dayInGame: {int}
 // gameVersion: {float}
 //
-void SaveHelper::Save(int saveNumber, int dayInGame)
+void SaveHelper::Save(int dayInGame, int moneyInGame, int repInGame, int susInGame)
 {
-    std::ofstream SaveFile("savegame", std::ios::app);
+    // Append to file
+    // std::ofstream SaveFile("savegame", std::ios::app);
 
-    // Write header
-    SaveFile << "\n[SAVE " << saveNumber << "]\n";
-
-    // Timestamp
-    // https://www.tutorialspoint.com/cplusplus/cpp_date_time.htm
-    // current date/time based on current system
-    std::time_t now = time(0);
-
-    // convert now to string form
-    char *timestamp = ctime(&now);
-
-    // convert now to tm struct for UTC
-    tm *gmtm = gmtime(&now);
-    timestamp = asctime(gmtm);
-
-    // Write timestamp
-    SaveFile << "timestamp: " << timestamp;
+    // Write to file
+    std::ofstream saveFile("savegame");
 
     // Write dayInGame
-    SaveFile << "dayInGame: " << dayInGame;
+    saveFile << "dayInGame " << dayInGame;
+    saveFile << "\n";
 
-    SaveFile << "\n";
+    // Write moneyInGame
+    saveFile << "moneyInGame " << moneyInGame;
+    saveFile << "\n";
 
-    SaveFile.close();
+    // Write moneyInGame
+    saveFile << "repInGame " << repInGame;
+    saveFile << "\n";
+
+    // Write moneyInGame
+    saveFile << "susInGame " << susInGame;
+    saveFile << "\n";
+
+    saveFile.close();
+}
+
+std::unordered_map<std::string, int> SaveHelper::Load()
+{
+    std::ifstream saveFile("savegame");
+
+    std::unordered_map<std::string, int> gameData;
+    std::string name;
+    int value;
+    if (saveFile.is_open())
+    {
+        while (saveFile >> name >> value)
+        {
+            std::cout << name << " "<< value << "\n";
+            gameData[name] = value;
+        }
+        
+    }
+    return gameData;
 }

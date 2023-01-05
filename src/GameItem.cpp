@@ -32,7 +32,8 @@ void GameItem::Update(float dt)
     {
         this->endPoint = this->startPoint;
         this->startPoint = this->currentPoint;
-        this->speed = (this->speed) * -1;
+        // this->speed = (this->speed) * -1;
+        this->speed = this->speed * 0;
     }
 }
 

@@ -13,6 +13,7 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+#include <unordered_map>
 
 class SaveHelper
 {
@@ -20,7 +21,10 @@ public:
     /// @brief Utility to write save data to save file
     /// @param saveNumber save counter
     /// @param dayInGame day in game when save method was called
-    static void Save(int saveNumber, int dayInGame);
+    /// @param dayInGame money in game when save method was called
+    static void Save(int dayInGame, int moneyInGame, int repInGame, int susInGame);
+
+    static std::unordered_map<std::string, int> Load();
 };
 
 #endif
