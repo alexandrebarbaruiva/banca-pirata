@@ -28,7 +28,7 @@ public:
         BLENDED
     };
 
-    Text(GameObject &associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color, float blinkTime = 0.5, float secondsToSelfDestruct = 0);
+    Text(GameObject &associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color, float blinkTime = 0, float secondsToSelfDestruct = 0);
     ~Text();
 
     std::string type = "Text";

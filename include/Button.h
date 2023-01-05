@@ -18,7 +18,7 @@
 class Button : public Component
 {
 public:
-    Button(GameObject &associated, std::string name, std::string sprite = "assets/img/button.png", bool clickable = true);
+    Button(GameObject &associated, std::string name, float scaleX = 1, float scaleY = 1, std::string sprite = "assets/img/placeholders/botao menu longo.png", bool clickable = true);
 
     std::string type = "Button";
     std::string name;

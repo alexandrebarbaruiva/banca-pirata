@@ -52,6 +52,7 @@ public:
 
     int GetWidth();
     int GetHeight();
+    void SetScale(Vec2 scale);
     void SetScale(float scaleX, float scaleY);
     Vec2 GetScale();
 

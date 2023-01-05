@@ -104,6 +104,11 @@ void Sprite::NotifyCollision(GameObject &other)
 {
 }
 
+void Sprite::SetScale(Vec2 scale)
+{
+    Sprite::SetScale(scale.x, scale.y);
+}
+
 void Sprite::SetScale(float scaleX, float scaleY)
 {
     float widthChange = associated.box.w * (scaleX - scale.x);
@@ -114,7 +119,7 @@ void Sprite::SetScale(float scaleX, float scaleY)
     associated.box.x -= widthChange / 2;
     associated.box.y -= heightChange / 2;
 
-    scale = {scaleX, scaleY};
+    this->scale = {scaleX, scaleY};
 }
 
 void Sprite::SetFrame(int frame)

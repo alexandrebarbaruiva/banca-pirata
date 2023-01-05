@@ -37,7 +37,7 @@ EndState::EndState()
 
     GameObject *text = new GameObject();
     text->box.SetOrigin({GAME_SCREEN_WIDTH / 2, 500});
-    text->AddComponent(new Text(*text, "assets/font/Call me maybe.ttf", 50, Text::BLENDED, "ESC to quit  SPACE to play again", {255, 0, 0, SDL_ALPHA_OPAQUE}));
+    text->AddComponent(new Text(*text, "assets/font/pixelated.ttf", 50, Text::BLENDED, "ESC to quit  SPACE to play again", {255, 0, 0, SDL_ALPHA_OPAQUE}));
     AddObject(text);
 }
 
