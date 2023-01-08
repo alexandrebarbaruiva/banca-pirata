@@ -64,3 +64,7 @@ bool Button::Is(std::string type)
 {
     return (type == Button::type);
 }
+
+bool Button::GetIsInside(Vec2 position){
+    return this->associated.box.IsInside(position);
+}

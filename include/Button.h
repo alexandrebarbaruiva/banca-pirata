@@ -31,6 +31,8 @@ public:
     void Update(float dt);
     void Render();
     void NotifyCollision(GameObject &other);
+    void ToggleSelect();
     bool Is(std::string type);
+    bool GetIsInside(Vec2 position);
 };
 #endif

@@ -20,6 +20,7 @@
 ButtonBox::ButtonBox(GameObject &associated, std::string name) : Component(associated)
 {
     this->name = name;
+    this->type = "ButtonBox";
 }
 
 
@@ -46,7 +47,7 @@ std::weak_ptr<Button> ButtonBox::GetButtonPtr(Button *butt)
 }
 
 
-std::weak_ptr<Button> ButtonBox::NextButton(Button *butt, bool next)
+void ButtonBox::NextButton(Button *butt, bool next)
 {   
     unsigned i;
     for (i = 0; i < buttonArray.size(); i++)
@@ -58,14 +59,72 @@ std::weak_ptr<Button> ButtonBox::NextButton(Button *butt, bool next)
     }
     if(next){
         if (i > buttonArray.size()){
-            return std::weak_ptr<Button>(buttonArray[0]);
+            this->activeButton = buttonArray[0];
+            this->activeButton->isSelected = true;
+        } else {
+            this->activeButton = buttonArray[i+i];
+            this->activeButton->isSelected = true;
         }
-        return std::weak_ptr<Button>(buttonArray[i+1]);
+        buttonArray[i]->isSelected = false;
     } 
     else {
         if(i < 1){
-            return std::weak_ptr<Button>(buttonArray.back());
+            this->activeButton = buttonArray.back();
+            this->activeButton->isSelected = true;
         }
-        return std::weak_ptr<Button>(buttonArray[i-1]);
+        else {
+            this->activeButton = buttonArray[i-1];
+            this->activeButton->isSelected = true;
+        }
+        buttonArray[i]->isSelected = false;
     }
+}
+
+
+void ButtonBox::Update(float dt)
+{
+    InputManager input = InputManager::GetInstance();
+    switch(input.curEvent){
+        case MOUSE_PRESS:
+            if (input.MousePress(LEFT_MOUSE_BUTTON) and this->activeButton->clickable)
+            {
+                bool mouseInButton = this->activeButton->GetIsInside(input.GetMousePosition());
+                if (mouseInButton)
+                {
+                    this->activeButton->isClicked = true;
+                    this->activeButton->timesClicked++;
+            #ifdef DEBUG
+                    Sound *sound = new Sound(associated, "assets/audio/quack.mp3");
+                    sound->Play();
+                    std::cout << GREEN;
+                    std::cout << this->name;
+                    std::cout << RESET;
+                    std::cout << " has been clicked " << this->timesClicked << " times.\n";
+            #endif
+                }
+            }
+            break;
+        case KEY_DOWN:
+            if(input.IsKeyDown(W_KEY) or input.IsKeyDown(UP_ARROW_KEY))
+            {
+                this->NextButton(this->activeButton, true);
+            }
+            else if(input.IsKeyDown(S_KEY) or input.IsKeyDown(UP_ARROW_KEY))
+            {
+                this->NextButton(this->activeButton, false);
+            }
+            break;
+}
+
+void ButtonBox::Render()
+{
+}
+
+void ButtonBox::NotifyCollision(GameObject &other)
+{
+}
+
+bool ButtonBox::Is(std::string type)
+{
+    return (type == ButtonBox::type);
 }

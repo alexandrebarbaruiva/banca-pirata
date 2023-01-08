@@ -22,10 +22,18 @@ public:
     ButtonBox(GameObject &associated, std::string name);
 
     std::string name;
+    std::string type;
     std::vector<std::shared_ptr<Button>> buttonArray;
+    std::shared_ptr<Button> activeButton;
 
     virtual std::weak_ptr<Button> AddButton(Button *butt);
     virtual std::weak_ptr<Button> GetButtonPtr(Button *butt);
-    virtual std::weak_ptr<Button> NextButton(Button *butt, bool next);
+    void NextButton(Button *butt, bool next);
+    
+    void Update(float dt);
+    void Render();
+    void NotifyCollision(GameObject &other);
+    void ToggleSelect();
+    bool Is(std::string type);
 };
 #endif
