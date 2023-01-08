@@ -80,7 +80,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	// HUD Seta da Reputação
 	GameObject *hudReputationArrowGO = new GameObject();
 	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, "assets/img/placeholders/tela 1-Rep_seta.png", currentRep, 1, 1));
-	hudReputationArrowGO->box.SetOrigin(950, 60);
+	hudReputationArrowGO->box.SetOrigin(960, 60);
 	AddObject(hudReputationArrowGO);
 
 	// HUD Pause
@@ -118,6 +118,18 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	hudGOSirene5->AddComponent(new GameItem(*hudGOSirene5, "assets/img/placeholders/tela 1-sus.png", 1, 1));
 	hudGOSirene5->box.SetOrigin(1800, 715);
 	AddObject(hudGOSirene5);
+
+	// Balcão
+	GameObject *balcaoGO = new GameObject();
+	balcaoGO->AddComponent(new GameItem(*balcaoGO, "assets/img/placeholders/balcão.png", 1, 1));
+	balcaoGO->box.SetOrigin(0, 800);
+	AddObject(balcaoGO);
+
+	// Velho
+	GameObject *velhoGO = new GameObject();
+	velhoGO->AddComponent(new GameItem(*velhoGO, "assets/img/placeholders/velinho.png", 1, 1));
+	velhoGO->box.SetOrigin(200, 320);
+	AddObject(velhoGO);
 
 	// GameObject *tileMap = new GameObject();
 	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
