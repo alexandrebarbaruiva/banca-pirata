@@ -38,4 +38,10 @@
 pdfs/
 JOGO
 play.cpp
-assets/img/placeholders/
+savegame
+
+# Assets
+assets/img/
+assets/audio/
+assets/font/
+assets/map/

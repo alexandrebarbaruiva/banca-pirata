@@ -33,6 +33,8 @@ public:
     void SetOrigin(float x, float y);
     void SetCenter(Vec2 vector);
     void SetCenter(float x, float y);
+    void SetBottom(float posX, float bottom);
+    void SetBottom(Vec2 bottomPos);
     static float Distance(Rect r1, Rect r2);
     Rect operator+(const Vec2 &vector) const;
     Rect operator+=(const Vec2 &vector) const;

@@ -12,26 +12,36 @@
 
 ReputationArrow::ReputationArrow(GameObject &associated, std::string sprite, int relativePos, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
 {
+#ifdef DEBUG
+    this->speed = Vec2(200, 0);
+#endif
     Sprite *spriteItem = new Sprite(associated, sprite, frameCount, frameTime);
+    this->endPoint = 710;
     spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
     this->destinationPoint = relativePos * (this->endPoint - this->startPoint) / 100;
 #ifdef DEBUG
-    std::cout << "Destination point "<< relativePos << "% on " << this->destinationPoint << "\n";
+    std::cout << "Destination point " << relativePos << "% on " << this->destinationPoint << "\n";
 #endif
 }
 
 void ReputationArrow::Update(float dt)
 {
-    // Update associated box location correctly
-    associated.box = associated.box + speed * dt;
-    this->currentPoint += (Vec2::Mag(speed * dt));
     if (this->currentPoint >= this->destinationPoint)
     {
         // TODO: change here when reputation starts to change
         this->speed = this->speed * 0;
     }
+    // To avoid big jumps when beginning session
+    if (dt > 0.1)
+    {
+        dt = 0.034;
+    }
+    // Update associated box location correctly
+    // associated.box += (speed * dt);
+    associated.box = associated.box + (speed * dt);
+    this->currentPoint += (Vec2::Mag(speed * dt));
 }
 
 void ReputationArrow::Render()

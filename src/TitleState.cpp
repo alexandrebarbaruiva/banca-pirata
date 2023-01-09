@@ -10,7 +10,7 @@
  */
 #include "TitleState.h"
 
-TitleState::TitleState() : State()
+TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 {
     // Background
     GameObject *bg = new GameObject();
@@ -90,10 +90,13 @@ void TitleState::LoadAssets()
 
 void TitleState::Pause()
 {
+	backgroundMusic.Stop(0);
+
 }
 
 void TitleState::Resume()
 {
+	backgroundMusic.Play();
     Camera::Reset();
 }
 
@@ -102,6 +105,7 @@ void TitleState::Start()
     Camera::Reset();
     LoadAssets();
     StartArray();
+    backgroundMusic.Play();
     started = true;
 }
 

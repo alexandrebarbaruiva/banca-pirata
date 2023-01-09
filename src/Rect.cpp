@@ -64,6 +64,17 @@ void Rect::SetCenter(float x, float y)
     Rect::SetCenter(Vec2(x, y));
 }
 
+void Rect::SetBottom(float posX, float bottom)
+{
+    this->x = posX;
+    this->y = bottom - this->h;
+}
+
+void Rect::SetBottom(Vec2 bottomPos)
+{
+    Rect::SetBottom(bottomPos.x, bottomPos.y);
+}
+
 Rect Rect::operator+(const Vec2 &vector) const
 {
     return Rect(this->x + vector.x, this->y + vector.y, this->w, this->h);

@@ -65,6 +65,8 @@ Game::Game(std::string title, int width, int height) : frameStart(0), dt(0)
 
     Mix_AllocateChannels(32);
 
+    SDL_Window_Flags = SDL_WINDOW_FULLSCREEN;
+
     window = SDL_CreateWindow(
         title.c_str(),          // window title
         SDL_WINDOWPOS_CENTERED, // initial x position

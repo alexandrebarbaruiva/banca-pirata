@@ -28,7 +28,7 @@ public:
     float currentPoint = 0;
     float destinationPoint = 0;
     float endPoint = 720;
-    Vec2 speed = Vec2(100, 0);
+    Vec2 speed = Vec2(200, 0);
 
     bool clickable = false;
     bool isClicked = false;

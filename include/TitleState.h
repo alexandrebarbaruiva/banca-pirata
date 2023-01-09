@@ -18,9 +18,13 @@
 #include "StageState.h"
 #include "Camera.h"
 #include "Game.h"
+#include "Music.h"
 
 class TitleState : public State
 {
+private:
+    Music backgroundMusic;
+
 public:
     TitleState();
     ~TitleState();
