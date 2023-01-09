@@ -11,8 +11,6 @@
 #include "GameData.h"
 
 bool GameData::playerVictory;
-int GameData::currentMinute;
-int GameData::currentHour;
 int GameData::currentDay;
 int GameData::currentMoney;
 int GameData::currentRep;
@@ -27,21 +25,13 @@ int GameData::currentSus;
 // dayInGame: {int}
 // gameVersion: {float}
 //
-void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyInGame, int repInGame, int susInGame)
+void GameData::Save(int dayInGame, int moneyInGame, int repInGame, int susInGame)
 {
     // Append to file
     // std::ofstream SaveFile("savegame", std::ios::app);
 
     // Write to file
     std::ofstream saveFile("savegame");
-
-    // Write minuteInGame
-    saveFile << "minuteInGame " << minuteInGame;
-    saveFile << "\n";
-
-    // Write hourInGame
-    saveFile << "hourInGame " << hourInGame;
-    saveFile << "\n";
 
     // Write dayInGame
     saveFile << "dayInGame " << dayInGame;
@@ -62,16 +52,6 @@ void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyIn
     saveFile.close();
 }
 
-void GameData::Reset()
-{
-    GameData::currentMinute = 0;
-    GameData::currentHour = 0;
-    GameData::currentDay = 0;
-    GameData::currentMoney = 0;
-    GameData::currentRep = 0;
-    GameData::currentSus = 0;
-}
-
 void GameData::Load()
 {
     std::ifstream saveFile("savegame");
@@ -87,16 +67,12 @@ void GameData::Load()
         }
     }
 
-    GameData::currentMinute = gameData["minuteInGame"];
-    GameData::currentHour = gameData["hourInGame"];
     GameData::currentDay = gameData["dayInGame"];
     GameData::currentMoney = gameData["moneyInGame"];
     GameData::currentRep = gameData["repInGame"];
     GameData::currentSus = gameData["susInGame"];
 
 #ifdef DEBUG
-    std::cout << "loaded Minute " << GameData::currentMinute << "\n";
-    std::cout << "loaded Hour " << GameData::currentHour << "\n";
     std::cout << "loaded Day " << GameData::currentDay << "\n";
     std::cout << "loaded Money " << GameData::currentMoney << "\n";
     std::cout << "loaded Rep " << GameData::currentRep << "\n";

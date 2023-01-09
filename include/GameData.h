@@ -15,6 +15,10 @@
 #include <fstream>
 #include <ctime>
 #include <unordered_map>
+#include <iostream>
+#include <fstream>
+#include <ctime>
+#include <unordered_map>
 
 class GameData
 {
@@ -22,8 +26,6 @@ private:
     /* data */
 public:
     static bool playerVictory;
-    static int currentMinute;
-    static int currentHour;
     static int currentDay;
     static int currentMoney;
     static int currentRep;
@@ -33,9 +35,7 @@ public:
     /// @param saveNumber save counter
     /// @param dayInGame day in game when save method was called
     /// @param dayInGame money in game when save method was called
-    static void Save(int minuteInGame, int hourInGame, int dayInGame, int moneyInGame, int repInGame, int susInGame);
-
-    static void Reset();
+    static void Save(int dayInGame, int moneyInGame, int repInGame, int susInGame);
 
     static void Load();
 };
