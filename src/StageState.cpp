@@ -29,6 +29,8 @@
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
 {
+	// Remove any previous save data from state
+	GameData::Reset();
 	if (loadGame)
 	{
 		// Load from save file
