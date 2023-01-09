@@ -21,7 +21,6 @@
 #include "TitleState.h"
 #include "EndState.h"
 #include "GameData.h"
-#include "SaveHelper.h"
 #include "ReputationArrow.h"
 #include "Client.h"
 
@@ -33,7 +32,7 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/screen2.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/Tela2-ui.png", 1, 1.0));
 	// bg->AddComponent(new CameraFollower(*bg));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
@@ -145,15 +144,6 @@ void SecondStageState::Update(float dt)
 	// 			g1->NotifyCollision(*g2);
 	// 			g2->NotifyCollision(*g1);
 	// 		}
-	// 	}
-	// }
-
-	// Check if object is dead
-	// for (unsigned i = 0; i < objectArray.size(); i++)
-	// {
-	// 	if (objectArray[i]->IsDead())
-	// 	{
-	// 		objectArray.erase(objectArray.begin() + i);
 	// 	}
 	// }
 

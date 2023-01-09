@@ -14,9 +14,9 @@ Client::Client(GameObject &associated, std::string sprite, float scaleX, float s
 {
     Sprite *spriteItem = new Sprite(associated, sprite, frameCount, frameTime);
     this->endPoint = 710;
-    this->speed = Vec2(50, 0);
+    this->speed = Vec2(600, 0);
 #ifdef DEBUG
-    this->speed = Vec2(300, 0);
+    this->speed = Vec2(600, 0);
 #endif
     spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);
@@ -33,6 +33,7 @@ void Client::Update(float dt)
         this->speed = this->speed * 0;
         Client::PopChat();
         this->reachedEndpoint = true;
+        std::cout << "Reached endpoint.\n";
     }
     // To avoid big jumps when beginning session
     if (dt > 0.1)

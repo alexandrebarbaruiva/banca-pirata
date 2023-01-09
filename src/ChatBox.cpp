@@ -23,15 +23,13 @@ ChatBox::ChatBox(GameObject &associated, bool clickable, std::string sprite, flo
 
 void ChatBox::Update(float dt)
 {
-    // associated.box.IsInside();
     InputManager input = InputManager::GetInstance();
-    bool mouseInBox = associated.box.IsInside(input.GetMousePosition());
-
-    if (input.MousePress(LEFT_MOUSE_BUTTON) and mouseInBox)
+    if (input.MousePress(LEFT_MOUSE_BUTTON) and associated.box.IsInside(input.GetMousePosition()))
     {
+        associated.RequestDelete();
         this->isClicked = true;
 
-        // TODO: create Screen 2 from here
+        // Create Screen 2 here
         State *stage = new SecondStageState();
         Game::GetInstance().Push(stage);
     }
