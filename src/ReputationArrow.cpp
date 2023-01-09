@@ -12,10 +12,12 @@
 
 ReputationArrow::ReputationArrow(GameObject &associated, std::string sprite, int relativePos, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
 {
+#ifdef DEBUG
+    this->speed = Vec2(200, 0);
+#endif
     Sprite *spriteItem = new Sprite(associated, sprite, frameCount, frameTime);
     this->endPoint = 710;
-    this->speed = Vec2(50, 0);
-    // spriteItem->SetScale(scaleX, scaleY);
+    spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
     this->destinationPoint = relativePos * (this->endPoint - this->startPoint) / 100;
