@@ -22,7 +22,7 @@ Client::Client(GameObject &associated, std::string sprite, float scaleX, float s
     associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
 #ifdef DEBUG
-    std::cout << "Destination point on " << this->endPoint << "\n";
+    std::cout << "Client destination point on " << this->endPoint << "\n";
 #endif
 }
 

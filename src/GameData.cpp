@@ -52,6 +52,14 @@ void GameData::Save(int dayInGame, int moneyInGame, int repInGame, int susInGame
     saveFile.close();
 }
 
+void GameData::Reset()
+{
+    GameData::currentDay = 0;
+    GameData::currentMoney = 0;
+    GameData::currentRep = 0;
+    GameData::currentSus = 0;
+}
+
 void GameData::Load()
 {
     std::ifstream saveFile("savegame");

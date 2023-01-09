@@ -12,8 +12,8 @@
 
 Siren::Siren(GameObject &associated, int reputationScore, std::string spriteOn, std::string spriteOff, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated), reputationScore(reputationScore)
 {
-    spriteOn = spriteOn;
-    spriteOff = spriteOff;
+    this->spriteOn = spriteOn;
+    this->spriteOff = spriteOff;
     Sprite *spriteItem = new Sprite(associated, spriteOff, 1, 1.0);
     spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);
@@ -22,13 +22,13 @@ Siren::Siren(GameObject &associated, int reputationScore, std::string spriteOn, 
 
 void Siren::Update(float dt)
 {
-
     if (not isOn and (GameData::currentSus >= reputationScore))
     {
 #ifdef DEBUG
         std::cout << "Turn on siren " << reputationScore << "\n";
         std::cout << "CurSus " << GameData::currentSus << "\n";
 #endif
+        this->isOn = true;
         associated.RemoveComponent(associated.GetComponent("Sprite"));
         Sprite *spriteItem = new Sprite(associated, spriteOn, 1, 1.0);
         // spriteItem->SetScale(scaleX, scaleY);
@@ -40,6 +40,7 @@ void Siren::Update(float dt)
         std::cout << "Turn off siren " << reputationScore << "\n";
         std::cout << "CurSus " << GameData::currentSus << "\n";
 #endif
+        this->isOn = false;
         associated.RemoveComponent(associated.GetComponent("Sprite"));
         Sprite *spriteItem = new Sprite(associated, spriteOff, 1, 1.0);
         // spriteItem->SetScale(scaleX, scaleY);
