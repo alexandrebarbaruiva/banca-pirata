@@ -29,6 +29,8 @@
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
 {
+	// Remove any previous save data from state
+	GameData::Reset();
 	if (loadGame)
 	{
 		// Load from save file
@@ -61,7 +63,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 
 	GameObject *moneyHudText = new GameObject();
 	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
-	moneyHudText->box.SetOrigin(600, 35);
+	moneyHudText->box.SetOrigin(500, 35);
 	AddObject(moneyHudText);
 
 	// HUD Reputação

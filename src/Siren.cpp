@@ -12,8 +12,8 @@
 
 Siren::Siren(GameObject &associated, int reputationScore, std::string spriteOn, std::string spriteOff, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated), reputationScore(reputationScore)
 {
-    spriteOn = spriteOn;
-    spriteOff = spriteOff;
+    this->spriteOn = spriteOn;
+    this->spriteOff = spriteOff;
     Sprite *spriteItem = new Sprite(associated, spriteOff, 1, 1.0);
     spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);

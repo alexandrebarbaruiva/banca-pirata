@@ -37,6 +37,8 @@ public:
     /// @param dayInGame money in game when save method was called
     static void Save(int dayInGame, int moneyInGame, int repInGame, int susInGame);
 
+    static void Reset();
+
     static void Load();
 };
 
