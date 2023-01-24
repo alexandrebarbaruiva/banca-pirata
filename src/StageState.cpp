@@ -21,33 +21,18 @@
 #include "TitleState.h"
 #include "EndState.h"
 #include "GameData.h"
-#include "SaveHelper.h"
 #include "ReputationArrow.h"
 #include "Client.h"
+#include "Siren.h"
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
 {
-	// Initialize game session variables
-	int currentDay = 0;
-	int currentMoney = 0;
-	int currentRep = 0;
-	int currentSus = 0;
-	// SaveHelper::Save(currentDay, currentMoney, currentRep, currentSus);
-
+	// Remove any previous save data from state
+	GameData::Reset();
 	if (loadGame)
 	{
 		// Load from save file
-		std::unordered_map<std::string, int> loadData = SaveHelper::Load();
-		currentDay = loadData["dayInGame"];
-		currentMoney = loadData["moneyInGame"];
-		currentRep = loadData["repInGame"];
-		currentSus = loadData["susInGame"];
-#ifdef DEBUG
-		std::cout << "loaded Day " << currentDay << "\n";
-		std::cout << "loaded Money " << currentMoney << "\n";
-		std::cout << "loaded Rep " << currentRep << "\n";
-		std::cout << "loaded Sus " << currentSus << "\n";
-#endif
+		GameData::Load();
 	}
 
 	// Background
@@ -64,13 +49,13 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	AddObject(hudGO);
 
 	GameObject *dayHudText = new GameObject();
-	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	dayHudText->box.SetOrigin(115, 35);
 	AddObject(dayHudText);
 
 	GameObject *moneyHudText = new GameObject();
-	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
-	moneyHudText->box.SetOrigin(600, 35);
+	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	moneyHudText->box.SetOrigin(500, 35);
 	AddObject(moneyHudText);
 
 	// HUD Reputação
@@ -81,7 +66,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 
 	// HUD Seta da Reputação
 	GameObject *hudReputationArrowGO = new GameObject();
-	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, "assets/img/placeholders/tela 1-Rep_seta.png", currentRep, 1, 1));
+	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, "assets/img/placeholders/tela 1-Rep_seta.png", GameData::currentRep, 1, 1));
 	hudReputationArrowGO->box.SetOrigin(960, 60);
 	AddObject(hudReputationArrowGO);
 
@@ -93,31 +78,31 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 
 	// HUD Sirene 1
 	GameObject *hudGOSirene1 = new GameObject();
-	hudGOSirene1->AddComponent(new GameItem(*hudGOSirene1, "assets/img/placeholders/tela 1-sus-vazio.png", 1, 1));
+	hudGOSirene1->AddComponent(new Siren(*hudGOSirene1, 100));
 	hudGOSirene1->box.SetOrigin(1800, 235);
 	AddObject(hudGOSirene1);
 
 	// HUD Sirene 2
 	GameObject *hudGOSirene2 = new GameObject();
-	hudGOSirene2->AddComponent(new GameItem(*hudGOSirene2, "assets/img/placeholders/tela 1-sus-vazio.png", 1, 1));
+	hudGOSirene2->AddComponent(new Siren(*hudGOSirene2, 80));
 	hudGOSirene2->box.SetOrigin(1800, 355);
 	AddObject(hudGOSirene2);
 
 	// HUD Sirene 3
 	GameObject *hudGOSirene3 = new GameObject();
-	hudGOSirene3->AddComponent(new GameItem(*hudGOSirene3, "assets/img/placeholders/tela 1-sus-vazio.png", 1, 1));
+	hudGOSirene3->AddComponent(new Siren(*hudGOSirene3, 60));
 	hudGOSirene3->box.SetOrigin(1800, 475);
 	AddObject(hudGOSirene3);
 
 	// HUD Sirene 4
 	GameObject *hudGOSirene4 = new GameObject();
-	hudGOSirene4->AddComponent(new GameItem(*hudGOSirene4, "assets/img/placeholders/tela 1-sus-vazio.png", 1, 1));
+	hudGOSirene4->AddComponent(new Siren(*hudGOSirene4, 40));
 	hudGOSirene4->box.SetOrigin(1800, 595);
 	AddObject(hudGOSirene4);
 
 	// HUD Sirene 5
 	GameObject *hudGOSirene5 = new GameObject();
-	hudGOSirene5->AddComponent(new GameItem(*hudGOSirene5, "assets/img/placeholders/tela 1-sus.png", 1, 1));
+	hudGOSirene5->AddComponent(new Siren(*hudGOSirene5, 20));
 	hudGOSirene5->box.SetOrigin(1800, 715);
 	AddObject(hudGOSirene5);
 
@@ -132,7 +117,6 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	velhoGO->AddComponent(new Client(*velhoGO, "assets/img/placeholders/velinho.png", 1, 1));
 	velhoGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
 	AddObject(velhoGO);
-
 }
 
 StageState::~StageState()
@@ -154,7 +138,7 @@ void StageState::LoadAssets()
 
 void StageState::Pause()
 {
-	backgroundMusic.Stop();
+	backgroundMusic.Stop(0);
 }
 
 void StageState::Resume()

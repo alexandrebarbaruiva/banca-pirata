@@ -21,22 +21,55 @@
 #include "TitleState.h"
 #include "EndState.h"
 #include "GameData.h"
-#include "SaveHelper.h"
 #include "ReputationArrow.h"
 #include "Client.h"
 
 SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
 #ifdef DEBUG
-		std::cout << "Loaded Second Screen\n";
+	std::cout << "Loaded Second Screen\n";
 #endif
 
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/screen2.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/Tela2-ui.png", 1, 1.0));
 	// bg->AddComponent(new CameraFollower(*bg));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
+
+	// HUD Dia + Dinheiro
+	GameObject *hudGO = new GameObject();
+	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 1, 1));
+	hudGO->box.SetOrigin(0, 0);
+	AddObject(hudGO);
+
+	GameObject *dayHudText = new GameObject();
+	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	dayHudText->box.SetOrigin(115, 35);
+	AddObject(dayHudText);
+
+	GameObject *moneyHudText = new GameObject();
+	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	moneyHudText->box.SetOrigin(500, 35);
+	AddObject(moneyHudText);
+
+	// HUD Reputação
+	GameObject *hudReputationGO2 = new GameObject();
+	hudReputationGO2->AddComponent(new GameItem(*hudReputationGO2, "assets/img/placeholders/tela 1-Rep.png", 1, 1));
+	hudReputationGO2->box.SetOrigin(960, 0);
+	AddObject(hudReputationGO2);
+
+	// HUD Seta da Reputação
+	GameObject *hudReputationArrowGO = new GameObject();
+	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, "assets/img/placeholders/tela 1-Rep_seta.png", GameData::currentRep, 1, 1));
+	hudReputationArrowGO->box.SetOrigin(960, 60);
+	AddObject(hudReputationArrowGO);
+
+	// HUD Pause
+	GameObject *hudPauseGO = new GameObject();
+	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
+	hudPauseGO->box.SetOrigin(1800, 0);
+	AddObject(hudPauseGO);
 
 	// GameObject *tileMap = new GameObject();
 	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
@@ -145,15 +178,6 @@ void SecondStageState::Update(float dt)
 	// 			g1->NotifyCollision(*g2);
 	// 			g2->NotifyCollision(*g1);
 	// 		}
-	// 	}
-	// }
-
-	// Check if object is dead
-	// for (unsigned i = 0; i < objectArray.size(); i++)
-	// {
-	// 	if (objectArray[i]->IsDead())
-	// 	{
-	// 		objectArray.erase(objectArray.begin() + i);
 	// 	}
 	// }
 

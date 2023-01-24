@@ -13,7 +13,7 @@
 ReputationArrow::ReputationArrow(GameObject &associated, std::string sprite, int relativePos, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
 {
 #ifdef DEBUG
-    this->speed = Vec2(200, 0);
+    this->speed = Vec2(1000, 0);
 #endif
     Sprite *spriteItem = new Sprite(associated, sprite, frameCount, frameTime);
     this->endPoint = 710;
