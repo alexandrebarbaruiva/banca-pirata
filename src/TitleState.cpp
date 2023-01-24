@@ -9,6 +9,7 @@
  *
  */
 #include "TitleState.h"
+#include <string>
 
 TitleState::TitleState() : State()
 {
@@ -19,6 +20,11 @@ TitleState::TitleState() : State()
     bg->box.y = 0;
     this->AddObject(bg);
 
+    // Add ButtonBox
+    GameObject *boxContainer = new GameObject();
+    this->buttonBox = new ButtonBox(*boxContainer, "ButtonBox");
+    boxContainer->AddComponent(buttonBox);
+
     // Start Button
     Vec2 buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 300);
 
@@ -26,6 +32,7 @@ TitleState::TitleState() : State()
     startButton->AddComponent(new Button(*startButton, "startButton"));
     startButton->box.SetCenter(buttonPosition);
     this->AddObject(startButton);
+    buttonBox->AddButton(startButton);
 
     GameObject *startText = new GameObject();
     startText->AddComponent(new Text(*startText, "assets/font/Call me maybe.ttf", 50, Text::BLENDED, "Start", {255, 0, 0, SDL_ALPHA_OPAQUE}));
@@ -39,6 +46,7 @@ TitleState::TitleState() : State()
     continueButton->AddComponent(new Button(*continueButton, "continueButton"));
     continueButton->box.SetCenter(buttonPosition);
     this->AddObject(continueButton);
+    buttonBox->AddButton(continueButton);
 
     GameObject *continueText = new GameObject();
     continueText->AddComponent(new Text(*continueText, "assets/font/Call me maybe.ttf", 50, Text::BLENDED, "Continue", {255, 0, 0, SDL_ALPHA_OPAQUE}));
@@ -52,6 +60,7 @@ TitleState::TitleState() : State()
     settingsButton->AddComponent(new Button(*settingsButton, "settingsButton"));
     settingsButton->box.SetCenter(buttonPosition);
     this->AddObject(settingsButton);
+    buttonBox->AddButton(settingsButton);
 
     GameObject *settingsText = new GameObject();
     settingsText->AddComponent(new Text(*settingsText, "assets/font/Call me maybe.ttf", 50, Text::BLENDED, "Settings", {255, 0, 0, SDL_ALPHA_OPAQUE}));
@@ -64,6 +73,7 @@ TitleState::TitleState() : State()
     GameObject *exitButton = new GameObject();
     exitButton->AddComponent(new Button(*exitButton, "exitButton"));
     exitButton->box.SetCenter(buttonPosition);
+    buttonBox->AddButton(exitButton);
     this->AddObject(exitButton);
 
     GameObject *exitText = new GameObject();
@@ -77,6 +87,8 @@ TitleState::TitleState() : State()
     text->box.y = 500;
     text->AddComponent(new Text(*text, "assets/font/Call me maybe.ttf", 50, Text::BLENDED, "Settings", {255, 0, 0, SDL_ALPHA_OPAQUE}));
     this->AddObject(text);
+    
+    this->AddObject(boxContainer);
 }
 
 TitleState::~TitleState()
@@ -109,7 +121,7 @@ void TitleState::Update(float dt)
 {
     UpdateArray(dt);
     std::string pressedButton;
-    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+    std::vector<std::weak_ptr<GameObject>> buttons = this->buttonBox->GetArray();
     for (unsigned i = 0; i < buttons.size(); i++)
     {
         Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));

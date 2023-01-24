@@ -21,40 +21,29 @@
 ButtonBox::ButtonBox(GameObject &associated, std::string name) : Component(associated)
 {
     this->name = name;
-    this->type = "ButtonBox";
 }
 
 
-std::shared_ptr<Button> ButtonBox::AddButton(Button *butt)
+ButtonBox::~ButtonBox(){
+    buttonArray.clear();
+}
+
+
+std::shared_ptr<GameObject> ButtonBox::AddButton(GameObject *butt)
 {
-	std::shared_ptr<Button> sharedButton(butt);
+	std::shared_ptr<GameObject> sharedButton(butt);
 	buttonArray.push_back(sharedButton);
 
-	return std::shared_ptr<Button>(sharedButton);
+	return std::shared_ptr<GameObject>(sharedButton);
 }
 
 
-std::shared_ptr<Button> ButtonBox::GetButtonPtr(Button *butt)
-{
-    std::shared_ptr<Button> sharedButton(butt);
-	for (unsigned i = 0; i < buttonArray.size(); i++)
-	{
-		if (buttonArray[i].get() == sharedButton.get())
-		{
-			return std::shared_ptr<Button>(buttonArray[i]);
-		}
-	}
-	return nullptr;
-}
-
-
-void ButtonBox::NextButton(std::shared_ptr<Button> butt, bool next)
+void ButtonBox::NextButton(std::shared_ptr<GameObject> butt, bool next)
 {   
     unsigned i;
-    std::shared_ptr<Button> sharedButton(butt);
     for (i = 0; i < buttonArray.size(); i++)
     {
-        if (buttonArray[i].get() == sharedButton.get())
+        if (buttonArray[i].get() == butt.get())
         {
             break;
         }
@@ -62,39 +51,38 @@ void ButtonBox::NextButton(std::shared_ptr<Button> butt, bool next)
     if(next){
         if (i > buttonArray.size()){
             activeButton = buttonArray[0];
-            activeButton->isSelected = true;
         } else {
             activeButton = buttonArray[i+i];
-            activeButton->isSelected = true;
         }
-        buttonArray[i]->isSelected = false;
     } 
     else {
         if(i < 1){
             activeButton = buttonArray.back();
-            activeButton->isSelected = true;
         }
         else {
             activeButton = buttonArray[i-1];
-            activeButton->isSelected = true;
         }
-        buttonArray[i]->isSelected = false;
     }
+    Button *curButton = (Button *)activeButton->GetComponent("Button");
+    curButton->isSelected = true;
+    Button *pastButton = ((Button *)(buttonArray[i]->GetComponent("Button")));
+    pastButton->isSelected = false;
 }
 
 
 void ButtonBox::Update(float dt)
 {
     InputManager input = InputManager::GetInstance();
+    Button *button = ((Button *)(this->activeButton->GetComponent("Button")));
     switch(input.curEvent){
     case InputOptions::MOUSE_DOWN:
-        if (input.MousePress(LEFT_MOUSE_BUTTON) and this->activeButton->clickable)
+        if (input.MousePress(LEFT_MOUSE_BUTTON) and button->clickable)
         {
-            bool mouseInButton = this->activeButton->GetIsInside(input.GetMousePosition());
+            bool mouseInButton = button->GetIsInside(input.GetMousePosition());
             if (mouseInButton)
             {
-                this->activeButton->isClicked = true;
-                this->activeButton->timesClicked++;
+                button->isClicked = true;
+                button->timesClicked++;
         #ifdef DEBUG
                 Sound *sound = new Sound(associated, "assets/audio/quack.mp3");
                 sound->Play();
@@ -131,4 +119,15 @@ void ButtonBox::NotifyCollision(GameObject &other)
 bool ButtonBox::Is(std::string type)
 {
     return (type == ButtonBox::type);
+}
+
+
+std::vector<std::weak_ptr<GameObject>> ButtonBox::GetArray()
+{
+    std::vector<std::weak_ptr<GameObject>> array;
+    for(std::shared_ptr<GameObject> button: this->buttonArray){
+        std::weak_ptr<GameObject> butt(button);
+        array.push_back(butt);
+    }
+    return array;
 }

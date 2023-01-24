@@ -20,20 +20,21 @@ class ButtonBox: public Component
 {
 public:
     ButtonBox(GameObject &associated, std::string name);
-
+    ~ButtonBox();
     std::string name;
-    std::string type;
-    std::vector<std::shared_ptr<Button>> buttonArray;
-    std::shared_ptr<Button> activeButton;
+    std::string type = "ButtonBox";
+    std::vector<std::shared_ptr<GameObject>> buttonArray;
+    std::shared_ptr<GameObject> activeButton;
 
-    virtual std::shared_ptr<Button> AddButton(Button *butt);
-    virtual std::shared_ptr<Button> GetButtonPtr(Button *butt);
-    void NextButton(std::shared_ptr<Button> butt, bool next);
+    std::shared_ptr<GameObject> AddButton(GameObject *butt);
+    std::vector<std::weak_ptr<GameObject>> GetArray();
     
     void Update(float dt);
     void Render();
     void NotifyCollision(GameObject &other);
     void ToggleSelect();
     bool Is(std::string type);
+private:
+   void NextButton(std::shared_ptr<GameObject> butt, bool next);
 };
 #endif
