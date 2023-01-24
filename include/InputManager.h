@@ -24,15 +24,21 @@
 #define CTRL_KEY SDLK_LCTRL
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
-#define KEY_PRESS "KEY_PRESS"
-#define KEY_RELEASE "KEY_RELEASE"
-#define KEY_DOWN "KEY_DOWN"
-#define MOUSE_PRESS "MOUSE_PRESS"
-#define MOUSE_RELEASE "MOUSE_RELEASE"
-#define MOUSE_DOWN "MOUSE_DOWN"
+
 #include "SDL_include.h"
 #include "Vec2.h"
 #include <unordered_map>
+
+
+enum class InputOptions{
+    KEY_DOWN,
+    KEY_PRESS,
+    KEY_RELEASE,
+    MOUSE_PRESS,
+    MOUSE_RELEASE,
+    MOUSE_DOWN
+};
+
 
 class InputManager
 {
@@ -47,8 +53,6 @@ private:
     int updateCounter;
     int mouseX;
     int mouseY;
-
-    std::string curEvent;
 public:
     InputManager();
     ~InputManager();
@@ -68,6 +72,7 @@ public:
     int GetMouseY();
 
     bool QuitRequested();
+    InputOptions curEvent;
 };
 
 #endif

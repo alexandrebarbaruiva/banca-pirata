@@ -26,9 +26,9 @@ public:
     std::vector<std::shared_ptr<Button>> buttonArray;
     std::shared_ptr<Button> activeButton;
 
-    virtual std::weak_ptr<Button> AddButton(Button *butt);
-    virtual std::weak_ptr<Button> GetButtonPtr(Button *butt);
-    void NextButton(Button *butt, bool next);
+    virtual std::shared_ptr<Button> AddButton(Button *butt);
+    virtual std::shared_ptr<Button> GetButtonPtr(Button *butt);
+    void NextButton(std::shared_ptr<Button> butt, bool next);
     
     void Update(float dt);
     void Render();
