@@ -71,6 +71,18 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
+	// Cliente frontal
+	GameObject *clienteGO = new GameObject();
+	clienteGO->AddComponent(new GameItem(*clienteGO, "assets/img/placeholders/cliente_placeholder.png", 1, 1));
+	clienteGO->box.SetOrigin(120, 300);
+	AddObject(clienteGO);
+
+	// Capa simples placeholder
+	GameObject *capaGO = new GameObject();
+	capaGO->AddComponent(new GameItem(*capaGO, "assets/img/placeholders/capa-placeholder.png", 1, 1));
+	capaGO->box.SetOrigin(800, 200);
+	AddObject(capaGO);
+
 	// GameObject *tileMap = new GameObject();
 	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
 	// tileMap->AddComponent(new TileMap(*tileMap, "assets/map/tileMap.txt", tileSet));

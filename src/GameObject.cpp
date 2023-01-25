@@ -11,6 +11,15 @@
 #include "GameObject.h"
 #include "Component.h"
 
+GameObject::GameObject(float x, float y)
+{
+    this->started = false;
+    this->angleDeg = 0;
+    this->isDead = false;
+    this->box.x = x;
+    this->box.y = y;
+}
+
 GameObject::GameObject()
 {
     this->started = false;
