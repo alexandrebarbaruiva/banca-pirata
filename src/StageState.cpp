@@ -25,7 +25,7 @@
 #include "GameData.h"
 #include "ReputationArrow.h"
 #include "Client.h"
-#include "Siren.h"
+#include "SirenBox.h"
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -85,35 +85,11 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
-	// HUD Sirene 1
-	GameObject *hudGOSirene1 = new GameObject();
-	hudGOSirene1->AddComponent(new Siren(*hudGOSirene1, 100));
-	hudGOSirene1->box.SetOrigin(1800, 235);
-	AddObject(hudGOSirene1);
-
-	// HUD Sirene 2
-	GameObject *hudGOSirene2 = new GameObject();
-	hudGOSirene2->AddComponent(new Siren(*hudGOSirene2, 80));
-	hudGOSirene2->box.SetOrigin(1800, 355);
-	AddObject(hudGOSirene2);
-
-	// HUD Sirene 3
-	GameObject *hudGOSirene3 = new GameObject();
-	hudGOSirene3->AddComponent(new Siren(*hudGOSirene3, 60));
-	hudGOSirene3->box.SetOrigin(1800, 475);
-	AddObject(hudGOSirene3);
-
-	// HUD Sirene 4
-	GameObject *hudGOSirene4 = new GameObject();
-	hudGOSirene4->AddComponent(new Siren(*hudGOSirene4, 40));
-	hudGOSirene4->box.SetOrigin(1800, 595);
-	AddObject(hudGOSirene4);
-
-	// HUD Sirene 5
-	GameObject *hudGOSirene5 = new GameObject();
-	hudGOSirene5->AddComponent(new Siren(*hudGOSirene5, 20));
-	hudGOSirene5->box.SetOrigin(1800, 715);
-	AddObject(hudGOSirene5);
+	// HUD Sirene
+	GameObject *hudGOSirene = new GameObject();
+	hudGOSirene->AddComponent(new SirenBox(*hudGOSirene));
+	hudGOSirene->box.SetOrigin(1800, 355);
+	AddObject(hudGOSirene);
 
 	// Balcão
 	GameObject *balcaoGO = new GameObject();
