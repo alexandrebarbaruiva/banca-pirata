@@ -26,6 +26,7 @@
 #include "ReputationArrow.h"
 #include "Client.h"
 #include "SirenBox.h"
+#include "SirenBox.h"
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -89,6 +90,11 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	hudGOSirene->AddComponent(new SirenBox(*hudGOSirene));
 	hudGOSirene->box.SetOrigin(1800, 355);
 	AddObject(hudGOSirene);
+	// HUD Sirene
+	GameObject *hudGOSirene = new GameObject();
+	hudGOSirene->AddComponent(new SirenBox(*hudGOSirene));
+	hudGOSirene->box.SetOrigin(1800, 355);
+	AddObject(hudGOSirene);
 
 	// Balcão
 	GameObject *balcaoGO = new GameObject();
@@ -97,10 +103,10 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	AddObject(balcaoGO);
 
 	// Lojeiro
-	//GameObject *lojeiroGO = new GameObject();
-	//lojeiroGO->AddComponent(new GameItem(*lojeiroGO, "assets/img/placeholders/lojeiro_placeholder.png", 1, 1));
-	//lojeiroGO->box.SetBottom(1290, balcaoGO->box.y);
-	//AddObject(lojeiroGO);
+	GameObject *lojeiroGO = new GameObject();
+	lojeiroGO->AddComponent(new GameItem(*lojeiroGO, "assets/img/placeholders/lojeiro_placeholder.png", 1, 1));
+	lojeiroGO->box.SetBottom(1290, balcaoGO->box.y);
+	AddObject(lojeiroGO);
 
 	// Velho
 	GameObject *velhoGO = new GameObject();
