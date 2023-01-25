@@ -13,25 +13,36 @@
 #include "Component.h"
 #include "GameObject.h"
 #include "Button.h"
+#include "InputManager.h"
 #include <unordered_map>
 #include <vector>
 #include <string>
 #include <memory>
 
+
 class ButtonManager
 {
 private:
-    std::unordered_map<std::string, std::vector<std::shared_ptr<GameObject>>> buttonTable;
-    std::shared_ptr<GameObject> activeButton;
+    std::unordered_map<std::string, std::vector<std::string>> buttonTable;
+    std::string activeButton = "";
     std::string activeState = "";
 public:
+    typedef enum typeEvents
+    {
+        Start = 1,
+        Continue = 2,
+        Quit = 3
+    } Events;
     ButtonManager();
     ~ButtonManager();
 
     void SetActiveScene(std::string key);
+    void SetActiveButton(std::string button);
     void ToggleActive(std::vector<std::shared_ptr<GameObject>> vec);
-    void AddButton(std::string key, std::shared_ptr<GameObject> button);
-    void NextButton(std::shared_ptr<GameObject> button, bool next);
+    void AddButton(std::string key, std::string button);
+    std::string NextButton(std::string button, bool next);
+
+    Events Update(std::vector<std::weak_ptr<GameObject>> buttons);
 
     void ToggleSelect();
     bool Is(std::string type);

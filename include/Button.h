@@ -15,6 +15,7 @@
 #include "Text.h"
 #include "Sound.h"
 
+
 class Button : public Component
 {
 public:
@@ -23,7 +24,6 @@ public:
     std::string type = "Button";
     std::string name;
 
-    bool active;
     bool clickable;
     bool isClicked;
     bool isSelected;

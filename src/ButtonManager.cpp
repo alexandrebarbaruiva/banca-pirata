@@ -24,13 +24,13 @@ ButtonManager::~ButtonManager(){
 }
 
 
-void ButtonManager::AddButton(std::string key, std::shared_ptr<GameObject> button)
+void ButtonManager::AddButton(std::string key, std::string button)
 {
-    std::vector<std::shared_ptr<GameObject>> vec;
-    std::unordered_map<std::string, std::vector<std::shared_ptr<GameObject>>>::const_iterator search = buttonTable.find(key);
+    std::vector<std::string> vec;
+    std::unordered_map<std::string, std::vector<std::string>>::const_iterator search = buttonTable.find(key);
     if (search != this->buttonTable.end())
     {
-        std::vector<std::shared_ptr<GameObject>> found = search->second;
+        std::vector<std::string> found = search->second;
         found.emplace_back(button);
     }
     else
@@ -41,12 +41,12 @@ void ButtonManager::AddButton(std::string key, std::shared_ptr<GameObject> butto
 }
 
 
-void ButtonManager::NextButton(std::shared_ptr<GameObject> button, bool next)
+std::string ButtonManager::NextButton(std::string curButton, bool next)
 {   
     unsigned i;
     for (i = 0; i < buttonTable[activeState].size(); i++)
     {
-        if (buttonTable[activeState][i].get() == button.get())
+        if (buttonTable[activeState][i] == curButton)
         {
             break;
         }
@@ -66,10 +66,7 @@ void ButtonManager::NextButton(std::shared_ptr<GameObject> button, bool next)
             activeButton = buttonTable[activeState][i-1];
         }
     }
-    Button *curButton = (Button *)activeButton->GetComponent("Button");
-    curButton->isSelected = true;
-    Button *pastButton = ((Button *)(buttonTable[activeState][i]->GetComponent("Button")));
-    pastButton->isSelected = false;
+    return activeButton;
 }
 
 
@@ -79,22 +76,45 @@ bool ButtonManager::Is(std::string type)
 }
 
 
-void ButtonManager::ToggleActive(std::vector<std::shared_ptr<GameObject>> vec)
+void ButtonManager::SetActiveScene(std::string key)
 {
-    for(auto& it: vec)
-    {
-        Button *button = (Button *) (it->GetComponent("Button"));
-        button->active = ! (button->active);
-    }
+    activeState = key;
 }
 
 
-void ButtonManager::SetActiveScene(std::string key)
+void ButtonManager::SetActiveButton(std::string button)
 {
-    if (activeState != "")
+    activeButton = button;
+}
+
+
+    ButtonManager::Events ButtonManager::Update(std::vector<std::weak_ptr<GameObject>> buttons)
+{
+    InputManager input = InputManager::GetInstance();
+    std::string pressedButton;
+    for (unsigned i = 0; i < buttons.size(); i++)
     {
-        ToggleActive(buttonTable[activeState]);
+        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
+        if (button->isClicked)
+        {
+            pressedButton = button->name;
+            button->isClicked = false;
+        }
     }
-    ToggleActive(buttonTable[key]);
-    activeState = key;
+
+    if (InputManager::GetInstance().KeyPress(ESCAPE_KEY) or InputManager::GetInstance().QuitRequested() or pressedButton == "exitButton")
+    {
+        return Events::Quit;
+    }
+
+    else if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "startButton")
+    {
+        return Events::Start;
+    }
+
+    else if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "continueButton")
+    {
+        return Events::Continue;
+    }
+
 }

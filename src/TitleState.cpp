@@ -9,6 +9,7 @@
  *
  */
 #include "TitleState.h"
+#include "ButtonManager.h"
 #include <string>
 
 TitleState::TitleState(std::string name) : State(name)
@@ -25,11 +26,11 @@ TitleState::TitleState(std::string name) : State(name)
     // Start Button
     Vec2 buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 300);
 
-    std::shared_ptr<GameObject> startButton(new GameObject());
+    GameObject *startButton = new GameObject();
     startButton->AddComponent(new Button(*startButton, "startButton"));
     startButton->box.SetCenter(buttonPosition);
-    this->AddObject(startButton.get());
-    input.buttonManager->AddButton(name, startButton);
+    this->AddObject(startButton);
+    input.buttonManager->AddButton(name, "startButton");
 
     GameObject *startText = new GameObject();
     startText->AddComponent(new Text(*startText, "assets/font/Call me maybe.ttf", 50, Text::BLENDED, "Start", {255, 0, 0, SDL_ALPHA_OPAQUE}));
@@ -39,11 +40,11 @@ TitleState::TitleState(std::string name) : State(name)
     // Continue Button
     buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 420);
 
-    std::shared_ptr<GameObject> continueButton(new GameObject());
+    GameObject *continueButton = new GameObject();
     continueButton->AddComponent(new Button(*continueButton, "continueButton"));
     continueButton->box.SetCenter(buttonPosition);
-    this->AddObject(continueButton.get());
-    input.buttonManager->AddButton(name, continueButton);
+    this->AddObject(continueButton);
+    input.buttonManager->AddButton(name, "continueButton");
 
     GameObject *continueText = new GameObject();
     continueText->AddComponent(new Text(*continueText, "assets/font/Call me maybe.ttf", 50, Text::BLENDED, "Continue", {255, 0, 0, SDL_ALPHA_OPAQUE}));
@@ -53,11 +54,11 @@ TitleState::TitleState(std::string name) : State(name)
     // Settings Button
     buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 540);
 
-    std::shared_ptr<GameObject> settingsButton(new GameObject());
+    GameObject *settingsButton = new GameObject();
     settingsButton->AddComponent(new Button(*settingsButton, "settingsButton"));
     settingsButton->box.SetCenter(buttonPosition);
-    this->AddObject(settingsButton.get());
-    input.buttonManager->AddButton(name, settingsButton);
+    this->AddObject(settingsButton);
+    input.buttonManager->AddButton(name, "settingsButton");
 
     GameObject *settingsText = new GameObject();
     settingsText->AddComponent(new Text(*settingsText, "assets/font/Call me maybe.ttf", 50, Text::BLENDED, "Settings", {255, 0, 0, SDL_ALPHA_OPAQUE}));
@@ -67,11 +68,11 @@ TitleState::TitleState(std::string name) : State(name)
     // Exit Button
     buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 660);
 
-    std::shared_ptr<GameObject> exitButton(new GameObject());
+    GameObject *exitButton = new GameObject();
     exitButton->AddComponent(new Button(*exitButton, "exitButton"));
     exitButton->box.SetCenter(buttonPosition);
-    input.buttonManager->AddButton(name, exitButton);
-    this->AddObject(exitButton.get());
+    input.buttonManager->AddButton(name, "exitButton");
+    this->AddObject(exitButton);
 
     GameObject *exitText = new GameObject();
     exitText->AddComponent(new Text(*exitText, "assets/font/Call me maybe.ttf", 50, Text::BLENDED, "Exit", {255, 0, 0, SDL_ALPHA_OPAQUE}));
@@ -112,39 +113,30 @@ void TitleState::Start()
     started = true;
     InputManager input = InputManager::GetInstance();
     input.buttonManager->SetActiveScene(name);
+    input.buttonManager->SetActiveButton("startButton");
 }
 
 void TitleState::Update(float dt)
 {
     UpdateArray(dt);
-    std::string pressedButton;
-    InputManager input = InputManager::GetInstance();
     std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
-    for (unsigned i = 0; i < buttons.size(); i++)
+    InputManager input = InputManager::GetInstance();
+    ButtonManager::Events event = input.buttonManager->Update(buttons);
+    switch (event)
     {
-        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
-        if (button->isClicked)
-        {
-            pressedButton = button->name;
-            button->isClicked = false;
-        }
-    }
-
-    if (InputManager::GetInstance().KeyPress(ESCAPE_KEY) or InputManager::GetInstance().QuitRequested() or pressedButton == "exitButton")
-    {
-        quitRequested = true;
-    }
-
-    if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "startButton")
-    {
+    case ButtonManager::Events::Start:
         State *stage = new StageState("StageState");
         Game::GetInstance().Push(stage);
-    }
-
-    if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "continueButton")
-    {
+        break;
+    case ButtonManager::Events::Continue:
         State *stage = new StageState("StageState", true);
         Game::GetInstance().Push(stage);
+        break;
+    case ButtonManager::Events::Quit:
+        quitRequested = true;
+        break;
+    default:
+        break;
     }
 }
 
