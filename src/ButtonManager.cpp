@@ -24,7 +24,7 @@ ButtonManager::~ButtonManager(){
 }
 
 
-void ButtonManager::AddButton(std::string key, GameObject *button)
+void ButtonManager::AddButton(std::string key, std::shared_ptr<GameObject> button)
 {
 	std::shared_ptr<GameObject> sharedButton(button);
     std::vector<std::shared_ptr<GameObject>> vec;
@@ -98,15 +98,4 @@ void ButtonManager::SetActiveScene(std::string key)
     }
     ToggleActive(buttonTable[key]);
     activeState = key;
-}
-
-
-std::vector<std::weak_ptr<GameObject>> ButtonManager::GetArray()
-{
-    std::vector<std::weak_ptr<GameObject>> array;
-    for(std::shared_ptr<GameObject> button: buttonTable[activeState]){
-        std::weak_ptr<GameObject> butt(button);
-        array.push_back(butt);
-    }
-    return array;
 }

@@ -21,7 +21,6 @@
 class ButtonManager
 {
 private:
-    void NextButton(std::shared_ptr<GameObject> button, bool next);
     std::unordered_map<std::string, std::vector<std::shared_ptr<GameObject>>> buttonTable;
     std::shared_ptr<GameObject> activeButton;
     std::string activeState = "";
@@ -31,9 +30,9 @@ public:
 
     void SetActiveScene(std::string key);
     void ToggleActive(std::vector<std::shared_ptr<GameObject>> vec);
-    void AddButton(std::string key, GameObject *button);
+    void AddButton(std::string key, std::shared_ptr<GameObject> button);
+    void NextButton(std::shared_ptr<GameObject> button, bool next);
 
-    std::vector<std::weak_ptr<GameObject>> GetArray();
     void ToggleSelect();
     bool Is(std::string type);
 };
