@@ -21,7 +21,7 @@
 #include "EndState.h"
 #include "GameData.h"
 
-StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
+StageState::StageState(std::string name, bool loadGame) : State(name), backgroundMusic("assets/audio/chill.ogg")
 {
 	// Initialize game session variables
 	int currentMoney = 0;

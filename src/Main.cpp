@@ -14,7 +14,7 @@
 int main(int argc, char **argv)
 {
     Game game = Game::GetInstance();
-    State *initialState = new TitleState();
+    State *initialState = new TitleState("TitleState");
     game.Push(initialState);
     game.Run();
     return 0;

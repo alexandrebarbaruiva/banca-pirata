@@ -27,10 +27,12 @@
 
 #include "SDL_include.h"
 #include "Vec2.h"
+#include "ButtonManager.h"
 #include <unordered_map>
 
 
-enum class InputOptions{
+enum class InputOptions
+{
     KEY_DOWN,
     KEY_PRESS,
     KEY_RELEASE,
@@ -72,7 +74,9 @@ public:
     int GetMouseY();
 
     bool QuitRequested();
+    ButtonManager *buttonManager;
     InputOptions curEvent;
+    std::string curStateName = "";
 };
 
 #endif

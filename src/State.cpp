@@ -10,8 +10,9 @@
  */
 #include "State.h"
 
-State::State()
+State::State(std::string name)
 {
+	this->name = name;
 	this->started = false;
 	this->quitRequested = false;
 	this->popRequested = false;
@@ -94,4 +95,10 @@ std::vector<std::weak_ptr<GameObject>> State::QueryObjectsByComponent(std::strin
 	}
 
 	return gameObjects;
+}
+
+
+std::string State::GetName()
+{
+	return name;
 }

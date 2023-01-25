@@ -16,7 +16,7 @@
 class EndState : public State
 {
 public:
-    EndState();
+    EndState(std::string name = "EndState");
     ~EndState();
 
     void LoadAssets();

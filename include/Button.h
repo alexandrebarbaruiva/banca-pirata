@@ -23,6 +23,7 @@ public:
     std::string type = "Button";
     std::string name;
 
+    bool active;
     bool clickable;
     bool isClicked;
     bool isSelected;

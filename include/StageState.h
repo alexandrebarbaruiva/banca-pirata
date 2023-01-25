@@ -23,7 +23,7 @@ private:
     TileSet *tileSet;
 
 public:
-    StageState(bool loadGame = false);
+    StageState(std::string name = "StageState", bool loadGame = false);
     ~StageState();
 
     void LoadAssets();

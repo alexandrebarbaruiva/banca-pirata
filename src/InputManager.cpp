@@ -21,6 +21,7 @@ InputManager::InputManager()
     this->quitRequested = false;
     this->mouseX = 0;
     this->mouseY = 0;
+    this->buttonManager = new ButtonManager();
 }
 
 InputManager::~InputManager()

@@ -69,6 +69,7 @@ public:
 
     // Method for getting current game State
     State &GetCurrentState();
+    std::string GetCurrentStateName();
 
     void Push(State *state);
     float GetDeltaTime();

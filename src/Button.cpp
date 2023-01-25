@@ -23,6 +23,7 @@ Button::Button(GameObject &associated, std::string name, std::string sprite, boo
     std::cout << "X = " << associated.box.x << " Y = " << associated.box.y << "\n";
     std::cout << "W = " << associated.box.x + associated.box.w << " H = " << associated.box.y + associated.box.h << "\n";
 #endif
+    this->active = false;
     this->clickable = clickable;
     this->name = name;
     this->isClicked = false;
@@ -32,6 +33,33 @@ Button::Button(GameObject &associated, std::string name, std::string sprite, boo
 
 void Button::Update(float dt)
 {
+    if(active)
+    {
+        InputManager input = InputManager::GetInstance();
+        switch(input.curEvent){
+        case InputOptions::MOUSE_DOWN:
+            if (input.MousePress(LEFT_MOUSE_BUTTON) and clickable)
+            {
+                bool mouseInButton = GetIsInside(input.GetMousePosition());
+                if (mouseInButton)
+                {
+                    isClicked = true;
+                    timesClicked++;
+            #ifdef DEBUG
+                    Sound *sound = new Sound(associated, "assets/audio/quack.mp3");
+                    sound->Play();
+                    std::cout << GREEN;
+                    std::cout << this->name;
+                    std::cout << RESET;
+                    std::cout << " has been clicked " << this->timesClicked << " times.\n";
+            #endif
+                }
+            }
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 void Button::Render()

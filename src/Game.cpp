@@ -119,6 +119,12 @@ State &Game::GetCurrentState()
     return *cState;
 }
 
+std::string Game::GetCurrentStateName()
+{
+    State * cState = stateStack.top().get();
+    return (cState->GetName());
+}
+
 void Game::Push(State *state)
 {
     this->storedState = state;

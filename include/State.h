@@ -15,6 +15,7 @@
 #include <string>
 #include <memory>
 
+
 class State
 {
 protected:
@@ -22,6 +23,7 @@ protected:
     virtual void UpdateArray(float dt);
     virtual void RenderArray();
 
+    std::string name;
     bool started;
     bool quitRequested;
     bool popRequested;
@@ -29,7 +31,7 @@ protected:
     std::vector<std::shared_ptr<GameObject>> objectArray;
 
 public:
-    State();
+    State(std::string name);
     virtual ~State();
 
     virtual void Start() = 0;
@@ -46,5 +48,7 @@ public:
 
     bool PopRequested();
     bool QuitRequested();
+
+    std::string GetName();
 };
 #endif

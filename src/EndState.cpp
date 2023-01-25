@@ -17,7 +17,7 @@
 #include "Text.h"
 #include "Game.h"
 
-EndState::EndState()
+EndState::EndState(std::string name) : State(name)
 {
     GameObject *bg = new GameObject();
     Sprite *result;

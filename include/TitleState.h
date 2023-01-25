@@ -13,7 +13,6 @@
 #include "State.h"
 #include "Sprite.h"
 #include "Button.h"
-#include "ButtonBox.h"
 #include "Text.h"
 #include "InputManager.h"
 #include "StageState.h"
@@ -23,7 +22,7 @@
 class TitleState : public State
 {
 public:
-    TitleState();
+    TitleState(std::string name = "TitleState");
     ~TitleState();
 
     void LoadAssets();
@@ -33,7 +32,5 @@ public:
     void Start();
     void Pause();
     void Resume();
-private:
-    ButtonBox *buttonBox;
 };
 #endif
