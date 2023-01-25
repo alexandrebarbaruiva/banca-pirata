@@ -26,18 +26,17 @@ ButtonManager::~ButtonManager(){
 
 void ButtonManager::AddButton(std::string key, std::shared_ptr<GameObject> button)
 {
-	std::shared_ptr<GameObject> sharedButton(button);
     std::vector<std::shared_ptr<GameObject>> vec;
     std::unordered_map<std::string, std::vector<std::shared_ptr<GameObject>>>::const_iterator search = buttonTable.find(key);
     if (search != this->buttonTable.end())
     {
         std::vector<std::shared_ptr<GameObject>> found = search->second;
-        found.emplace_back(sharedButton);
+        found.emplace_back(button);
     }
     else
     {   
         buttonTable.emplace(key, vec);
-        buttonTable[key].emplace_back(sharedButton);
+        buttonTable[key].emplace_back(button);
     }
 }
 
