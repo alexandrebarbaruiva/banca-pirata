@@ -50,11 +50,6 @@ void Clock::Update(float dt){
         GameData::currentMinute = minutes;
         GameData::currentHour = hours;
 
-<<<<<<< HEAD
-=======
-        std::cout << "Hora: " << clockTime << std::endl;
-        std::cout << "Dia: " << GameData::currentDay << std::endl;
->>>>>>> 97332fc (Relogio implementado)
         textClock->SetText(clockTime);
 
     }
