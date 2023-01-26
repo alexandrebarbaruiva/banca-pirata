@@ -15,10 +15,7 @@
 #include "Game.h"
 #include "Text.h"
 #include "Clock.h"
-<<<<<<< HEAD
 #include "Calendar.h"
-=======
->>>>>>> 97332fc (Relogio implementado)
 #include "Camera.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
