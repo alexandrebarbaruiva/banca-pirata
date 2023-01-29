@@ -28,21 +28,22 @@ public:
         BLENDED
     };
 
-    Text(GameObject &associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color, float blinkTime = 0, float secondsToSelfDestruct = 0);
+    Text(GameObject &associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color, Uint32 sizeWrapped = 0, float blinkTime = 0, float secondsToSelfDestruct = 0);
     ~Text();
 
     std::string type = "Text";
 
-    void Update(float dt);
+    virtual void Update(float dt);
     void Render();
     bool Is(std::string type);
 
-    void SetText(std::string text);
+    void SetText(std::string text, bool hasArgs = false, std::string args = "");
     void SetColor(SDL_Color color);
     void SetStyle(TextStyle style);
     void SetFontFile(std::string fontFile);
     void SetFontSize(int fontSize);
-
+    void SetWrappedSize(Uint32 wrappedSize);
+    virtual void ResetTexture();
 private:
     std::shared_ptr<TTF_Font> font;
     std::string text;
@@ -52,6 +53,7 @@ private:
     std::string fontFile;
     int fontSize;
     SDL_Color color;
+    Uint32 sizeWrapped;
 
     Timer cooldown;
     float blinkTime;
@@ -60,7 +62,5 @@ private:
     Timer selfDestructCount;
 
     bool showText;
-
-    void ResetTexture();
 };
 #endif
