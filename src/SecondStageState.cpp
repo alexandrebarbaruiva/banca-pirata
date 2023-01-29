@@ -30,13 +30,19 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 #ifdef DEBUG
 		std::cout << "Loaded Second Screen\n";
 #endif
-
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/screen2.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/Tela2-ui.png", 1, 1.0));
 	// bg->AddComponent(new CameraFollower(*bg));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
+
+	GameObject *chatText = new GameObject();
+	Text *text = new Text(*chatText, "assets/font/up.ttf", 50, Text::BLENDED, "TESTE", {255, 255, 255, SDL_ALPHA_OPAQUE}, GAME_SCREEN_WIDTH - GAME_SCREEN_WIDTH/8);
+	text->SetText("Opa meu bacano, me ve um jogo de %s %s e %s Ah, voce tem troco pra nota de 100?", true, "suspense, luta aventura?");
+    chatText->AddComponent(text);
+    chatText->box.SetCenter(GAME_SCREEN_WIDTH / 2, (GAME_SCREEN_HEIGHT - GAME_SCREEN_HEIGHT/6));
+    AddObject(chatText);
 
 	// GameObject *tileMap = new GameObject();
 	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
