@@ -31,6 +31,8 @@ public:
     bool started;
 
     GameObject(/* args */);
+    GameObject(float x, float y);
+
     ~GameObject();
 
     void Start();
