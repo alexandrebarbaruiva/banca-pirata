@@ -147,10 +147,6 @@ void Text::ResetTexture()
     texture = SDL_CreateTextureFromSurface(Game::GetInstance().GetRenderer(), surf);
     associated.box.w = surf->w;
     associated.box.h = surf->h;
-<<<<<<< HEAD
     associated.box.x = surf->w;
-=======
-    //associated.box.x -= surf->w / 2;
->>>>>>> b09b130 (relogio e data funcionando)
     SDL_FreeSurface(surf);
 }
