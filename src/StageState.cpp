@@ -89,11 +89,6 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	hudGOSirene->AddComponent(new SirenBox(*hudGOSirene));
 	hudGOSirene->box.SetOrigin(1800, 355);
 	AddObject(hudGOSirene);
-	// HUD Sirene
-	GameObject *hudGOSirene = new GameObject();
-	hudGOSirene->AddComponent(new SirenBox(*hudGOSirene));
-	hudGOSirene->box.SetOrigin(1800, 355);
-	AddObject(hudGOSirene);
 
 	// Balcão
 	GameObject *balcaoGO = new GameObject();
