@@ -84,6 +84,12 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	computadorGO->box.SetOrigin(0, 0);
 	AddObject(computadorGO);
 	
+	// Tela de Fundo do PC
+	GameObject *fundoPcGO = new GameObject();
+	fundoPcGO->AddComponent(new GameItem(*fundoPcGO, "assets/img/placeholders/Loja-fundo-site.png", 1, 0.97, false, 1, 1));
+	fundoPcGO->box.SetOrigin(732, 160);
+	AddObject(fundoPcGO);
+	
 	// Caixa HUD Sirene
 	GameObject *caixaSireneGO = new GameObject();
 	caixaSireneGO->AddComponent(new GameItem(*caixaSireneGO, "assets/img/placeholders/Loja-fundo-suspeita.png", 1, 1));
@@ -92,7 +98,7 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Capa simples placeholder
 	GameObject *capaGO = new GameObject();
-	capaGO->AddComponent(new GameItem(*capaGO, "assets/img/placeholders/capa-placeholder.png", 1, 1));
+	capaGO->AddComponent(new GameItem(*capaGO, "assets/img/placeholders/capa-placeholder.png" ,0.8 ,0.8 ,false , 1, 1));
 	capaGO->box.SetOrigin(800, 200);
 	AddObject(capaGO);
 
