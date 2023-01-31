@@ -14,6 +14,8 @@
 #include "TileMap.h"
 #include "Game.h"
 #include "Text.h"
+#include "Clock.h"
+#include "Calendar.h"
 #include "Camera.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
@@ -42,16 +44,22 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
-	// HUD Dia + Dinheiro
+	// HUD Dia + Hora + Dinheiro
 	GameObject *hudGO = new GameObject();
 	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 1, 1));
 	hudGO->box.SetOrigin(0, 0);
 	AddObject(hudGO);
 
 	GameObject *dayHudText = new GameObject();
-	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	//dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	dayHudText->AddComponent(new Calendar(*dayHudText, GameData::currentDay));
 	dayHudText->box.SetOrigin(115, 35);
 	AddObject(dayHudText);
+
+	GameObject *timeHudText = new GameObject();
+	timeHudText->AddComponent(new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute));
+	timeHudText->box.SetOrigin(300, 35);
+	AddObject(timeHudText);
 
 	GameObject *moneyHudText = new GameObject();
 	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));

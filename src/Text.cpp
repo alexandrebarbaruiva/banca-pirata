@@ -147,6 +147,6 @@ void Text::ResetTexture()
     texture = SDL_CreateTextureFromSurface(Game::GetInstance().GetRenderer(), surf);
     associated.box.w = surf->w;
     associated.box.h = surf->h;
-    associated.box.x = surf->w;
+    associated.box.x = surf->w / 2;
     SDL_FreeSurface(surf);
 }
