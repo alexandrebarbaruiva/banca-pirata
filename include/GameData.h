@@ -37,8 +37,6 @@ public:
 
     static void Reset();
 
-    static void Reset();
-
     static void Load();
 };
 
