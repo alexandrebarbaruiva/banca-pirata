@@ -71,6 +71,12 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
+	
+	// Caixa HUD Sirene
+	GameObject *caixaSireneGO = new GameObject();
+	caixaSireneGO->AddComponent(new GameItem(*caixaSireneGO, "assets/img/placeholders/Mesa_Tela2.png", 1, 1));
+	caixaSireneGO->box.SetOrigin(0, 355);
+	AddObject(caixaSireneGO);
 
 	// HUD Sirene
 	GameObject *hudGOSirene = new GameObject();
