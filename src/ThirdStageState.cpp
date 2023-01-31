@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include "SecondStageState.h"
+#include "ThirdStageState.h"
 #include "Constants.h"
 #include "Sound.h"
 #include "TileMap.h"
@@ -22,28 +22,22 @@
 #include "EndState.h"
 #include "GameData.h"
 #include "ReputationArrow.h"
+#include "SirenBox.h"
 #include "Client.h"
-#include "ChangeScreen.h"
 
-SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
+ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
 #ifdef DEBUG
 	std::cout << "Loaded Second Screen\n";
 #endif
+
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/Tela2-ui.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
 	// bg->AddComponent(new CameraFollower(*bg));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
-	GameObject *chatText = new GameObject();
-	Text *text = new Text(*chatText, "assets/font/up.ttf", 50, Text::BLENDED, "TESTE", {255, 255, 255, SDL_ALPHA_OPAQUE}, GAME_SCREEN_WIDTH - GAME_SCREEN_WIDTH/8);
-	text->SetText("Opa meu bacano, me ve um jogo de %s %s e %s Ah, voce tem troco pra nota de 100?", true, "suspense, luta aventura?");
-    chatText->AddComponent(text);
-    chatText->box.SetCenter(GAME_SCREEN_WIDTH / 2, (GAME_SCREEN_HEIGHT - GAME_SCREEN_HEIGHT/6));
-    AddObject(chatText);
-    
 	// HUD Dia + Dinheiro
 	GameObject *hudGO = new GameObject();
 	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 1, 1));
@@ -78,17 +72,17 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
-	// Cliente frontal
-	//GameObject *clienteGO = new GameObject();
-	//clienteGO->AddComponent(new GameItem(*clienteGO, "assets/img/placeholders/cliente_placeholder.png", 1, 1));
-	//clienteGO->box.SetOrigin(120, 300);
-	//AddObject(clienteGO);
+	// HUD Sirene
+	GameObject *hudGOSirene = new GameObject();
+	hudGOSirene->AddComponent(new SirenBox(*hudGOSirene));
+	hudGOSirene->box.SetOrigin(0, 355);
+	AddObject(hudGOSirene);
 
-	//Icone pra mudar tela
-    GameObject *iconeGO = new GameObject();
-    iconeGO->AddComponent(new ChangeScreen(*iconeGO));
-    iconeGO->box.SetOrigin(1650, 650);
-	AddObject(iconeGO);
+	// Computador
+	GameObject *computadorGO = new GameObject();
+	computadorGO->AddComponent(new GameItem(*computadorGO, "assets/img/placeholders/Mesa_Tela2.png", 1, 1));
+	computadorGO->box.SetOrigin(0, 0);
+	AddObject(computadorGO);
 
 	// Capa simples placeholder
 	GameObject *capaGO = new GameObject();
@@ -131,12 +125,12 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	// }
 }
 
-SecondStageState::~SecondStageState()
+ThirdStageState::~ThirdStageState()
 {
 	objectArray.clear();
 }
 
-void SecondStageState::Start()
+void ThirdStageState::Start()
 {
 	LoadAssets();
 	StartArray();
@@ -144,21 +138,21 @@ void SecondStageState::Start()
 	started = true;
 }
 
-void SecondStageState::LoadAssets()
+void ThirdStageState::LoadAssets()
 {
 }
 
-void SecondStageState::Pause()
+void ThirdStageState::Pause()
 {
 	backgroundMusic.Stop();
 }
 
-void SecondStageState::Resume()
+void ThirdStageState::Resume()
 {
 	backgroundMusic.Play();
 }
 
-void SecondStageState::Update(float dt)
+void ThirdStageState::Update(float dt)
 {
 	// update camera
 	Camera::Update(dt);
@@ -221,7 +215,7 @@ void SecondStageState::Update(float dt)
 	// }
 }
 
-void SecondStageState::Render()
+void ThirdStageState::Render()
 {
 	// Render every object
 	RenderArray();
