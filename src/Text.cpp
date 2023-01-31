@@ -13,7 +13,9 @@
 #include "Game.h"
 #include "Resources.h"
 
-Text::Text(GameObject &associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color, float blinkTime, float secondsToSelfDestruct) : Component(associated)
+#include <sstream>
+
+Text::Text(GameObject &associated, std::string fontFile, int fontSize, TextStyle style, std::string text, SDL_Color color, Uint32 sizeWrapped, float blinkTime, float secondsToSelfDestruct) : Component(associated)
 {
     this->texture = nullptr;
     this->fontFile = fontFile;
@@ -24,6 +26,7 @@ Text::Text(GameObject &associated, std::string fontFile, int fontSize, TextStyle
     this->showText = true;
     this->blinkTime = blinkTime;
     this->secondsToSelfDestruct = secondsToSelfDestruct;
+    this->sizeWrapped = sizeWrapped;
     ResetTexture();
 #ifdef DEBUG
     associated.AddComponent(new Collider(associated));
@@ -82,16 +85,35 @@ bool Text::Is(std::string type)
     return (type == Text::type);
 }
 
-void Text::SetText(std::string text)
-{
+void Text::SetText(std::string text, bool hasArgs, std::string args)
+{  if(hasArgs){
+        std::stringstream textStream(text);
+        std::stringstream argStream(args);
+        std::string word;
+        std::string replace;
+        text = "";
+        while(textStream >> word){
+            if (word != "%s")
+            {   
+                text+= word + " ";
+            }
+            else
+            {
+                argStream >> replace;
+                text+= replace + " ";
+            }
+        }
+    }
     this->text = text;
     ResetTexture();
 }
+
 void Text::SetFontFile(std::string fontFile)
 {
     this->fontFile = fontFile;
     ResetTexture();
 }
+
 void Text::SetColor(SDL_Color color)
 {
     this->color = color;
@@ -108,6 +130,12 @@ void Text::SetFontSize(int fontSize)
     ResetTexture();
 }
 
+void Text::SetWrappedSize(Uint32 sizeWrapped)
+{
+    this->sizeWrapped = sizeWrapped;
+    ResetTexture();
+}
+
 void Text::ResetTexture()
 {
     if (texture != nullptr)
@@ -115,10 +143,10 @@ void Text::ResetTexture()
         SDL_DestroyTexture(texture);
     }
     font = Resources::GetFont(fontFile, fontSize);
-    SDL_Surface *surf = TTF_RenderText_Blended(font.get(), text.c_str(), color);
+    SDL_Surface *surf = TTF_RenderText_Blended_Wrapped(font.get(), text.c_str(), color, sizeWrapped);
     texture = SDL_CreateTextureFromSurface(Game::GetInstance().GetRenderer(), surf);
     associated.box.w = surf->w;
     associated.box.h = surf->h;
-    //associated.box.x -= surf->w / 2;
+    associated.box.x = surf->w;
     SDL_FreeSurface(surf);
 }
