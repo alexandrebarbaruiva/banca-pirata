@@ -85,22 +85,25 @@ bool Text::Is(std::string type)
     return (type == Text::type);
 }
 
-void Text::SetText(std::string text, bool hasArgs, std::string args)
-{  if(hasArgs){
+void Text::SetText(std::string text, std::string args)
+{
+    if (args != "")
+    {
         std::stringstream textStream(text);
         std::stringstream argStream(args);
         std::string word;
         std::string replace;
         text = "";
-        while(textStream >> word){
+        while (textStream >> word)
+        {
             if (word != "%s")
-            {   
-                text+= word + " ";
+            {
+                text += word + " ";
             }
             else
             {
                 argStream >> replace;
-                text+= replace + " ";
+                text += replace + " ";
             }
         }
     }
@@ -147,6 +150,5 @@ void Text::ResetTexture()
     texture = SDL_CreateTextureFromSurface(Game::GetInstance().GetRenderer(), surf);
     associated.box.w = surf->w;
     associated.box.h = surf->h;
-    associated.box.x = surf->w / 2;
     SDL_FreeSurface(surf);
 }

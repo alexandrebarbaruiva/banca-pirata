@@ -14,8 +14,7 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 {
     // Background
     GameObject *bg = new GameObject();
-    Sprite *spriteBackground = new Sprite(*bg, "assets/img/store.png", 1, 1.0f);
-    spriteBackground->SetScale(1.5, 1.5); 
+    Sprite *spriteBackground = new Sprite(*bg, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0f);
     bg->AddComponent(spriteBackground);
     bg->box.x = 0;
     bg->box.y = 0;
@@ -90,13 +89,12 @@ void TitleState::LoadAssets()
 
 void TitleState::Pause()
 {
-	backgroundMusic.Stop(0);
-
+    backgroundMusic.Stop(0);
 }
 
 void TitleState::Resume()
 {
-	backgroundMusic.Play();
+    backgroundMusic.Play();
     Camera::Reset();
 }
 

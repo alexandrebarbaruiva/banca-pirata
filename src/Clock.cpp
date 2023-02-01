@@ -3,23 +3,24 @@
 #include "GameData.h"
 #include <iostream>
 
-Clock::Clock(GameObject &associated, int initialHour, int initialMinute) : Component(associated) {
+Clock::Clock(GameObject &associated, int initialHour, int initialMinute) : Component(associated)
+{
     time = 0;
     hours = initialHour;
     minutes = initialMinute;
 
     WriteClock();
 
-    textClock = new Text(associated, "assets/font/five.ttf", 40, Text::SOLID, (clockTime),{255, 255, 255, SDL_ALPHA_OPAQUE}) ;
+    textClock = new Text(associated, "assets/font/five.ttf", 40, Text::SOLID, (this->clockTime), {255, 255, 255, SDL_ALPHA_OPAQUE});
     associated.AddComponent(textClock);
 }
 
-
-Clock::~Clock() {
-
+Clock::~Clock()
+{
 }
 
-void Clock::Update(float dt){
+void Clock::Update(float dt)
+{
 
     time += dt;
 
@@ -28,12 +29,12 @@ void Clock::Update(float dt){
         if (minutes < 59)
         {
             minutes++;
-            //std::cout << "minute: " << minutes << std::endl;
+            // std::cout << "minute: " << minutes << std::endl;
         }
         else
         {
             minutes = 0;
-            if (hours < 23)
+            if (hours < 17)
             {
                 hours++;
             }
@@ -50,48 +51,56 @@ void Clock::Update(float dt){
         GameData::currentMinute = minutes;
         GameData::currentHour = hours;
 
-        textClock->SetText(clockTime);
-
+        textClock->SetText(this->clockTime);
     }
 }
 
-void Clock::Restart(){
+void Clock::Restart()
+{
 
     time = 0;
-    hours = 0;
+    hours = 8;
     minutes = 0;
 
-    clockTime = "00:00";
+    this->clockTime = "08:00";
 }
 
-std::string Clock::GetClock() {
-    return clockTime;
+std::string Clock::GetClock()
+{
+    return this->clockTime;
 }
 
-int Clock::GetHours(){
+int Clock::GetHours()
+{
     return hours;
 }
 
-int Clock::GetMinutes(){
+int Clock::GetMinutes()
+{
     return minutes;
 }
 
-void Clock::WriteClock() {
+void Clock::WriteClock()
+{
     std::string hourString;
     std::string minuteString;
-    if(hours >= 0 && hours < 10) {
+    if (hours >= 0 && hours < 10)
+    {
         hourString = "0" + std::to_string(hours);
-    } 
-    if(hours >= 10 && hours < 24) {
+    }
+    if (hours >= 10 && hours < 24)
+    {
         hourString = std::to_string(hours);
-    } 
-    if(minutes >= 0 && minutes < 10) {
+    }
+    if (minutes >= 0 && minutes < 10)
+    {
         minuteString = "0" + std::to_string(minutes);
-    } 
-    if(minutes >= 10 && minutes < 60) {
+    }
+    if (minutes >= 10 && minutes < 60)
+    {
         minuteString = std::to_string(minutes);
-    } 
-    clockTime = hourString + ":" + minuteString;
+    }
+    this->clockTime = hourString + ":" + minuteString;
 }
 
 void Clock::Render()
