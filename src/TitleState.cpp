@@ -89,13 +89,12 @@ void TitleState::LoadAssets()
 
 void TitleState::Pause()
 {
-	backgroundMusic.Stop(0);
-
+    backgroundMusic.Stop(0);
 }
 
 void TitleState::Resume()
 {
-	backgroundMusic.Play();
+    backgroundMusic.Play();
     Camera::Reset();
 }
 

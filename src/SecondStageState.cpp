@@ -33,17 +33,16 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	// Background
 	GameObject *bg = new GameObject();
 	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/Tela2-ui.png", 1, 1.0));
-	// bg->AddComponent(new CameraFollower(*bg));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
 	GameObject *chatText = new GameObject();
-	Text *text = new Text(*chatText, "assets/font/up.ttf", 50, Text::BLENDED, "TESTE", {255, 255, 255, SDL_ALPHA_OPAQUE}, GAME_SCREEN_WIDTH - GAME_SCREEN_WIDTH/8);
+	Text *text = new Text(*chatText, "assets/font/up.ttf", 50, Text::BLENDED, "TESTE", {255, 255, 255, SDL_ALPHA_OPAQUE}, GAME_SCREEN_WIDTH - GAME_SCREEN_WIDTH / 8);
 	text->SetText("Opa meu bacano, me ve um jogo de %s %s e %s Ah, voce tem troco pra nota de 100?", true, "suspense, luta aventura?");
-    chatText->AddComponent(text);
-    chatText->box.SetCenter(GAME_SCREEN_WIDTH / 2, (GAME_SCREEN_HEIGHT - GAME_SCREEN_HEIGHT/6));
-    AddObject(chatText);
-    
+	chatText->AddComponent(text);
+	chatText->box.SetCenter(GAME_SCREEN_WIDTH / 2, (GAME_SCREEN_HEIGHT - GAME_SCREEN_HEIGHT / 6));
+	AddObject(chatText);
+
 	// HUD Dia + Dinheiro
 	GameObject *hudGO = new GameObject();
 	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 1, 1));
@@ -79,15 +78,15 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	AddObject(hudPauseGO);
 
 	// Cliente frontal
-	//GameObject *clienteGO = new GameObject();
-	//clienteGO->AddComponent(new GameItem(*clienteGO, "assets/img/placeholders/cliente_placeholder.png", 1, 1));
-	//clienteGO->box.SetOrigin(120, 300);
-	//AddObject(clienteGO);
+	GameObject *clienteGO = new GameObject();
+	clienteGO->AddComponent(new GameItem(*clienteGO, "assets/img/placeholders/cliente_placeholder.png", 1, 1));
+	clienteGO->box.SetOrigin(120, 300);
+	AddObject(clienteGO);
 
-	//Icone pra mudar tela
-    GameObject *iconeGO = new GameObject();
-    iconeGO->AddComponent(new ChangeScreen(*iconeGO));
-    iconeGO->box.SetOrigin(1655, 647);
+	// Icone pra mudar tela
+	GameObject *iconeGO = new GameObject();
+	iconeGO->AddComponent(new ChangeScreen(*iconeGO));
+	iconeGO->box.SetOrigin(1655, 647);
 	AddObject(iconeGO);
 
 	// Capa simples placeholder

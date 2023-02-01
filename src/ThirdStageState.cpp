@@ -84,13 +84,13 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	computadorGO->AddComponent(new GameItem(*computadorGO, "assets/img/placeholders/Mesa_Tela2.png", 1, 1));
 	computadorGO->box.SetOrigin(0, 0);
 	AddObject(computadorGO);
-	
+
 	// Tela de Fundo do PC
 	GameObject *fundoPcGO = new GameObject();
 	fundoPcGO->AddComponent(new GameItem(*fundoPcGO, "assets/img/placeholders/Loja-fundo-site.png", 1, 0.97, false, 1, 1));
 	fundoPcGO->box.SetOrigin(732, 160);
 	AddObject(fundoPcGO);
-	
+
 	// Caixa HUD Sirene
 	GameObject *caixaSireneGO = new GameObject();
 	caixaSireneGO->AddComponent(new GameItem(*caixaSireneGO, "assets/img/placeholders/Loja-fundo-suspeita.png", 1, 1));
@@ -100,11 +100,11 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	// GameAsset 1
 	GameObject *gameAsset1GO = new GameObject();
 	AssetGame *assetGame1 = new AssetGame(*gameAsset1GO, "assets/img/placeholders/capa-placeholder.png", "Violento", "Radical", "Esportivo", 10);
-	//gameAsset1GO->AddComponent(assetGame1);
+	// gameAsset1GO->AddComponent(assetGame1);
 
 	// Capa Game 1
 	GameObject *capaGO = new GameObject();
-	capaGO->AddComponent(new GameItem(*capaGO, assetGame1->spriteName ,0.8 ,0.8 ,false , 1, 1));
+	capaGO->AddComponent(new GameItem(*capaGO, assetGame1->spriteName, 0.8, 0.8, false, 1, 1));
 	capaGO->box.SetOrigin(800, 220);
 	AddObject(capaGO);
 
@@ -116,7 +116,7 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Preço Game 1
 	GameObject *precoGame1GO = new GameObject();
-	precoGame1GO->AddComponent(new Text(*precoGame1GO, "assets/font/five.ttf", 40, Text::SOLID, ( "$" + std::to_string(assetGame1->price) ), {0, 0, 0, SDL_ALPHA_OPAQUE}));
+	precoGame1GO->AddComponent(new Text(*precoGame1GO, "assets/font/five.ttf", 40, Text::SOLID, ("$" + std::to_string(assetGame1->price)), {0, 0, 0, SDL_ALPHA_OPAQUE}));
 	precoGame1GO->box.SetOrigin(1015, 220);
 	AddObject(precoGame1GO);
 
@@ -140,11 +140,11 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Carrinho Game 1
 	GameObject *carrinho1GO = new GameObject();
-	carrinho1GO->AddComponent(new GameItem(*carrinho1GO, "assets/img/placeholders/UI/Loja-compra.png" ,0.6 ,0.6 ,false , 1, 1));
+	carrinho1GO->AddComponent(new GameItem(*carrinho1GO, "assets/img/placeholders/UI/Loja-compra.png", 0.6, 0.6, false, 1, 1));
 	carrinho1GO->box.SetOrigin(1020, 610);
 	AddObject(carrinho1GO);
 
-	//Alternativa de Asset
+	// Alternativa de Asset
 	GameObject *textoAlternativaGO = new GameObject();
 	textoAlternativaGO->AddComponent(new Text(*textoAlternativaGO, "assets/font/five.ttf", 80, Text::SOLID, "OU", {255, 191, 0, SDL_ALPHA_OPAQUE}));
 	textoAlternativaGO->box.SetOrigin(1200, 400);
@@ -153,11 +153,11 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	// GameAsset 2
 	GameObject *gameAsset2GO = new GameObject();
 	AssetGame *assetGame2 = new AssetGame(*gameAsset2GO, "assets/img/placeholders/Capa kirby.png", "Fofo", "Casual", "Radical", 20);
-	//gameAsset1GO->AddComponent(assetGame1);
+	// gameAsset1GO->AddComponent(assetGame1);
 
 	// Capa Game 2
 	GameObject *capa2GO = new GameObject();
-	capa2GO->AddComponent(new GameItem(*capa2GO, assetGame2->spriteName ,0.8 ,0.8 ,false , 1, 1));
+	capa2GO->AddComponent(new GameItem(*capa2GO, assetGame2->spriteName, 0.8, 0.8, false, 1, 1));
 	capa2GO->box.SetOrigin(1400, 220);
 	AddObject(capa2GO);
 
@@ -169,7 +169,7 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Preço Game 2
 	GameObject *precoGame2GO = new GameObject();
-	precoGame2GO->AddComponent(new Text(*precoGame2GO, "assets/font/five.ttf", 40, Text::SOLID, ( "$" + std::to_string(assetGame2->price) ), {0, 0, 0, SDL_ALPHA_OPAQUE}));
+	precoGame2GO->AddComponent(new Text(*precoGame2GO, "assets/font/five.ttf", 40, Text::SOLID, ("$" + std::to_string(assetGame2->price)), {0, 0, 0, SDL_ALPHA_OPAQUE}));
 	precoGame2GO->box.SetOrigin(1615, 220);
 	AddObject(precoGame2GO);
 
@@ -193,19 +193,19 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Carrinho Game 2
 	GameObject *carrinho2GO = new GameObject();
-	carrinho2GO->AddComponent(new GameItem(*carrinho2GO, "assets/img/placeholders/UI/Loja-compra.png" ,0.6 ,0.6 ,false , 1, 1));
+	carrinho2GO->AddComponent(new GameItem(*carrinho2GO, "assets/img/placeholders/UI/Loja-compra.png", 0.6, 0.6, false, 1, 1));
 	carrinho2GO->box.SetOrigin(1620, 610);
 	AddObject(carrinho2GO);
 
 	// End Of Day Post-it
 	GameObject *postItGO = new GameObject();
-	postItGO->AddComponent(new GameItem(*postItGO, "assets/img/placeholders/UI/Loja-postit.png" ,1.0 ,1.0 ,false , 1, 1));
+	postItGO->AddComponent(new GameItem(*postItGO, "assets/img/placeholders/UI/Loja-postit.png", 1.0, 1.0, false, 1, 1));
 	postItGO->box.SetOrigin(1745, 620);
 	AddObject(postItGO);
 
 	// Botao Desligar PC
 	GameObject *botaoDesligaGO = new GameObject();
-	botaoDesligaGO->AddComponent(new GameItem(*botaoDesligaGO, "assets/img/placeholders/UI/Loja-desliga.png" ,1.0 ,1.0 ,false , 1, 1));
+	botaoDesligaGO->AddComponent(new GameItem(*botaoDesligaGO, "assets/img/placeholders/UI/Loja-desliga.png", 1.0, 1.0, false, 1, 1));
 	botaoDesligaGO->box.SetOrigin(1800, 745);
 	AddObject(botaoDesligaGO);
 }
