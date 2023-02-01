@@ -87,7 +87,7 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	//Icone pra mudar tela
     GameObject *iconeGO = new GameObject();
     iconeGO->AddComponent(new ChangeScreen(*iconeGO));
-    iconeGO->box.SetOrigin(1650, 650);
+    iconeGO->box.SetOrigin(1655, 647);
 	AddObject(iconeGO);
 
 	// Capa simples placeholder

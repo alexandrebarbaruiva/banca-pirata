@@ -24,6 +24,7 @@
 #include "ReputationArrow.h"
 #include "SirenBox.h"
 #include "Client.h"
+#include "AssetGame.h"
 
 ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -96,45 +97,117 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	caixaSireneGO->box.SetOrigin(-50, 330);
 	AddObject(caixaSireneGO);
 
-	// Capa simples placeholder
+	// GameAsset 1
+	GameObject *gameAsset1GO = new GameObject();
+	AssetGame *assetGame1 = new AssetGame(*gameAsset1GO, "assets/img/placeholders/capa-placeholder.png", "Violento", "Radical", "Esportivo", 10);
+	//gameAsset1GO->AddComponent(assetGame1);
+
+	// Capa Game 1
 	GameObject *capaGO = new GameObject();
-	capaGO->AddComponent(new GameItem(*capaGO, "assets/img/placeholders/capa-placeholder.png" ,0.8 ,0.8 ,false , 1, 1));
-	capaGO->box.SetOrigin(800, 200);
+	capaGO->AddComponent(new GameItem(*capaGO, assetGame1->spriteName ,0.8 ,0.8 ,false , 1, 1));
+	capaGO->box.SetOrigin(800, 220);
 	AddObject(capaGO);
 
-	// GameObject *tileMap = new GameObject();
-	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
-	// tileMap->AddComponent(new TileMap(*tileMap, "assets/map/tileMap.txt", tileSet));
-	// tileMap->box.x = 0;
-	// tileMap->box.y = 0;
-	// AddObject(tileMap);
+	// Marcador de Preço Game 1
+	GameObject *marcaPrecoGame1GO = new GameObject();
+	marcaPrecoGame1GO->AddComponent(new GameItem(*marcaPrecoGame1GO, "assets/img/placeholders/UI/Loja-fundo preco.png", 1, 1));
+	marcaPrecoGame1GO->box.SetOrigin(1000, 200);
+	AddObject(marcaPrecoGame1GO);
 
-	// GameObject *penguin = new GameObject();
-	// PenguinBody *penguinBody = new PenguinBody(*penguin);
-	// penguin->AddComponent(penguinBody);
-	// penguin->box.x = 704;
-	// penguin->box.y = 640;
-	// AddObject(penguin);
-	// Camera::Follow(penguin);
+	// Preço Game 1
+	GameObject *precoGame1GO = new GameObject();
+	precoGame1GO->AddComponent(new Text(*precoGame1GO, "assets/font/five.ttf", 40, Text::SOLID, ( "$" + std::to_string(assetGame1->price) ), {0, 0, 0, SDL_ALPHA_OPAQUE}));
+	precoGame1GO->box.SetOrigin(1015, 220);
+	AddObject(precoGame1GO);
 
-	// int newX;
-	// int newY;
+	// Categoria 1 Game 1
+	GameObject *categoria1Game1GO = new GameObject();
+	categoria1Game1GO->AddComponent(new Text(*categoria1Game1GO, "assets/font/five.ttf", 30, Text::SOLID, assetGame1->category1, {255, 0, 0, SDL_ALPHA_OPAQUE}));
+	categoria1Game1GO->box.SetOrigin(800, 570);
+	AddObject(categoria1Game1GO);
 
-	// int maxAliens = (int)(((float)rand() / RAND_MAX) * (6 - 1) + 1);
-	// float newOffset;
-	// GameObject *alien;
+	// Categoria 2 Game 1
+	GameObject *categoria2Game1GO = new GameObject();
+	categoria2Game1GO->AddComponent(new Text(*categoria2Game1GO, "assets/font/five.ttf", 30, Text::SOLID, assetGame1->category2, {0, 0, 255, SDL_ALPHA_OPAQUE}));
+	categoria2Game1GO->box.SetOrigin(800, 620);
+	AddObject(categoria2Game1GO);
 
-	// for (int i = 0; i < maxAliens; i++)
-	// {
-	// 	alien = new GameObject();
-	// 	newOffset = ((((float)rand()) / RAND_MAX) + i) / pow(10, i);
-	// 	alien->AddComponent(new Alien(*alien, newOffset));
-	// 	newX = (int)(((float)rand() / RAND_MAX) * (1340 + 40) - 40);
-	// 	newY = (int)(((float)rand() / RAND_MAX) * (1280 + 10) - 10);
-	// 	alien->box.x = newX - alien->box.w / 2;
-	// 	alien->box.y = newY - alien->box.h / 2;
-	// 	AddObject(alien);
-	// }
+	// Categoria 3 Game 1
+	GameObject *categoria3Game1GO = new GameObject();
+	categoria3Game1GO->AddComponent(new Text(*categoria3Game1GO, "assets/font/five.ttf", 30, Text::SOLID, assetGame1->category3, {0, 255, 0, SDL_ALPHA_OPAQUE}));
+	categoria3Game1GO->box.SetOrigin(800, 670);
+	AddObject(categoria3Game1GO);
+
+	// Carrinho Game 1
+	GameObject *carrinho1GO = new GameObject();
+	carrinho1GO->AddComponent(new GameItem(*carrinho1GO, "assets/img/placeholders/UI/Loja-compra.png" ,0.6 ,0.6 ,false , 1, 1));
+	carrinho1GO->box.SetOrigin(1020, 610);
+	AddObject(carrinho1GO);
+
+	//Alternativa de Asset
+	GameObject *textoAlternativaGO = new GameObject();
+	textoAlternativaGO->AddComponent(new Text(*textoAlternativaGO, "assets/font/five.ttf", 80, Text::SOLID, "OU", {255, 191, 0, SDL_ALPHA_OPAQUE}));
+	textoAlternativaGO->box.SetOrigin(1200, 400);
+	AddObject(textoAlternativaGO);
+
+	// GameAsset 2
+	GameObject *gameAsset2GO = new GameObject();
+	AssetGame *assetGame2 = new AssetGame(*gameAsset2GO, "assets/img/placeholders/Capa kirby.png", "Fofo", "Casual", "Radical", 20);
+	//gameAsset1GO->AddComponent(assetGame1);
+
+	// Capa Game 2
+	GameObject *capa2GO = new GameObject();
+	capa2GO->AddComponent(new GameItem(*capa2GO, assetGame2->spriteName ,0.8 ,0.8 ,false , 1, 1));
+	capa2GO->box.SetOrigin(1400, 220);
+	AddObject(capa2GO);
+
+	// Marcador de Preço Game 2
+	GameObject *marcaPrecoGame2GO = new GameObject();
+	marcaPrecoGame2GO->AddComponent(new GameItem(*marcaPrecoGame2GO, "assets/img/placeholders/UI/Loja-fundo preco.png", 1, 1));
+	marcaPrecoGame2GO->box.SetOrigin(1600, 200);
+	AddObject(marcaPrecoGame2GO);
+
+	// Preço Game 2
+	GameObject *precoGame2GO = new GameObject();
+	precoGame2GO->AddComponent(new Text(*precoGame2GO, "assets/font/five.ttf", 40, Text::SOLID, ( "$" + std::to_string(assetGame2->price) ), {0, 0, 0, SDL_ALPHA_OPAQUE}));
+	precoGame2GO->box.SetOrigin(1615, 220);
+	AddObject(precoGame2GO);
+
+	// Categoria 1 Game 2
+	GameObject *categoria1Game2GO = new GameObject();
+	categoria1Game2GO->AddComponent(new Text(*categoria1Game2GO, "assets/font/five.ttf", 30, Text::SOLID, assetGame2->category1, {255, 0, 191, SDL_ALPHA_OPAQUE}));
+	categoria1Game2GO->box.SetOrigin(1400, 570);
+	AddObject(categoria1Game2GO);
+
+	// Categoria 2 Game 2
+	GameObject *categoria2Game2GO = new GameObject();
+	categoria2Game2GO->AddComponent(new Text(*categoria2Game2GO, "assets/font/five.ttf", 30, Text::SOLID, assetGame2->category2, {191, 0, 255, SDL_ALPHA_OPAQUE}));
+	categoria2Game2GO->box.SetOrigin(1400, 620);
+	AddObject(categoria2Game2GO);
+
+	// Categoria 3 Game 2
+	GameObject *categoria3Game2GO = new GameObject();
+	categoria3Game2GO->AddComponent(new Text(*categoria3Game2GO, "assets/font/five.ttf", 30, Text::SOLID, assetGame2->category3, {255, 128, 0, SDL_ALPHA_OPAQUE}));
+	categoria3Game2GO->box.SetOrigin(1400, 670);
+	AddObject(categoria3Game2GO);
+
+	// Carrinho Game 2
+	GameObject *carrinho2GO = new GameObject();
+	carrinho2GO->AddComponent(new GameItem(*carrinho2GO, "assets/img/placeholders/UI/Loja-compra.png" ,0.6 ,0.6 ,false , 1, 1));
+	carrinho2GO->box.SetOrigin(1620, 610);
+	AddObject(carrinho2GO);
+
+	// End Of Day Post-it
+	GameObject *postItGO = new GameObject();
+	postItGO->AddComponent(new GameItem(*postItGO, "assets/img/placeholders/UI/Loja-postit.png" ,1.0 ,1.0 ,false , 1, 1));
+	postItGO->box.SetOrigin(1745, 620);
+	AddObject(postItGO);
+
+	// Botao Desligar PC
+	GameObject *botaoDesligaGO = new GameObject();
+	botaoDesligaGO->AddComponent(new GameItem(*botaoDesligaGO, "assets/img/placeholders/UI/Loja-desliga.png" ,1.0 ,1.0 ,false , 1, 1));
+	botaoDesligaGO->box.SetOrigin(1800, 745);
+	AddObject(botaoDesligaGO);
 }
 
 ThirdStageState::~ThirdStageState()
