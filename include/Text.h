@@ -37,7 +37,7 @@ public:
     void Render();
     bool Is(std::string type);
 
-    void SetText(std::string text, bool hasArgs = false, std::string args = "");
+    void SetText(std::string text, std::string args = "");
     void SetColor(SDL_Color color);
     void SetStyle(TextStyle style);
     void SetFontFile(std::string fontFile);

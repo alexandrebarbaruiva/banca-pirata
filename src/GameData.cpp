@@ -65,10 +65,10 @@ void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyIn
 void GameData::Reset()
 {
     GameData::currentMinute = 0;
-    GameData::currentHour = 0;
-    GameData::currentDay = 0;
+    GameData::currentHour = 8;
+    GameData::currentDay = 1;
     GameData::currentMoney = 0;
-    GameData::currentRep = 0;
+    GameData::currentRep = 50;
     GameData::currentSus = 0;
 }
 

@@ -38,7 +38,7 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 	GameObject *chatText = new GameObject();
 	Text *text = new Text(*chatText, "assets/font/up.ttf", 50, Text::BLENDED, "TESTE", {255, 255, 255, SDL_ALPHA_OPAQUE}, GAME_SCREEN_WIDTH - GAME_SCREEN_WIDTH / 8);
-	text->SetText("Opa meu bacano, me ve um jogo de %s %s e %s Ah, voce tem troco pra nota de 100?", true, "suspense, luta aventura?");
+	text->SetText("Opa meu bacano, me ve um jogo de %s %s e %s Ah, voce tem troco pra nota de 100?", "suspense, luta aventura?");
 	chatText->AddComponent(text);
 	chatText->box.SetCenter(GAME_SCREEN_WIDTH / 2, (GAME_SCREEN_HEIGHT - GAME_SCREEN_HEIGHT / 6));
 	AddObject(chatText);

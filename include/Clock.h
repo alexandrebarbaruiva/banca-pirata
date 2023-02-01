@@ -27,7 +27,7 @@ private:
     Text *textClock;
 
 public:
-    Clock(GameObject &associated, int initialHour = 0, int initialMinute = 0);
+    Clock(GameObject &associated, int initialHour = 8, int initialMinute = 0);
     ~Clock();
 
     std::string type = "Clock";
