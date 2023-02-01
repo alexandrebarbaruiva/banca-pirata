@@ -15,10 +15,12 @@ ChangeScreen::ChangeScreen(GameObject &associated, bool clickable, std::string s
     Sprite *spriteItem = new Sprite(associated, sprite, frameCount, frameTime);
     spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);
-    std::cout << "Criou Icone" << std::endl;
 #ifdef DEBUG
+    std::cout << GREEN;
+    std::cout << "Criou Icone" << std::endl;
     associated.AddComponent(new Collider(associated));
-    std::cout << "Chat box created\n";
+    std::cout << RESET;
+
 #endif
 }
 
@@ -27,7 +29,13 @@ void ChangeScreen::Update(float dt)
     InputManager input = InputManager::GetInstance();
     if (input.MousePress(LEFT_MOUSE_BUTTON) and associated.box.IsInside(input.GetMousePosition()))
     {
+#ifdef DEBUG
+        std::cout << YELLOW;
         std::cout << "Clicou Icone" << std::endl;
+        std::cout << RESET;
+
+#endif
+
         associated.RequestDelete();
         this->isClicked = true;
 
