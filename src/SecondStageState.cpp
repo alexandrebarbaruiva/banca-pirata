@@ -23,6 +23,8 @@
 #include "GameData.h"
 #include "ReputationArrow.h"
 #include "Client.h"
+#include "Clock.h"
+#include "Calendar.h"
 #include "ChangeScreen.h"
 
 SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
@@ -50,9 +52,14 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	AddObject(hudGO);
 
 	GameObject *dayHudText = new GameObject();
-	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	dayHudText->AddComponent(new Calendar(*dayHudText, GameData::currentDay));
 	dayHudText->box.SetOrigin(115, 35);
 	AddObject(dayHudText);
+
+	GameObject *timeHudText = new GameObject();
+	timeHudText->AddComponent(new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute));
+	timeHudText->box.SetOrigin(300, 35);
+	AddObject(timeHudText);
 
 	GameObject *moneyHudText = new GameObject();
 	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
