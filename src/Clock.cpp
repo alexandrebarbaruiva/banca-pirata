@@ -9,6 +9,8 @@ Clock::Clock(GameObject &associated, int initialHour, int initialMinute) : Compo
     hours = initialHour;
     minutes = initialMinute;
 
+    paused = false;
+
     WriteClock();
 
     textClock = new Text(associated, "assets/font/five.ttf", 40, Text::SOLID, (this->clockTime), {255, 255, 255, SDL_ALPHA_OPAQUE});
@@ -21,37 +23,39 @@ Clock::~Clock()
 
 void Clock::Update(float dt)
 {
-
-    time += dt;
-
-    if (time >= 1)
+    if (!paused)
     {
-        if (minutes < 59)
+        time += dt;
+
+        if (time >= 1)
         {
-            minutes++;
-            // std::cout << "minute: " << minutes << std::endl;
-        }
-        else
-        {
-            minutes = 0;
-            if (hours < 17)
+            if (minutes < 59)
             {
-                hours++;
+                minutes++;
+                // std::cout << "minute: " << minutes << std::endl;
             }
             else
             {
-                std::cout << "Passou o dia" << std::endl;
-                hours = 0;
-                GameData::currentDay++;
+                minutes = 0;
+                if (hours < 17)
+                {
+                    hours++;
+                }
+                else
+                {
+                    std::cout << "Passou o dia" << std::endl;
+                    hours = 8;
+                    GameData::currentDay++;
+                }
             }
+
+            time = 0;
+            WriteClock();
+            GameData::currentMinute = minutes;
+            GameData::currentHour = hours;
+
+            textClock->SetText(this->clockTime);
         }
-
-        time = 0;
-        WriteClock();
-        GameData::currentMinute = minutes;
-        GameData::currentHour = hours;
-
-        textClock->SetText(this->clockTime);
     }
 }
 
@@ -63,6 +67,16 @@ void Clock::Restart()
     minutes = 0;
 
     this->clockTime = "08:00";
+}
+
+void Clock::Pause()
+{
+    paused = true;
+}
+
+void Clock::Resume()
+{
+    paused = false;
 }
 
 std::string Clock::GetClock()
