@@ -11,7 +11,7 @@
 #ifndef CHANGESCREEN_HEADER
 #define CHANGESCREEN_HEADER
 #include "Component.h"
-#include "ThirdStageState.h"
+#include "StageState.h"
 #include "Sprite.h"
 #include "Collider.h"
 #include "Vec2.h"
@@ -20,7 +20,7 @@ class ChangeScreen : public Component
 {
 private:
 public:
-    ChangeScreen(GameObject &associated, bool clickable = false, std::string sprite = "assets/img/placeholders/tela2-Botao gravar hover.png", float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
+    ChangeScreen(GameObject &associated, bool clickable = false, std::string sprite = "assets/img/placeholders/UI/Loja-desliga.png", float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
 
     std::string type = "ChangeScreen";
 

@@ -9,6 +9,7 @@
  *
  */
 #include "SecondStageState.h"
+#include "ThirdStageState.h"
 #include "Constants.h"
 #include "Sound.h"
 #include "TileMap.h"
@@ -23,7 +24,6 @@
 #include "GameData.h"
 #include "ReputationArrow.h"
 #include "Client.h"
-#include "Clock.h"
 #include "Calendar.h"
 #include "ChangeScreen.h"
 
@@ -57,7 +57,8 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	AddObject(dayHudText);
 
 	GameObject *timeHudText = new GameObject();
-	timeHudText->AddComponent(new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute));
+	stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute);
+	timeHudText->AddComponent(stageClock);
 	timeHudText->box.SetOrigin(300, 35);
 	AddObject(timeHudText);
 
@@ -90,17 +91,17 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	clienteGO->box.SetOrigin(120, 300);
 	AddObject(clienteGO);
 
-	// Icone pra mudar tela
-	GameObject *iconeGO = new GameObject();
-	iconeGO->AddComponent(new ChangeScreen(*iconeGO));
-	iconeGO->box.SetOrigin(1655, 647);
-	AddObject(iconeGO);
-
 	// Capa simples placeholder
 	GameObject *capaGO = new GameObject();
 	capaGO->AddComponent(new GameItem(*capaGO, "assets/img/placeholders/capa-placeholder.png", 1, 1));
 	capaGO->box.SetOrigin(800, 200);
 	AddObject(capaGO);
+
+	//Grade fechando a loja
+	gradeGO = new GameObject();	
+	gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+	gradeGO->box.SetOrigin(0, -1080);
+	AddObject(gradeGO);
 
 	// GameObject *tileMap = new GameObject();
 	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
@@ -194,6 +195,23 @@ void SecondStageState::Update(float dt)
 	UpdateArray(dt);
 
 	srand(time(NULL));
+
+	//Mecanismo para terminar o dia
+	Vec2 speed = Vec2(0,600);
+
+	if(GameData::currentHour == 17 && GameData::currentMinute == 59)
+	{
+		stageClock->Pause();
+		if(gradeGO->box.y <= 0) 
+		{
+			gradeGO->box = gradeGO->box + (speed * dt);
+		}
+		else
+		{
+        	State *stage3 = new ThirdStageState();
+        	Game::GetInstance().Push(stage3);
+		}
+	}
 
 	// check collidable objects
 	// TODO: improve here

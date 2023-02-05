@@ -9,7 +9,7 @@
  *
  */
 #ifndef CLOCK_HEADER
-#define SPRITE_HEADER
+#define CLOCK_HEADER
 #define INCLUDE_SDL_IMAGE
 #include "SDL_include.h"
 #include "Component.h"

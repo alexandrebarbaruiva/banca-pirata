@@ -8,19 +8,21 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef STAGESTATE_HEADER
-#define STAGESTATE_HEADER
+#ifndef THIRDSTAGESTATE_HEADER
+#define THIRDSTAGESTATE_HEADER
 #include "Sprite.h"
 #include "State.h"
 #include "TileSet.h"
 #include "GameItem.h"
 #include "Music.h"
+#include "Clock.h"
 
 class ThirdStageState : public State
 {
 private:
     Music backgroundMusic;
     TileSet *tileSet;
+    Clock *stageClock;
 
 public:
     ThirdStageState();
@@ -35,4 +37,4 @@ public:
     void Resume();
 };
 
-#endif
+#endif //THIRDSTAGESTATE_HEADER

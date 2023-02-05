@@ -9,12 +9,12 @@
  *
  */
 #include "StageState.h"
+#include "ThirdStageState.h"
 #include "Constants.h"
 #include "Sound.h"
 #include "TileMap.h"
 #include "Game.h"
 #include "Text.h"
-#include "Clock.h"
 #include "Calendar.h"
 #include "Camera.h"
 #include "InputManager.h"
@@ -56,7 +56,9 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	AddObject(dayHudText);
 
 	GameObject *timeHudText = new GameObject();
-	timeHudText->AddComponent(new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute));
+	stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute);
+	stageClock->Resume();
+	timeHudText->AddComponent(stageClock);
 	timeHudText->box.SetOrigin(300, 35);
 	AddObject(timeHudText);
 
@@ -106,6 +108,12 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	velhoGO->AddComponent(new Client(*velhoGO, "assets/img/placeholders/velinho.png", 1, 1));
 	velhoGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
 	AddObject(velhoGO);
+
+	//Grade fechando a loja
+	gradeGO = new GameObject();	
+	gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+	gradeGO->box.SetOrigin(0, -1080);
+	AddObject(gradeGO);
 }
 
 StageState::~StageState()
@@ -159,6 +167,23 @@ void StageState::Update(float dt)
 #ifdef DEBUG
 		std::cout << "X:" << input.GetMouseX() << " Y:" << input.GetMouseY() << "\n";
 #endif
+	}
+
+	//Mecanismo para terminar o dia
+	Vec2 speed = Vec2(0,600);
+
+	if(GameData::currentHour == 17 && GameData::currentMinute == 59)
+	{
+		stageClock->Pause();
+		if(gradeGO->box.y <= 0) 
+		{
+			gradeGO->box = gradeGO->box + (speed * dt);
+		}
+		else
+		{
+        	State *stage3 = new ThirdStageState();
+        	Game::GetInstance().Push(stage3);
+		}
 	}
 
 	// Update every object

@@ -8,19 +8,22 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef STAGESTATE_HEADER
-#define STAGESTATE_HEADER
+#ifndef SECONDSTAGESTATE_HEADER
+#define SECONDSTAGESTATE_HEADER
 #include "Sprite.h"
 #include "State.h"
 #include "TileSet.h"
 #include "GameItem.h"
 #include "Music.h"
+#include "Clock.h"
 
 class SecondStageState : public State
 {
 private:
     Music backgroundMusic;
     TileSet *tileSet;
+    Clock *stageClock;
+	GameObject *gradeGO;	
 
 public:
     SecondStageState();

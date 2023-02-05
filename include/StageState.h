@@ -15,12 +15,15 @@
 #include "TileSet.h"
 #include "GameItem.h"
 #include "Music.h"
+#include "Clock.h"
 
 class StageState : public State
 {
 private:
     Music backgroundMusic;
     TileSet *tileSet;
+    Clock *stageClock;
+	GameObject *gradeGO;	
 
 public:
     StageState(bool loadGame = false);
