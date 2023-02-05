@@ -40,7 +40,7 @@ void ChangeScreen::Update(float dt)
         this->isClicked = true;
 
         // Create Screen 3 here
-        State *stage = new ThirdStageState();
+        State *stage = new StageState();
         Game::GetInstance().Push(stage);
     }
 }

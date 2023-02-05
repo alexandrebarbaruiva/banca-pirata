@@ -15,13 +15,14 @@
 #include "Camera.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
+#include "GameData.h"
 #include "ReputationArrow.h"
 #include "SirenBox.h"
 #include "Client.h"
 #include "Clock.h"
 #include "Calendar.h"
 #include "AssetGame.h"
-#include "GameData.h"
+#include "ChangeScreen.h"
 
 ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -47,9 +48,9 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	AddObject(dayHudText);
 
 	GameObject *timeHudText = new GameObject();
-	Clock *clock = new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute);
-	clock->Pause();
-	timeHudText->AddComponent(clock);
+	stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute);
+	stageClock->Pause();
+	timeHudText->AddComponent(stageClock);
 	timeHudText->box.SetOrigin(300, 35);
 	AddObject(timeHudText);
 
@@ -207,10 +208,10 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	AddObject(postItGO);
 
 	// Botao Desligar PC
-	GameObject *botaoDesligaGO = new GameObject();
-	botaoDesligaGO->AddComponent(new GameItem(*botaoDesligaGO, SCREEN3_PATH + "Loja-desliga.png", 1.0, 1.0, false, 1, 1));
-	botaoDesligaGO->box.SetOrigin(1800, 745);
-	AddObject(botaoDesligaGO);
+	GameObject *iconeGO = new GameObject();
+	iconeGO->AddComponent(new ChangeScreen(*iconeGO));
+	iconeGO->box.SetOrigin(1800, 745);
+	AddObject(iconeGO);
 }
 
 ThirdStageState::~ThirdStageState()
@@ -271,36 +272,6 @@ void ThirdStageState::Update(float dt)
 
 	srand(time(NULL));
 
-	// check collidable objects
-	// TODO: improve here
-	// std::vector<std::weak_ptr<GameObject>> collidable = QueryObjectsByComponent("Collider");
-	// for (unsigned i = 0; i < collidable.size(); i++)
-	// {
-	// 	for (unsigned j = i + 1; j < collidable.size(); j++)
-	// 	{
-	// 		if (Collision::IsColliding(collidable[i].lock()->box, collidable[j].lock()->box, collidable[i].lock()->angleDeg * PI / 180, collidable[j].lock()->angleDeg * PI / 180))
-	// 		{
-	// 			GameObject *g1 = collidable[i].lock().get();
-	// 			GameObject *g2 = collidable[j].lock().get();
-	// 			g1->NotifyCollision(*g2);
-	// 			g2->NotifyCollision(*g1);
-	// 		}
-	// 	}
-	// }
-
-	// if (Alien::alienCount <= 0)
-	// {
-	// 	GameData::playerVictory = true;
-	// 	popRequested = true;
-	// 	Game::GetInstance().Push(new EndState());
-	// }
-
-	// if (PenguinBody::player == nullptr)
-	// {
-	// 	GameData::playerVictory = false;
-	// 	popRequested = true;
-	// 	Game::GetInstance().Push(new EndState());
-	// }
 }
 
 void ThirdStageState::Render()

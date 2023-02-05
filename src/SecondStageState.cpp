@@ -9,6 +9,7 @@
  *
  */
 #include "SecondStageState.h"
+#include "ThirdStageState.h"
 #include "Constants.h"
 #include "Sound.h"
 #include "TileMap.h"
@@ -17,10 +18,12 @@
 #include "Camera.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
+#include "Collision.cpp"
+#include "TitleState.h"
 #include "EndState.h"
+#include "GameData.h"
 #include "ReputationArrow.h"
 #include "Client.h"
-#include "Clock.h"
 #include "Calendar.h"
 #include "ChangeScreen.h"
 #include "ComputerBox.h"
@@ -74,7 +77,8 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	AddObject(dayHudText);
 
 	GameObject *timeHudText = new GameObject();
-	timeHudText->AddComponent(new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute));
+	stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute);
+	timeHudText->AddComponent(stageClock);
 	timeHudText->box.SetOrigin(300, 35);
 	AddObject(timeHudText);
 
@@ -100,6 +104,16 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	clienteGO->AddComponent(new GameItem(*clienteGO, NPCS_PATH + GameData::currentClient + "t2.png"));
 	clienteGO->box.SetBottom(0, dialogBoxGO->box.y);
 	AddObject(clienteGO);
+
+	
+
+	//Grade fechando a loja
+	gradeGO = new GameObject();	
+	gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+	gradeGO->box.SetOrigin(0, -1080);
+	AddObject(gradeGO);
+
+	
 }
 
 SecondStageState::~SecondStageState()
@@ -160,6 +174,23 @@ void SecondStageState::Update(float dt)
 	UpdateArray(dt);
 
 	srand(time(NULL));
+
+	//Mecanismo para terminar o dia
+	Vec2 speed = Vec2(0,600);
+
+	if(GameData::currentHour == 17 && GameData::currentMinute == 59)
+	{
+		stageClock->Pause();
+		if(gradeGO->box.y <= 0) 
+		{
+			gradeGO->box = gradeGO->box + (speed * dt);
+		}
+		else
+		{
+        	State *stage3 = new ThirdStageState();
+        	Game::GetInstance().Push(stage3);
+		}
+	}
 
 	// check collidable objects
 	// TODO: improve here
