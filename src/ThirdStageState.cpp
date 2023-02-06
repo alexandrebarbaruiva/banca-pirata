@@ -21,6 +21,7 @@
 #include "Client.h"
 #include "Clock.h"
 #include "Calendar.h"
+#include "Carrinho.h"
 #include "AssetGame.h"
 #include "ChangeScreen.h"
 
@@ -103,7 +104,7 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// GameAsset 1
 	GameObject *gameAsset1GO = new GameObject();
-	AssetGame *assetGame1 = new AssetGame(*gameAsset1GO, COVERS_PATH + "capa-placeholder.png", "Violento", "Radical", "Esportivo", 10);
+	AssetGame *assetGame1 = new AssetGame(*gameAsset1GO, COVERS_PATH + "capa-placeholder.png", "Violento", "Radical", "Esportivo", 30);
 	// gameAsset1GO->AddComponent(assetGame1);
 
 	// Capa Game 1
