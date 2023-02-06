@@ -39,9 +39,12 @@ void ChangeScreen::Update(float dt)
         associated.RequestDelete();
         this->isClicked = true;
 
-        // Create Screen 3 here
-        State *stage = new StageState();
-        Game::GetInstance().Push(stage);
+        // Change to StageState
+        State *stage = &Game::GetInstance().GetCurrentState();
+        //State *stage = new StageState(true);
+        stage->Pause();
+		stage->PopRequested();
+        //Game::GetInstance().Push(stage);
     }
 }
 

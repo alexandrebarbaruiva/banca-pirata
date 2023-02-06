@@ -183,6 +183,7 @@ void StageState::Update(float dt)
 		{
         	State *stage3 = new ThirdStageState();
         	Game::GetInstance().Push(stage3);
+			this->Pause();
 		}
 	}
 

@@ -11,10 +11,10 @@
 #include "AssetGame.h"
 #include "Text.h"
 
-AssetGame::AssetGame(GameObject &associated, std::string sprite, std::string setCategory1,  std::string setCategory2, std::string setCategory3, int priceSet) : Component(associated) 
+AssetGame::AssetGame(GameObject &associated, std::string game, std::string setCategory1,  std::string setCategory2, std::string setCategory3, int priceSet) : Component(associated) 
 {
     price = priceSet;
-    spriteName = sprite;
+    spriteName = "assets/img/Jogos/Capas combinadas/Capa " + game + ".png";
     category1 = setCategory1;
     category2 = setCategory2;
     category3 = setCategory3;

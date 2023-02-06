@@ -26,6 +26,7 @@
 #include "Client.h"
 #include "Clock.h"
 #include "Calendar.h"
+#include "Carrinho.h"
 #include "AssetGame.h"
 #include "ChangeScreen.h"
 
@@ -109,7 +110,7 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// GameAsset 1
 	GameObject *gameAsset1GO = new GameObject();
-	AssetGame *assetGame1 = new AssetGame(*gameAsset1GO, "assets/img/placeholders/capa-placeholder.png", "Violento", "Radical", "Esportivo", 10);
+	AssetGame *assetGame1 = new AssetGame(*gameAsset1GO, "gta", "Violento", "Radical", "Esportivo", 30);
 	// gameAsset1GO->AddComponent(assetGame1);
 
 	// Capa Game 1
@@ -150,7 +151,9 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Carrinho Game 1
 	GameObject *carrinho1GO = new GameObject();
-	carrinho1GO->AddComponent(new GameItem(*carrinho1GO, "assets/img/placeholders/UI/Loja-compra.png", 0.6, 0.6, false, 1, 1));
+	//carrinho1GO->AddComponent(new GameItem(*carrinho1GO, "assets/img/placeholders/UI/Loja-compra.png", 0.6, 0.6, false, 1, 1));
+	//carrinho1GO->AddComponent(new Button(*carrinho1GO,"",0.6,0.6,"assets/img/placeholders/UI/Loja-compra.png"));
+	carrinho1GO->AddComponent(new Carrinho(*carrinho1GO, assetGame1,0.6, 0.6));
 	carrinho1GO->box.SetOrigin(1020, 610);
 	AddObject(carrinho1GO);
 
@@ -162,7 +165,7 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// GameAsset 2
 	GameObject *gameAsset2GO = new GameObject();
-	AssetGame *assetGame2 = new AssetGame(*gameAsset2GO, "assets/img/placeholders/Capa kirby.png", "Fofo", "Casual", "Radical", 20);
+	AssetGame *assetGame2 = new AssetGame(*gameAsset2GO, "pokemon", "Fofo", "Casual", "Radical", 30);
 	// gameAsset1GO->AddComponent(assetGame1);
 
 	// Capa Game 2
@@ -214,12 +217,6 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	AddObject(postItGO);
 
 	// Botao Desligar PC
-	//GameObject *botaoDesligaGO = new GameObject();
-	//botaoDesligaGO->AddComponent(new GameItem(*botaoDesligaGO, "assets/img/placeholders/UI/Loja-desliga.png", 1.0, 1.0, false, 1, 1));
-	//botaoDesligaGO->box.SetOrigin(1800, 745);
-	//AddObject(botaoDesligaGO);
-	// Icone pra mudar tela
-
 	GameObject *iconeGO = new GameObject();
 	iconeGO->AddComponent(new ChangeScreen(*iconeGO));
 	iconeGO->box.SetOrigin(1800, 745);
