@@ -36,15 +36,15 @@ void ChangeScreen::Update(float dt)
 
 #endif
 
-        associated.RequestDelete();
-        this->isClicked = true;
-
         // Change to StageState
-        State *stage = &Game::GetInstance().GetCurrentState();
+        //State *stage = &Game::GetInstance().GetCurrentState();
         //State *stage = new StageState(true);
-        stage->Pause();
-		stage->PopRequested();
+        //stage->Pause();
+		//stage->PopRequested();
         //Game::GetInstance().Push(stage);
+
+        //associated.RequestDelete();
+        this->isClicked = true;
     }
 }
 

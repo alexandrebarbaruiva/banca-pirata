@@ -24,6 +24,7 @@ private:
     TileSet *tileSet;
     Clock *stageClock;
 	GameObject *gradeGO;	
+    bool gradeFechada;
 
 public:
     SecondStageState();
