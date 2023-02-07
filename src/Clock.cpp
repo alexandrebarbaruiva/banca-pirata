@@ -66,7 +66,11 @@ void Clock::Restart()
     hours = 8;
     minutes = 0;
 
+    GameData::currentMinute = minutes;
+    GameData::currentHour = hours;
+
     this->clockTime = "08:00";
+    textClock->SetText(this->clockTime);
 }
 
 void Clock::Pause()
@@ -117,6 +121,15 @@ void Clock::WriteClock()
     this->clockTime = hourString + ":" + minuteString;
 }
 
+void Clock::AssertClock() {
+    if(this->hours != GameData::currentHour) {
+        this->hours = GameData::currentHour;
+        this->minutes = GameData::currentMinute;
+
+        WriteClock();
+        textClock->SetText(this->clockTime);
+    }
+}
 void Clock::Render()
 {
 }

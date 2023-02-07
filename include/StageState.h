@@ -23,7 +23,8 @@ private:
     Music backgroundMusic;
     TileSet *tileSet;
     Clock *stageClock;
-    GameObject *gradeGO;	
+	GameObject *gradeGO;	
+    bool gradeFechada;
 
 public:
     StageState(bool loadGame = false);

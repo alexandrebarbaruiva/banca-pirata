@@ -42,6 +42,7 @@ public:
     int GetHours();
     int GetMinutes();
     void WriteClock();
+    void AssertClock();
 };
 
 #endif

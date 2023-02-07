@@ -37,6 +37,8 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
+	
+
 	// HUD Dia + Dinheiro
 	GameObject *hudGO = new GameObject();
 	hudGO->AddComponent(new GameItem(*hudGO, HUD_PATH + "dia_dinheiro.png"));
@@ -50,6 +52,9 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	GameObject *timeHudText = new GameObject();
 	stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute);
+    GameData::currentMinute = 0;
+    GameData::currentHour = 8;
+	GameData::currentDay++;
 	stageClock->Pause();
 	timeHudText->AddComponent(stageClock);
 	timeHudText->box.SetOrigin(300, 35);
@@ -244,11 +249,29 @@ void ThirdStageState::Resume()
 
 void ThirdStageState::Update(float dt)
 {
+
+	// Update every object
+	UpdateArray(dt);
+
 	// update camera
 	Camera::Update(dt);
 
 	InputManager input = InputManager::GetInstance();
+    std::string pressedButton;
 
+    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("ChangeScreen");
+    for (unsigned i = 0; i < buttons.size(); i++)
+    {
+		ChangeScreen *button = ((ChangeScreen *) (buttons[i].lock()->GetComponent("ChangeScreen")));
+        if (button->isClicked)
+        {
+            button->isClicked = false;
+            pressedButton = button->type;
+
+        	//associated.RequestDelete();
+        	//this->isClicked = true;
+        }
+    }
 	// check if quit was requested
 	if (input.QuitRequested())
 	{
@@ -268,8 +291,16 @@ void ThirdStageState::Update(float dt)
 #endif
 	}
 
-	// Update every object
-	UpdateArray(dt);
+	if(pressedButton == "ChangeScreen")
+	{
+
+        	// Change to StageState
+        	//State *stage = &Game::GetInstance().GetCurrentState();
+        	//State *stage = new StageState(true);
+        	this->Pause();
+			popRequested = true;
+        	//Game::GetInstance().Push(stage);
+	}
 
 	srand(time(NULL));
 
