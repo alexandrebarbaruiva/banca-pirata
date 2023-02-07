@@ -199,9 +199,10 @@ void SecondStageState::Update(float dt)
 	{
 
 		popRequested = true;
+		gradeGO->box.SetOrigin(0, -1080);
 		if(gradeGO->box.y > -1080) 
 		{
-			gradeGO->box = gradeGO->box - (speed * dt);
+			gradeGO->box.SetOrigin(0, -1080);
 			//std::cout << "pos grade: " << gradeGO->box.Center().y << std::endl;
 		}
 		else

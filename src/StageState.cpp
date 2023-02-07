@@ -171,20 +171,20 @@ void StageState::Update(float dt)
 	if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada)
 	{
 		// Fechando elementos que sobrepoe grade
-		std::vector<std::weak_ptr<GameObject>> sirenes = this->QueryObjectsByComponent("SirenBox");
-		for (unsigned i = 0; i < sirenes.size(); i++)
-		{
-			SirenBox *sirene = ((SirenBox *)(sirenes[i].lock()->GetComponent("SirenBox")));
-			//sirene->~SirenBox();
-			//TODO esconder sirene
-		}
-		std::vector<std::weak_ptr<GameObject>> clientes = this->QueryObjectsByComponent("Client");
-		for (unsigned i = 0; i < clientes.size(); i++)
-		{
-			Client *client = ((Client *)(clientes[i].lock()->GetComponent("Client")));
-			//client->~Client();
-			//TODO esconder chat de cliente
-		}
+		//std::vector<std::weak_ptr<GameObject>> sirenes = this->QueryObjectsByComponent("SirenBox");
+		//for (unsigned i = 0; i < sirenes.size(); i++)
+		//{
+		//	SirenBox *sirene = ((SirenBox *)(sirenes[i].lock()->GetComponent("SirenBox")));
+		//	//sirene->~SirenBox();
+		//	//TODO esconder sirene
+		//}
+		//std::vector<std::weak_ptr<GameObject>> clientes = this->QueryObjectsByComponent("Client");
+		//for (unsigned i = 0; i < clientes.size(); i++)
+		//{
+		//	Client *client = ((Client *)(clientes[i].lock()->GetComponent("Client")));
+		//	//client->~Client();
+		//	//TODO esconder chat de cliente
+		//}
 		stageClock->Pause();
 		if (gradeGO->box.y <= 0)
 		{

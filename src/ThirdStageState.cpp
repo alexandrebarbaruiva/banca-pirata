@@ -23,6 +23,7 @@
 #include "Calendar.h"
 #include "Carrinho.h"
 #include "AssetGame.h"
+#include "AssetItem.h"
 #include "ChangeScreen.h"
 
 ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
@@ -114,13 +115,13 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Capa Game 1
 	GameObject *capaGO = new GameObject();
-	capaGO->AddComponent(new GameItem(*capaGO, assetGame1->spriteName, 0.8, 0.8, false, 1, 1));
+	capaGO->AddComponent(new AssetItem(*capaGO, assetGame1, assetGame1->spriteName, 0.8, 0.8, false, 1, 1));
 	capaGO->box.SetOrigin(800, 220);
 	AddObject(capaGO);
 
 	// Marcador de Preço Game 1
 	GameObject *marcaPrecoGame1GO = new GameObject();
-	marcaPrecoGame1GO->AddComponent(new GameItem(*marcaPrecoGame1GO, SCREEN3_PATH + "Loja-fundo preco.png", 1, 1));
+	marcaPrecoGame1GO->AddComponent(new AssetItem(*marcaPrecoGame1GO, assetGame1, SCREEN3_PATH + "Loja-fundo preco.png", 1, 1));
 	marcaPrecoGame1GO->box.SetOrigin(1000, 200);
 	AddObject(marcaPrecoGame1GO);
 
@@ -150,7 +151,7 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Carrinho Game 1
 	GameObject *carrinho1GO = new GameObject();
-	carrinho1GO->AddComponent(new GameItem(*carrinho1GO, SCREEN3_PATH + "Loja-compra.png", 0.6, 0.6, false, 1, 1));
+	carrinho1GO->AddComponent(new Carrinho(*carrinho1GO, assetGame1,0.6, 0.6));
 	carrinho1GO->box.SetOrigin(1020, 610);
 	AddObject(carrinho1GO);
 
@@ -167,13 +168,13 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Capa Game 2
 	GameObject *capa2GO = new GameObject();
-	capa2GO->AddComponent(new GameItem(*capa2GO, assetGame2->spriteName, 0.8, 0.8, false, 1, 1));
+	capa2GO->AddComponent(new AssetItem(*capa2GO, assetGame2, assetGame2->spriteName, 0.8, 0.8, false, 1, 1));
 	capa2GO->box.SetOrigin(1400, 220);
 	AddObject(capa2GO);
 
 	// Marcador de Preço Game 2
 	GameObject *marcaPrecoGame2GO = new GameObject();
-	marcaPrecoGame2GO->AddComponent(new GameItem(*marcaPrecoGame2GO, SCREEN3_PATH + "Loja-fundo preco.png", 1, 1));
+	marcaPrecoGame2GO->AddComponent(new AssetItem(*marcaPrecoGame2GO, assetGame2, SCREEN3_PATH + "Loja-fundo preco.png", 1, 1));
 	marcaPrecoGame2GO->box.SetOrigin(1600, 200);
 	AddObject(marcaPrecoGame2GO);
 
@@ -203,7 +204,7 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Carrinho Game 2
 	GameObject *carrinho2GO = new GameObject();
-	carrinho2GO->AddComponent(new GameItem(*carrinho2GO, SCREEN3_PATH + "Loja-compra.png", 0.6, 0.6, false, 1, 1));
+	carrinho2GO->AddComponent(new Carrinho(*carrinho2GO, assetGame2,0.6, 0.6));
 	carrinho2GO->box.SetOrigin(1620, 610);
 	AddObject(carrinho2GO);
 
@@ -259,6 +260,21 @@ void ThirdStageState::Update(float dt)
 	InputManager input = InputManager::GetInstance();
     std::string pressedButton;
 
+    std::vector<std::weak_ptr<GameObject>> carrinhos = this->QueryObjectsByComponent("Carrinho");
+    for (unsigned i = 0; i < carrinhos.size(); i++)
+    {
+		Carrinho *carrinho = ((Carrinho *) (carrinhos[i].lock()->GetComponent("Carrinho")));
+        if (carrinho->isClicked)
+        {
+            carrinho->isClicked = false;
+            pressedButton = carrinho->type;
+			
+
+        	//associated.RequestDelete();
+        	//this->isClicked = true;
+        }
+    }
+
     std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("ChangeScreen");
     for (unsigned i = 0; i < buttons.size(); i++)
     {
@@ -290,6 +306,7 @@ void ThirdStageState::Update(float dt)
 		std::cout << "X:" << input.GetMouseX() << " Y:" << input.GetMouseY() << "\n";
 #endif
 	}
+
 
 	if(pressedButton == "ChangeScreen")
 	{
