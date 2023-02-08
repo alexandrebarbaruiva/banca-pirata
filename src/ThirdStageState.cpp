@@ -52,7 +52,7 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	AddObject(dayHudText);
 
 	GameObject *timeHudText = new GameObject();
-	stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute);
+	stageClock = new Clock(*timeHudText, 18, 0);
     GameData::currentMinute = 0;
     GameData::currentHour = 8;
 	GameData::currentDay++;
