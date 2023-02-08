@@ -99,11 +99,7 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	capaGO->box.SetOrigin(800, 200);
 	AddObject(capaGO);
 
-	//Grade fechando a loja
-	gradeGO = new GameObject();	
-	gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
-	gradeGO->box.SetOrigin(0, -1080);
-	AddObject(gradeGO);
+	gradeGO = nullptr;	
 
 	gradeFechada = false;
 
@@ -203,8 +199,16 @@ void SecondStageState::Update(float dt)
 	//Mecanismo para terminar o dia
 	Vec2 speed = Vec2(0,600);
 
-	if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada )
+	if(GameData::endDay && !gradeFechada )
 	{
+		if (gradeGO == nullptr)
+		{
+			// Grade fechando a loja
+			gradeGO = new GameObject();
+			gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+			gradeGO->box.SetOrigin(0, -1080);
+			AddObject(gradeGO);
+		}
 		stageClock->Pause();
 		if(gradeGO->box.y <= 0) 
 		{

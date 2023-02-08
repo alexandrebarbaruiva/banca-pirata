@@ -111,12 +111,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	velhoGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
 	AddObject(velhoGO);
 
-	//Grade fechando a loja
-	gradeGO = new GameObject();	
-	gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
-	gradeGO->box.SetOrigin(0, -1080);
-	AddObject(gradeGO);
-
+	gradeGO = nullptr;
 	gradeFechada = false;
 }
 
@@ -194,6 +189,14 @@ void StageState::Update(float dt)
 		//	//client->~Client();
 		//	//TODO esconder chat de cliente
 		//}
+		if (gradeGO == nullptr)
+		{
+			// Grade fechando a loja
+			gradeGO = new GameObject();
+			gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+			gradeGO->box.SetOrigin(0, -1080);
+			AddObject(gradeGO);
+		}
 
 		stageClock->Pause();
 		if (gradeGO->box.y <= 0)
