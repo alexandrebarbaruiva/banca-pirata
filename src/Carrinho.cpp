@@ -20,8 +20,13 @@ Carrinho::Carrinho(GameObject &associated, AssetGame *gameBuying , float scaleX,
     associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
     this->gameToBuy = gameBuying;
+    this->name = gameBuying->name;
     this->clickable = true;
     this->isClicked = false;
+}
+
+Carrinho::~Carrinho()
+{
 }
 
 void Carrinho::Update(float dt)
@@ -36,13 +41,19 @@ void Carrinho::Update(float dt)
             this->clickable = false;
             associated.AddComponent(spriteItemHoover);
             GameData::currentMoney -= gameToBuy->price;
-            std::cout << "Total na carteira: " << GameData::currentMoney << std::endl;
+            //std::cout << "Total na carteira: " << GameData::currentMoney << std::endl;
+            //associated.RequestDelete();
         }
     }
 }
 
 void Carrinho::Render()
 {
+}
+
+void Carrinho::Delete()
+{
+    associated.RequestDelete();
 }
 
 void Carrinho::NotifyCollision(GameObject &other)

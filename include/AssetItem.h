@@ -30,7 +30,7 @@ public:
     bool moveable = false;
     float startPoint = 0;
     float currentPoint = 0;
-    float endPoint = 300;
+    float endPoint = 100;
     Vec2 speed = Vec2(10, 0);
 
     bool clickable = false;

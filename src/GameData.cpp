@@ -17,6 +17,7 @@ int GameData::currentDay;
 int GameData::currentMoney;
 int GameData::currentRep;
 int GameData::currentSus;
+std::vector<std::string> GameData::ownedGames;
 
 // Save file has the following structure.
 // Currently doesn't check for existing saved games.
@@ -59,6 +60,8 @@ void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyIn
     saveFile << "susInGame " << susInGame;
     saveFile << "\n";
 
+    //TODO ownedGames save
+
     saveFile.close();
 }
 
@@ -70,6 +73,7 @@ void GameData::Reset()
     GameData::currentMoney = 0;
     GameData::currentRep = 50;
     GameData::currentSus = 0;
+    GameData::ownedGames.clear();
 }
 
 void GameData::Load()
@@ -93,6 +97,7 @@ void GameData::Load()
     GameData::currentMoney = gameData["moneyInGame"];
     GameData::currentRep = gameData["repInGame"];
     GameData::currentSus = gameData["susInGame"];
+    //TODO ownedGames Load
 
 #ifdef DEBUG
     std::cout << "loaded Minute " << GameData::currentMinute << "\n";

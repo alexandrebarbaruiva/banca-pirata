@@ -15,6 +15,7 @@
 #include <fstream>
 #include <ctime>
 #include <unordered_map>
+#include <vector>
 
 class GameData
 {
@@ -28,6 +29,7 @@ public:
     static int currentMoney;
     static int currentRep;
     static int currentSus;
+    static std::vector<std::string> ownedGames;
 
     /// @brief Utility to write save data to save file
     /// @param saveNumber save counter

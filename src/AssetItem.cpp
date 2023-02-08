@@ -18,24 +18,32 @@ AssetItem::AssetItem(GameObject &associated, AssetGame *gameLinked , std::string
     associated.AddComponent(new Collider(associated));
 
     gameOrigin = gameLinked;
+    this->name = gameLinked->name;
 }
 
 void AssetItem::Update(float dt)
 {
-    if (!this->moveable)
+    if (!gameOrigin->gameChoosed)
     {
-        return;
-    }
+        if (!this->moveable)
+        {
+            return;
+        }
 
-    // Update associated box location correctly
-    associated.box = associated.box + speed * dt;
-    this->currentPoint += (Vec2::Mag(speed * dt));
-    if (this->currentPoint >= endPoint)
+        // Update associated box location correctly
+        associated.box = associated.box + speed * dt;
+        this->currentPoint += (Vec2::Mag(speed * dt));
+        if (this->currentPoint >= endPoint)
+        {
+            this->endPoint = this->startPoint;
+            this->startPoint = this->currentPoint;
+            // this->speed = (this->speed) * -1;
+            this->speed = this->speed * 0;
+        }
+    }
+    else
     {
-        this->endPoint = this->startPoint;
-        this->startPoint = this->currentPoint;
-        // this->speed = (this->speed) * -1;
-        this->speed = this->speed * 0;
+        associated.RequestDelete();
     }
 }
 
