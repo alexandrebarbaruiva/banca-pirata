@@ -168,7 +168,8 @@ void StageState::Update(float dt)
 	//Mecanismo para terminar o dia
 	Vec2 speed = Vec2(0,600);
 
-	if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada)
+	//if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada)
+	if(GameData::endDay && !gradeFechada)
 	{
 		// Fechando elementos que sobrepoe grade
 		//std::vector<std::weak_ptr<GameObject>> sirenes = this->QueryObjectsByComponent("SirenBox");
