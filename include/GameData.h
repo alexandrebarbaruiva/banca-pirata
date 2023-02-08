@@ -30,6 +30,7 @@ public:
     static int currentMoney;
     static int currentRep;
     static int currentSus;
+    static std::vector<std::string> ownedGames;
 
     /* game functions */
     static bool clientCanLeave;

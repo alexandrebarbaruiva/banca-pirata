@@ -20,6 +20,7 @@ int GameData::currentDay;
 int GameData::currentMoney;
 int GameData::currentRep;
 int GameData::currentSus;
+std::vector<std::string> GameData::ownedGames;
 
 /* game functions */
 bool GameData::clientCanLeave;
@@ -86,6 +87,8 @@ void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyIn
     saveFile << "susInGame " << susInGame;
     saveFile << "\n";
 
+    //TODO ownedGames save
+
     saveFile.close();
 }
 
@@ -97,6 +100,7 @@ void GameData::Reset()
     GameData::currentMoney = 0;
     GameData::currentRep = 50;
     GameData::currentSus = 0;
+    GameData::ownedGames.clear();
 
     GameData::clientCanLeave = false;
     GameData::nextClient = true;
@@ -146,6 +150,7 @@ void GameData::Load()
     GameData::currentMoney = gameData["moneyInGame"];
     GameData::currentRep = gameData["repInGame"];
     GameData::currentSus = gameData["susInGame"];
+    //TODO ownedGames Load
 
 #ifdef DEBUG
     std::cout << "loaded Minute " << GameData::currentMinute << "\n";

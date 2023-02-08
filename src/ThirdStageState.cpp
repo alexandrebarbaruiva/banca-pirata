@@ -261,21 +261,47 @@ void ThirdStageState::Update(float dt)
     std::string pressedButton;
 
     std::vector<std::weak_ptr<GameObject>> carrinhos = this->QueryObjectsByComponent("Carrinho");
-    for (unsigned i = 0; i < carrinhos.size(); i++)
-    {
-		Carrinho *carrinho = ((Carrinho *) (carrinhos[i].lock()->GetComponent("Carrinho")));
-        if (carrinho->isClicked)
-        {
-            carrinho->isClicked = false;
-            pressedButton = carrinho->type;
-			
+    std::vector<std::weak_ptr<GameObject>> assetItems = this->QueryObjectsByComponent("AssetItem");
+	for (unsigned i = 0; i < carrinhos.size(); i++)
+	{
+		for (unsigned j = i + 1; j < carrinhos.size(); j++)
+		{
+			Carrinho *carrinho1 = ((Carrinho *)(carrinhos[i].lock()->GetComponent("Carrinho")));
+			Carrinho *carrinho2 = ((Carrinho *)(carrinhos[j].lock()->GetComponent("Carrinho")));
+			if (carrinho1->isClicked) 
+			{
 
-        	//associated.RequestDelete();
-        	//this->isClicked = true;
-        }
-    }
+				for (unsigned i = 0; i < assetItems.size(); i++){
+					AssetItem *assetItem = ((AssetItem *)(assetItems[i].lock()->GetComponent("AssetItem")));
+					if(assetItem->name == carrinho1->name) 
+					{
+						assetItem->moveable = true;
+					}
+				}
+				carrinho2->clickable = false;
+				carrinho2->gameToBuy->gameChoosed = false;
+				GameData::ownedGames.emplace_back(carrinho1->name);
+				carrinho1->isClicked = false;
+			}
+			if(carrinho2->isClicked)
+			{
 
-    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("ChangeScreen");
+				for (unsigned i = 0; i < assetItems.size(); i++){
+					AssetItem *assetItem = ((AssetItem *)(assetItems[i].lock()->GetComponent("AssetItem")));
+					if(assetItem->name == carrinho2->name) 
+					{
+						assetItem->moveable = true;
+					}
+				}
+				carrinho1->clickable = false;
+				carrinho1->gameToBuy->gameChoosed = false;
+				GameData::ownedGames.emplace_back(carrinho2->name);
+				carrinho2->isClicked = false;
+			}
+		}
+	}
+
+	std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("ChangeScreen");
     for (unsigned i = 0; i < buttons.size(); i++)
     {
 		ChangeScreen *button = ((ChangeScreen *) (buttons[i].lock()->GetComponent("ChangeScreen")));

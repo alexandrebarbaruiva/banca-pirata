@@ -18,6 +18,7 @@ AssetGame::AssetGame(GameObject &associated, std::string game, std::string setCa
     category1 = setCategory1;
     category2 = setCategory2;
     category3 = setCategory3;
+    name = game;
 
 }
 

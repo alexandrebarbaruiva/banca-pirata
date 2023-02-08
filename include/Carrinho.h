@@ -21,6 +21,7 @@ class Carrinho : public Component
 private:
 public:
     Carrinho(GameObject &associated, AssetGame *gameBuying ,float scaleX = 1, float scaleY = 1);
+    ~Carrinho();
 
     std::string type = "Carrinho";
     std::string name;
@@ -35,6 +36,7 @@ public:
 
     void Update(float dt);
     void Render();
+    void Delete();
     bool Is(std::string type);
     void NotifyCollision(GameObject &other);
 };
