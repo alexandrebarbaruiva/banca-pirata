@@ -19,11 +19,12 @@ AssetItem::AssetItem(GameObject &associated, AssetGame *gameLinked , std::string
 
     gameOrigin = gameLinked;
     this->name = gameLinked->name;
+    std::cout << "Loaded " << name << std::endl;
 }
 
 void AssetItem::Update(float dt)
 {
-    if (!gameOrigin->gameChoosed)
+    if (gameOrigin->gameChoosed)
     {
         if (!this->moveable)
         {

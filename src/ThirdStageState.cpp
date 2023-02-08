@@ -261,7 +261,6 @@ void ThirdStageState::Update(float dt)
     std::string pressedButton;
 
     std::vector<std::weak_ptr<GameObject>> carrinhos = this->QueryObjectsByComponent("Carrinho");
-    std::vector<std::weak_ptr<GameObject>> assetItems = this->QueryObjectsByComponent("AssetItem");
 	for (unsigned i = 0; i < carrinhos.size(); i++)
 	{
 		for (unsigned j = i + 1; j < carrinhos.size(); j++)
@@ -271,11 +270,12 @@ void ThirdStageState::Update(float dt)
 			if (carrinho1->isClicked) 
 			{
 
+    			std::vector<std::weak_ptr<GameObject>> assetItems = this->QueryObjectsByComponent("AssetItem");
 				for (unsigned i = 0; i < assetItems.size(); i++){
 					AssetItem *assetItem = ((AssetItem *)(assetItems[i].lock()->GetComponent("AssetItem")));
 					if(assetItem->name == carrinho1->name) 
 					{
-						assetItem->moveable = true;
+						//assetItem->moveable = true;
 					}
 				}
 				carrinho2->clickable = false;
@@ -285,12 +285,13 @@ void ThirdStageState::Update(float dt)
 			}
 			if(carrinho2->isClicked)
 			{
+    			std::vector<std::weak_ptr<GameObject>> assetItems = this->QueryObjectsByComponent("AssetItem");
 
 				for (unsigned i = 0; i < assetItems.size(); i++){
 					AssetItem *assetItem = ((AssetItem *)(assetItems[i].lock()->GetComponent("AssetItem")));
 					if(assetItem->name == carrinho2->name) 
 					{
-						assetItem->moveable = true;
+						//assetItem->moveable = true;
 					}
 				}
 				carrinho1->clickable = false;
@@ -320,11 +321,11 @@ void ThirdStageState::Update(float dt)
 		quitRequested = true;
 	}
 
-	if (input.KeyPress(ESCAPE_KEY))
-	{
-		this->Pause();
-		popRequested = true;
-	}
+	//if (input.KeyPress(ESCAPE_KEY))
+	//{
+	//	this->Pause();
+	//	popRequested = true;
+	//}
 
 	if (input.MousePress(LEFT_MOUSE_BUTTON))
 	{
