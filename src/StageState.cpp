@@ -101,11 +101,12 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	lojeiroGO->box.SetBottom(1290, balcaoGO->box.y);
 	AddObject(lojeiroGO);
 
-	// Velho
-	GameObject *velhoGO = new GameObject();
-	velhoGO->AddComponent(new Client(*velhoGO, "assets/img/placeholders/velinho.png", 1, 1));
-	velhoGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
-	AddObject(velhoGO);
+	// Clientes
+	GameObject *clienteGO = new GameObject();
+	clienteGO->AddComponent(new Client(*clienteGO, "assets/img/placeholders/velinho.png", 1, 1));
+	clienteGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
+
+	AddObject(clienteGO);
 }
 
 StageState::~StageState()
@@ -140,8 +141,17 @@ void StageState::Update(float dt)
 	// update camera
 	Camera::Update(dt);
 
-	InputManager input = InputManager::GetInstance();
+	if (GameData::nextClient)
+	{
+		GameObject *cliente2GO = new GameObject();
+		cliente2GO->AddComponent(new Client(*cliente2GO, "assets/img/placeholders/velinho.png", 1, 1));
+		cliente2GO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
 
+		AddObject(cliente2GO);
+	}
+	
+
+	InputManager input = InputManager::GetInstance();
 	// check if quit was requested
 	if (input.QuitRequested())
 	{

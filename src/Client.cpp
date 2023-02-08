@@ -21,6 +21,7 @@ Client::Client(GameObject &associated, std::string sprite, float scaleX, float s
     spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
+    GameData::nextClient = false;
 #ifdef DEBUG
     std::cout << "Client destination point on " << this->endPoint << "\n";
 #endif
@@ -34,6 +35,16 @@ void Client::Update(float dt)
         Client::PopChat();
         this->reachedEndpoint = true;
         std::cout << "Reached endpoint.\n";
+    }
+    else if (GameData::canClientLeave)
+    {
+        this->speed = Vec2(600, 0);
+        if(this->currentPoint > GAME_SCREEN_WIDTH){
+            associated.RequestDelete();
+            GameData::canClientLeave = false;
+            GameData::nextClient = true;
+        }
+
     }
     // To avoid big jumps when beginning session
     if (dt > 0.1)

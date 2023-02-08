@@ -17,6 +17,8 @@ int GameData::currentDay;
 int GameData::currentMoney;
 int GameData::currentRep;
 int GameData::currentSus;
+bool GameData::canClientLeave;
+bool GameData::nextClient;
 
 // Save file has the following structure.
 // Currently doesn't check for existing saved games.
@@ -57,7 +59,7 @@ void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyIn
 
     // Write moneyInGame
     saveFile << "susInGame " << susInGame;
-    saveFile << "\n";
+    saveFile << "\n"; 
 
     saveFile.close();
 }
