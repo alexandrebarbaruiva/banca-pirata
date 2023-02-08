@@ -61,7 +61,6 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	stageClock = new Clock(*timeHudText, 18, 0);
     GameData::currentMinute = 0;
     GameData::currentHour = 8;
-	GameData::currentDay++;
 	stageClock->Pause();
 	timeHudText->AddComponent(stageClock);
 	timeHudText->box.SetOrigin(300, 35);
@@ -348,7 +347,8 @@ void ThirdStageState::Update(float dt)
         	// Change to StageState
         	//State *stage = &Game::GetInstance().GetCurrentState();
         	//State *stage = new StageState(true);
-			std::cout << "Money: " << GameData::currentMoney << "\n";
+			GameData::endDay = false;
+            GameData::currentDay++;
         	this->Pause();
 			popRequested = true;
         	//Game::GetInstance().Push(stage);

@@ -32,7 +32,6 @@ void Clock::Update(float dt)
             if (minutes < 59)
             {
                 minutes++;
-                // std::cout << "minute: " << minutes << std::endl;
             }
             else
             {
@@ -43,10 +42,8 @@ void Clock::Update(float dt)
                 }
                 else
                 {
-                    std::cout << "Passou o dia" << std::endl;
-                    hours = 8;
                     GameData::endDay = true;
-                    GameData::currentDay++;
+                    hours = 18;
                 }
             }
 
