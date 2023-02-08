@@ -28,15 +28,19 @@ public:
 
     Sprite *spriteItem;
     Sprite *spriteItemHoover;
+    Vec2 spriteScale;
 
     AssetGame *gameToBuy;
 
     bool clickable;
     bool isClicked;
+    int clickedTimes = 0;
+
+    void Choosed();
+    void UnChoosed();
 
     void Update(float dt);
     void Render();
-    void Delete();
     bool Is(std::string type);
     void NotifyCollision(GameObject &other);
 };

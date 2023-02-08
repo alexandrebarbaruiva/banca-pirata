@@ -19,13 +19,10 @@ AssetItem::AssetItem(GameObject &associated, AssetGame *gameLinked , std::string
 
     gameOrigin = gameLinked;
     this->name = gameLinked->name;
-    std::cout << "Loaded " << name << std::endl;
 }
 
 void AssetItem::Update(float dt)
 {
-    if (gameOrigin->gameChoosed)
-    {
         if (!this->moveable)
         {
             return;
@@ -41,11 +38,6 @@ void AssetItem::Update(float dt)
             // this->speed = (this->speed) * -1;
             this->speed = this->speed * 0;
         }
-    }
-    else
-    {
-        associated.RequestDelete();
-    }
 }
 
 void AssetItem::Render()

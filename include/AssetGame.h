@@ -48,7 +48,7 @@ public:
 
     bool clickable = false;
     bool isClicked = false;
-    bool gameChoosed = true;
+    bool gameChoosed = false;
 
     void Update(float dt);
     void Render();

@@ -20,6 +20,7 @@ int GameData::currentDay;
 int GameData::currentMoney;
 int GameData::currentRep;
 int GameData::currentSus;
+bool GameData::endDay;
 std::vector<std::string> GameData::ownedGames;
 
 /* game functions */

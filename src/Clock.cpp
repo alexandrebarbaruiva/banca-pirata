@@ -45,6 +45,7 @@ void Clock::Update(float dt)
                 {
                     std::cout << "Passou o dia" << std::endl;
                     hours = 8;
+                    GameData::endDay = true;
                     GameData::currentDay++;
                 }
             }
