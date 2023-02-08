@@ -193,6 +193,7 @@ void StageState::Update(float dt)
 		//	//client->~Client();
 		//	//TODO esconder chat de cliente
 		//}
+
 		stageClock->Pause();
 		if (gradeGO->box.y <= 0)
 		{

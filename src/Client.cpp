@@ -9,6 +9,7 @@
  *
  */
 #include "Client.h"
+#include "GameData.h"
 
 Client::Client(GameObject &associated, std::string sprite, float scaleX, float scaleY, bool reachedEndpoint, float frameTime, int frameCount) : Component(associated)
 {
@@ -34,6 +35,11 @@ void Client::Update(float dt)
         Client::PopChat();
         this->reachedEndpoint = true;
         std::cout << "Reached endpoint.\n";
+    }
+    if (GameData::endDay)
+    {
+        // pega chatbox
+        // deleta chatbox
     }
     // To avoid big jumps when beginning session
     if (dt > 0.1)

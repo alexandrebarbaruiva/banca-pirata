@@ -14,15 +14,17 @@
 Carrinho::Carrinho(GameObject &associated, AssetGame *gameBuying , float scaleX, float scaleY) : Component(associated)
 {
     spriteItem = new Sprite(associated, "assets/img/placeholders/UI/Loja-compra.png");
-    spriteItemHoover = new Sprite(associated, "assets/img/placeholders/UI/Loja-compra-click.png");
-    spriteItem->SetScale(scaleX, scaleY);
-    spriteItemHoover->SetScale(scaleX, scaleY);
+    //spriteItemHoover = new Sprite(associated, "assets/img/placeholders/UI/Loja-compra-click.png");
+    spriteScale = Vec2(scaleX,scaleY);
+    spriteItem->SetScale(spriteScale);
+    //spriteItemHoover->SetScale(spriteScale);
     associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
     this->gameToBuy = gameBuying;
     this->name = gameBuying->name;
     this->clickable = true;
     this->isClicked = false;
+    this->clickedTimes= 0;
 }
 
 Carrinho::~Carrinho()
@@ -37,23 +39,36 @@ void Carrinho::Update(float dt)
         bool mouseInButton = associated.box.IsInside(input.GetMousePosition());
         if (mouseInButton)
         {
-            this->isClicked = true;
-            this->clickable = false;
-            associated.AddComponent(spriteItemHoover);
-            GameData::currentMoney -= gameToBuy->price;
+            isClicked = true;
+            clickedTimes++;
+            //GameData::currentMoney -= gameToBuy->price;
             //std::cout << "Total na carteira: " << GameData::currentMoney << std::endl;
             //associated.RequestDelete();
         }
     }
 }
 
-void Carrinho::Render()
+void Carrinho::Choosed()
 {
+    spriteItemHoover = new Sprite(associated, "assets/img/placeholders/UI/Loja-compra-click.png");
+    spriteItemHoover->SetScale(spriteScale);
+    associated.AddComponent(spriteItemHoover);
+    gameToBuy->gameChoosed = true;
+    clickable = false;
 }
 
-void Carrinho::Delete()
+void Carrinho::UnChoosed()
 {
-    associated.RequestDelete();
+    if(clickedTimes > 0)
+    {
+        associated.RemoveComponent(spriteItemHoover);
+    }
+    gameToBuy->gameChoosed = false;
+    clickable = true;
+}
+
+void Carrinho::Render()
+{
 }
 
 void Carrinho::NotifyCollision(GameObject &other)

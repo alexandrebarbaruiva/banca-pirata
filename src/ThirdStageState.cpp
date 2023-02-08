@@ -117,7 +117,8 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	// GameAsset 1
 	GameObject *gameAsset1GO = new GameObject();
 	AssetGame *assetGame1 = new AssetGame(*gameAsset1GO, "gta", "Violento", "Radical", "Esportivo", 30);
-	// gameAsset1GO->AddComponent(assetGame1);
+	gameAsset1GO->AddComponent(assetGame1);
+	AddObject(gameAsset1GO);
 
 	// Capa Game 1
 	GameObject *capaGO = new GameObject();
@@ -159,8 +160,9 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	GameObject *carrinho1GO = new GameObject();
 	//carrinho1GO->AddComponent(new GameItem(*carrinho1GO, "assets/img/placeholders/UI/Loja-compra.png", 0.6, 0.6, false, 1, 1));
 	//carrinho1GO->AddComponent(new Button(*carrinho1GO,"",0.6,0.6,"assets/img/placeholders/UI/Loja-compra.png"));
-	carrinho1GO->AddComponent(new Carrinho(*carrinho1GO, assetGame1,0.6, 0.6));
-	carrinho1GO->box.SetOrigin(1020, 610);
+	//carrinho1GO->AddComponent(new Carrinho(*carrinho1GO, assetGame1,0.6, 0.6));
+	carrinho1GO->AddComponent(new Carrinho(*carrinho1GO, assetGame1));
+	carrinho1GO->box.SetOrigin(1010, 600);
 	AddObject(carrinho1GO);
 
 	// Alternativa de Asset
@@ -172,7 +174,8 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	// GameAsset 2
 	GameObject *gameAsset2GO = new GameObject();
 	AssetGame *assetGame2 = new AssetGame(*gameAsset2GO, "pokemon", "Fofo", "Casual", "Radical", 30);
-	// gameAsset1GO->AddComponent(assetGame1);
+	gameAsset2GO->AddComponent(assetGame2);
+	AddObject(gameAsset2GO);
 
 	// Capa Game 2
 	GameObject *capa2GO = new GameObject();
@@ -213,8 +216,9 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	// Carrinho Game 2
 	GameObject *carrinho2GO = new GameObject();
 	//carrinho2GO->AddComponent(new GameItem(*carrinho2GO, "assets/img/placeholders/UI/Loja-compra.png", 0.6, 0.6, false, 1, 1));
-	carrinho2GO->AddComponent(new Carrinho(*carrinho2GO, assetGame2,0.6, 0.6));
-	carrinho2GO->box.SetOrigin(1620, 610);
+	//carrinho2GO->AddComponent(new Carrinho(*carrinho2GO, assetGame2,0.6, 0.6));
+	carrinho2GO->AddComponent(new Carrinho(*carrinho2GO, assetGame2));
+	carrinho2GO->box.SetOrigin(1610, 600);
 	AddObject(carrinho2GO);
 
 	// End Of Day Post-it
@@ -276,36 +280,16 @@ void ThirdStageState::Update(float dt)
 		{
 			Carrinho *carrinho1 = ((Carrinho *)(carrinhos[i].lock()->GetComponent("Carrinho")));
 			Carrinho *carrinho2 = ((Carrinho *)(carrinhos[j].lock()->GetComponent("Carrinho")));
-			if (carrinho1->isClicked) 
+			if (carrinho1->clickable && carrinho1->isClicked) 
 			{
-
-    			std::vector<std::weak_ptr<GameObject>> assetItems = this->QueryObjectsByComponent("AssetItem");
-				for (unsigned i = 0; i < assetItems.size(); i++){
-					AssetItem *assetItem = ((AssetItem *)(assetItems[i].lock()->GetComponent("AssetItem")));
-					if(assetItem->name == carrinho1->name) 
-					{
-						//assetItem->moveable = true;
-					}
-				}
-				carrinho2->clickable = false;
-				carrinho2->gameToBuy->gameChoosed = false;
-				GameData::ownedGames.emplace_back(carrinho1->name);
+				carrinho1->Choosed();
+				carrinho2->UnChoosed();
 				carrinho1->isClicked = false;
 			}
-			if(carrinho2->isClicked)
+			if(carrinho2->clickable && carrinho2->isClicked)
 			{
-    			std::vector<std::weak_ptr<GameObject>> assetItems = this->QueryObjectsByComponent("AssetItem");
-
-				for (unsigned i = 0; i < assetItems.size(); i++){
-					AssetItem *assetItem = ((AssetItem *)(assetItems[i].lock()->GetComponent("AssetItem")));
-					if(assetItem->name == carrinho2->name) 
-					{
-						//assetItem->moveable = true;
-					}
-				}
-				carrinho1->clickable = false;
-				carrinho1->gameToBuy->gameChoosed = false;
-				GameData::ownedGames.emplace_back(carrinho2->name);
+				carrinho2->Choosed();
+				carrinho1->UnChoosed();
 				carrinho2->isClicked = false;
 			}
 		}
@@ -317,6 +301,20 @@ void ThirdStageState::Update(float dt)
 		ChangeScreen *button = ((ChangeScreen *) (buttons[i].lock()->GetComponent("ChangeScreen")));
         if (button->isClicked)
         {
+
+			std::vector<std::weak_ptr<GameObject>> games = this->QueryObjectsByComponent("AssetGame");
+			for (unsigned a = 0; a < games.size(); a++)
+			{
+					std::cout << "Jogo não comprado" << "\n";
+				AssetGame *game = ((AssetGame *) (games[a].lock()->GetComponent("AssetGame")));
+				if(game->gameChoosed)
+				{
+
+					std::cout << "Jogo comprado" << "\n";
+					GameData::ownedGames.emplace_back(game->name);
+					GameData::currentMoney -= 30;
+				}
+			}
             button->isClicked = false;
             pressedButton = button->type;
 
@@ -350,6 +348,7 @@ void ThirdStageState::Update(float dt)
         	// Change to StageState
         	//State *stage = &Game::GetInstance().GetCurrentState();
         	//State *stage = new StageState(true);
+			std::cout << "Money: " << GameData::currentMoney << "\n";
         	this->Pause();
 			popRequested = true;
         	//Game::GetInstance().Push(stage);
