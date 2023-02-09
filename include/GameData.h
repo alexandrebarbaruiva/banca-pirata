@@ -28,8 +28,9 @@ public:
     static int currentMoney;
     static int currentRep;
     static int currentSus;
-    static bool canClientLeave;
+    static bool clientCanLeave;
     static bool nextClient;
+    static std::string availableGames[10];
 
     /// @brief Utility to write save data to save file
     /// @param saveNumber save counter

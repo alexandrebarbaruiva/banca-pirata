@@ -24,6 +24,7 @@
 #include "ReputationArrow.h"
 #include "Client.h"
 #include "ChangeScreen.h"
+#include "ComputerBox.h"
 
 SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -32,9 +33,27 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 #endif
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/Tela2-ui.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/PlanoDeFundo_Tela2.png", 1, 1.0));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
+
+	// Mesa Tela
+	GameObject *tableGO = new GameObject();
+	tableGO->AddComponent(new Sprite(*tableGO, "assets/img/placeholders/Mesa_Tela2.png", 1, 1.0));
+	tableGO->box.SetOrigin(0, 0);
+	AddObject(tableGO);
+
+	// Computador
+	GameObject *computerBoxGO = new GameObject();
+	computerBoxGO->AddComponent(new ComputerBox(*computerBoxGO));
+	computerBoxGO->box.SetOrigin(1170, 170);
+	AddObject(computerBoxGO);
+
+	// Caixa diálogo
+	GameObject *dialogBoxGO = new GameObject();
+	dialogBoxGO->AddComponent(new Sprite(*dialogBoxGO, "assets/img/placeholders/tela2-caixa de dialogo.png", 1, 1.0));
+	dialogBoxGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
+	AddObject(dialogBoxGO);
 
 	GameObject *chatText = new GameObject();
 	Text *text = new Text(*chatText, "assets/font/up.ttf", 50, Text::BLENDED, "TESTE", {255, 255, 255, SDL_ALPHA_OPAQUE}, GAME_SCREEN_WIDTH - GAME_SCREEN_WIDTH / 8);
@@ -79,55 +98,15 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 	// Cliente frontal
 	GameObject *clienteGO = new GameObject();
-	clienteGO->AddComponent(new GameItem(*clienteGO, "assets/img/placeholders/cliente_placeholder.png", 1, 1));
-	clienteGO->box.SetOrigin(120, 300);
+	clienteGO->AddComponent(new GameItem(*clienteGO, "assets/img/placeholders/emo1t2.png", 1, 1));
+	clienteGO->box.SetBottom(0, dialogBoxGO->box.y);
 	AddObject(clienteGO);
-
-	// Icone pra mudar tela
-	GameObject *iconeGO = new GameObject();
-	iconeGO->AddComponent(new ChangeScreen(*iconeGO));
-	iconeGO->box.SetOrigin(1655, 647);
-	AddObject(iconeGO);
 
 	// Capa simples placeholder
 	GameObject *capaGO = new GameObject();
 	capaGO->AddComponent(new GameItem(*capaGO, "assets/img/placeholders/capa-placeholder.png", 1, 1));
 	capaGO->box.SetOrigin(800, 200);
 	AddObject(capaGO);
-
-	// GameObject *tileMap = new GameObject();
-	// TileSet *tileSet = new TileSet(*tileMap, 64, 64, "assets/img/tileset.png");
-	// tileMap->AddComponent(new TileMap(*tileMap, "assets/map/tileMap.txt", tileSet));
-	// tileMap->box.x = 0;
-	// tileMap->box.y = 0;
-	// AddObject(tileMap);
-
-	// GameObject *penguin = new GameObject();
-	// PenguinBody *penguinBody = new PenguinBody(*penguin);
-	// penguin->AddComponent(penguinBody);
-	// penguin->box.x = 704;
-	// penguin->box.y = 640;
-	// AddObject(penguin);
-	// Camera::Follow(penguin);
-
-	// int newX;
-	// int newY;
-
-	// int maxAliens = (int)(((float)rand() / RAND_MAX) * (6 - 1) + 1);
-	// float newOffset;
-	// GameObject *alien;
-
-	// for (int i = 0; i < maxAliens; i++)
-	// {
-	// 	alien = new GameObject();
-	// 	newOffset = ((((float)rand()) / RAND_MAX) + i) / pow(10, i);
-	// 	alien->AddComponent(new Alien(*alien, newOffset));
-	// 	newX = (int)(((float)rand() / RAND_MAX) * (1340 + 40) - 40);
-	// 	newY = (int)(((float)rand() / RAND_MAX) * (1280 + 10) - 10);
-	// 	alien->box.x = newX - alien->box.w / 2;
-	// 	alien->box.y = newY - alien->box.h / 2;
-	// 	AddObject(alien);
-	// }
 }
 
 SecondStageState::~SecondStageState()
@@ -173,7 +152,7 @@ void SecondStageState::Update(float dt)
 	if (input.KeyPress(ESCAPE_KEY))
 	{
 		this->Pause();
-		GameData::canClientLeave = true;
+		GameData::clientCanLeave = true;
 		popRequested = true;
 	}
 

@@ -36,12 +36,12 @@ void Client::Update(float dt)
         this->reachedEndpoint = true;
         std::cout << "Reached endpoint.\n";
     }
-    else if (GameData::canClientLeave)
+    else if (GameData::clientCanLeave)
     {
         this->speed = Vec2(600, 0);
         if(this->currentPoint > GAME_SCREEN_WIDTH){
             associated.RequestDelete();
-            GameData::canClientLeave = false;
+            GameData::clientCanLeave = false;
             GameData::nextClient = true;
         }
 
