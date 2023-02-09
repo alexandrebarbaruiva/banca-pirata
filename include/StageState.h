@@ -21,7 +21,6 @@ class StageState : public State
 private:
     Music backgroundMusic;
     TileSet *tileSet;
-
 public:
     StageState(bool loadGame = false);
     ~StageState();

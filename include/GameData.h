@@ -28,6 +28,8 @@ public:
     static int currentMoney;
     static int currentRep;
     static int currentSus;
+    static bool canClientLeave;
+    static bool nextClient;
 
     /// @brief Utility to write save data to save file
     /// @param saveNumber save counter
