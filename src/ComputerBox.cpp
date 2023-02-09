@@ -82,9 +82,7 @@ void ComputerBox::Update(float dt)
             {
                 if (selectedGameIcon->GetComponent("Sprite") != nullptr)
                 {
-                    std::cout << "Shit?\n";
                     selectedGameIcon->RequestDelete();
-                    std::cout << "Shit!\n";
                 }
 
                 gameAssetIcon->isClicked = false;
@@ -210,7 +208,6 @@ void ComputerBox::UpdateGameCover()
 
         if (selectedGame[coverLayer] >= 0)
         {
-            // std::cout << "coverLayer " << coverLayer << "\n";
             gameAsset = ("assets/img/placeholders/Jogos/Asset-" +
                          GameData::availableGames[selectedGame[coverLayer]] +
                          "-" + coverOptions[coverLayer] +
