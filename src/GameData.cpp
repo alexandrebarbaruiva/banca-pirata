@@ -17,8 +17,9 @@ int GameData::currentDay;
 int GameData::currentMoney;
 int GameData::currentRep;
 int GameData::currentSus;
-bool GameData::canClientLeave;
+bool GameData::clientCanLeave;
 bool GameData::nextClient;
+std::string GameData::availableGames[10] = {"sonic", "fifa", "kirby", "mkombat", "pwaa", "dance", "gta", "mgear", "pokemon", "sims"};
 
 // Save file has the following structure.
 // Currently doesn't check for existing saved games.
