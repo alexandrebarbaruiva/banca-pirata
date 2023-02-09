@@ -20,7 +20,7 @@ class GameAssetIcon : public Component
 {
 private:
 public:
-    GameAssetIcon(GameObject &associated, std::string sprite, bool isOnTab = false, bool isClickable = true, bool isClicked = false, float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
+    GameAssetIcon(GameObject &associated, std::string sprite, bool isClickable = true, bool isClicked = false, float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
 
     std::string type = "GameAssetIcon";
 

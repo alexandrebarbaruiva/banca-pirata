@@ -22,8 +22,11 @@ private:
     std::vector<std::weak_ptr<GameObject>> tabArray;
     std::vector<std::weak_ptr<GameObject>> tabIconArray;
     std::vector<std::weak_ptr<GameObject>> gameIconArray;
+    std::vector<std::weak_ptr<GameObject>> gameCoverArray;
+    GameObject *selectedGameIcon;
+    std::string coverOptions[3] = {"fundo" , "1", "2"};
     bool changedTab = false;
-    int selectedTab = 0;
+    int selectedTab = 1;
     int selectedGame[3] = {-1, -1, -1};
 
 public:
@@ -36,6 +39,7 @@ public:
     void UpdateTab();
     void UpdateTabIcon();
     void UpdateGameIcon();
+    void UpdateGameCover();
     void Render();
     bool Is(std::string type);
     void NotifyCollision(GameObject &other);

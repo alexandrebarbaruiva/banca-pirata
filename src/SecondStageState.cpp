@@ -101,12 +101,6 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	clienteGO->AddComponent(new GameItem(*clienteGO, "assets/img/placeholders/emo1t2.png", 1, 1));
 	clienteGO->box.SetBottom(0, dialogBoxGO->box.y);
 	AddObject(clienteGO);
-
-	// Capa simples placeholder
-	GameObject *capaGO = new GameObject();
-	capaGO->AddComponent(new GameItem(*capaGO, "assets/img/placeholders/capa-placeholder.png", 1, 1));
-	capaGO->box.SetOrigin(800, 200);
-	AddObject(capaGO);
 }
 
 SecondStageState::~SecondStageState()

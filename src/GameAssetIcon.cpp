@@ -10,7 +10,7 @@
  */
 #include "GameAssetIcon.h"
 
-GameAssetIcon::GameAssetIcon(GameObject &associated, std::string sprite, bool isOnTab, bool isClickable, bool isClicked, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
+GameAssetIcon::GameAssetIcon(GameObject &associated, std::string sprite, bool isClickable, bool isClicked, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
 {
     this->isClickable = isClickable;
     this->isClicked = isClicked;
