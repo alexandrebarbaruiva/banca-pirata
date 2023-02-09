@@ -29,7 +29,7 @@ std::vector<std::string> GameData::ownedGames;
 // dayInGame: {int}
 // gameVersion: {float}
 //
-void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyInGame, int repInGame, int susInGame)
+void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyInGame, int repInGame, int susInGame, std::vector<std::string> ownedGamesInGame)
 {
     // Append to file
     // std::ofstream SaveFile("savegame", std::ios::app);
@@ -62,6 +62,17 @@ void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyIn
     saveFile << "\n";
 
     //TODO ownedGames save
+    // Write ownedGames
+    saveFile << "ownedGamesInGame ";
+    //for (std::string i: ownedGamesInGame)
+    //{
+    //    saveFile << i << " ";
+    //}
+    for (unsigned i = 0; i < ownedGamesInGame.size(); i++) 
+    {
+        saveFile << ownedGamesInGame[i] << " ";
+    }
+    //saveFile << "\n";
 
     saveFile.close();
 }
@@ -83,13 +94,17 @@ void GameData::Load()
 
     std::unordered_map<std::string, int> gameData;
     std::string name;
+    std::stringstream jogos;
     int value;
     if (saveFile.is_open())
     {
         while (saveFile >> name >> value)
         {
+            //std::cout << "Variavel : " << name << std::endl;
             gameData[name] = value;
         }
+        jogos << saveFile.rdbuf();
+        //std::cout << "Depois : " << jogos.str() << std::endl;
     }
 
     GameData::currentMinute = gameData["minuteInGame"];
@@ -98,6 +113,23 @@ void GameData::Load()
     GameData::currentMoney = gameData["moneyInGame"];
     GameData::currentRep = gameData["repInGame"];
     GameData::currentSus = gameData["susInGame"];
+    
+    //Load ownedGames
+    GameData::ownedGames.clear();
+    std::string aux = "";
+	for(unsigned i=0;i<jogos.str().length();++i){
+		
+		if(jogos.str()[i]==' '){
+			GameData::ownedGames.push_back(aux);
+			aux = "";
+		}
+		else{
+			aux.push_back(jogos.str()[i]);
+		}
+		
+	}
+	GameData::ownedGames.push_back(aux);
+
     //TODO ownedGames Load
 
 #ifdef DEBUG

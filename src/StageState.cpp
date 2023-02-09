@@ -113,6 +113,11 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 
 	gradeGO = nullptr;
 	gradeFechada = false;
+	//std::cout << "Games Loaded: ";
+	//for (std::string i: GameData::ownedGames)
+	//{
+	//	std::cout << i << " ";
+	//}
 }
 
 StageState::~StageState()
