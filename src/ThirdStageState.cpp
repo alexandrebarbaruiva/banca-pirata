@@ -268,17 +268,20 @@ void ThirdStageState::Update(float dt)
 		{
 			Carrinho *carrinho1 = ((Carrinho *)(carrinhos[i].lock()->GetComponent("Carrinho")));
 			Carrinho *carrinho2 = ((Carrinho *)(carrinhos[j].lock()->GetComponent("Carrinho")));
-			if (carrinho1->clickable && carrinho1->isClicked) 
+			if (GameData::currentMoney > 30)
 			{
-				carrinho1->Choosed();
-				carrinho2->UnChoosed();
-				carrinho1->isClicked = false;
-			}
-			if(carrinho2->clickable && carrinho2->isClicked)
-			{
-				carrinho2->Choosed();
-				carrinho1->UnChoosed();
-				carrinho2->isClicked = false;
+				if (carrinho1->clickable && carrinho1->isClicked)
+				{
+					carrinho1->Choosed();
+					carrinho2->UnChoosed();
+					carrinho1->isClicked = false;
+				}
+				if (carrinho2->clickable && carrinho2->isClicked)
+				{
+					carrinho2->Choosed();
+					carrinho1->UnChoosed();
+					carrinho2->isClicked = false;
+				}
 			}
 		}
 	}
@@ -293,12 +296,10 @@ void ThirdStageState::Update(float dt)
 			std::vector<std::weak_ptr<GameObject>> games = this->QueryObjectsByComponent("AssetGame");
 			for (unsigned a = 0; a < games.size(); a++)
 			{
-					std::cout << "Jogo não comprado" << "\n";
 				AssetGame *game = ((AssetGame *) (games[a].lock()->GetComponent("AssetGame")));
 				if(game->gameChoosed)
 				{
 
-					std::cout << "Jogo comprado" << "\n";
 					GameData::ownedGames.emplace_back(game->name);
 					GameData::currentMoney -= 30;
 				}
@@ -338,6 +339,8 @@ void ThirdStageState::Update(float dt)
         	//State *stage = new StageState(true);
 			GameData::endDay = false;
             GameData::currentDay++;
+			//Save Game
+			GameData::Save(GameData::currentMinute, GameData::currentHour, GameData::currentDay, GameData::currentMoney, GameData::currentRep, GameData::currentSus, GameData::ownedGames);
         	this->Pause();
 			popRequested = true;
         	//Game::GetInstance().Push(stage);
