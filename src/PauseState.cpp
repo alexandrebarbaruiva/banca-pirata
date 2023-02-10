@@ -31,12 +31,16 @@ PauseState::PauseState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 	AddObject(hudGO);
 
 	GameObject *dayHudText = new GameObject();
-	dayHudText->AddComponent(new Calendar(*dayHudText, GameData::currentDay));
+	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	dayHudText->box.SetOrigin(115, 35);
 	AddObject(dayHudText);
 
 	GameObject *timeHudText = new GameObject();
-	timeHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, (std::to_string(GameData::currentHour) + ":" + std::to_string(GameData::currentMinute)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentHour);
+    //Mudar quando der merge em Clock
+    //stageClock->Pause();
+	//timeHudText->AddComponent(stageClock);
+	timeHudText->AddComponent(new Text(*timeHudText, "assets/font/five.ttf", 40, Text::SOLID, (stageClock->GetClock()), {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	timeHudText->box.SetOrigin(300, 35);
 	AddObject(timeHudText);
 
@@ -144,39 +148,37 @@ void PauseState::Start()
 void PauseState::Update(float dt)
 {
 	InputManager input = InputManager::GetInstance();
-    //std::string pressedButton;
-    //for (unsigned i = 0; i < sprites.size(); i++)
-    //{
-    //    Sprite *sprite = ((Sprite *)(sprites[i].lock()->GetComponent("Sprite")));
-    //    if ()
-    //    {
-    //        std::cout << "Acabou sprite" << std::endl;
-    //    }
-    //}
+    std::string pressedButton;
+    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+    for (unsigned i = 0; i < buttons.size(); i++)
+    {
+        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
+        if (button->isClicked)
+        {
+            pressedButton = button->name;
+            button->isClicked = false;
+        }
+    }
 
     if (input.QuitRequested())
     {
         quitRequested = true;
     }
 
-    if(input.KeyPress(ESCAPE_KEY))
+    if(input.KeyPress(ESCAPE_KEY) or pressedButton == "continue")
     {
         this->Pause();
         popRequested = true;
     }
 
-    //if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "startButton")
-    //{
-
-    //    State *stage = new StageState();
-    //    Game::GetInstance().Push(stage);
-    //}
-
-    //if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "continueButton")
-    if (input.KeyPress(SPACE_KEY) or input.MousePress(LEFT_MOUSE_BUTTON))
+    if(pressedButton == "menu")
     {
-        State *stage = new StageState(true);
-        Game::GetInstance().Push(stage);
+        std::cout << "Menu" << std::endl;
+    }
+    if(pressedButton == "sair")
+    {
+        //std::cout << "Sair" << std::endl;
+        quitRequested = true;
     }
 
     UpdateArray(dt);
