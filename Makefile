@@ -16,6 +16,7 @@ RFLAGS = -O3 -mtune=native
 INC_PATH = include
 SRC_PATH = src
 TEST_PATH = tests
+IMG_PATH = assets/img $(wildcard assets/img/*/)
 BIN_PATH = bin
 DEP_PATH = dep
 
@@ -56,7 +57,7 @@ endif
 endif
 
 .PRECIOUS: $(DEP_FILES)
-.PHONY: release debug clean folders help
+.PHONY: release debug clean folders help txt_files
 
 all: $(EXEC)
 
@@ -73,6 +74,7 @@ clean:
 	$(RMDIR) $(DEP_PATH)
 	$(RMDIR) $(BIN_PATH)
 	$(RM) $(EXEC)
+# for f in ${IMG_PATH}; do rm -f $${f}/names.txt; done
 
 release: FLAGS += $(RFLAGS)
 release: $(EXEC)
@@ -108,6 +110,9 @@ endif
 ifeq ($(OS), Windows_NT)
 	echo.
 endif
+
+txt_files:
+	for f in ${IMG_PATH}; do find $${f} -maxdepth 1 -name \*.png >> $${f}/names.txt; done
 
 .SECONDEXPANSION:
 -include $$(DEP_FILES)
