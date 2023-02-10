@@ -132,8 +132,11 @@ void TitleState::Update(float dt)
 
     if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "startButton")
     {
-        State *stage = new StageState();
+
+        State *stage = new LetterState();
         Game::GetInstance().Push(stage);
+        //State *stage = new StageState();
+        //Game::GetInstance().Push(stage);
     }
 
     if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "continueButton")
