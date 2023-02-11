@@ -41,7 +41,7 @@ play.cpp
 savegame
 
 # Assets
-assets/img/placeholders
+assets/img/placeholders/
 assets/audio/
 assets/font/
 assets/map/

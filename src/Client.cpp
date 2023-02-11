@@ -9,6 +9,8 @@
  *
  */
 #include "Client.h"
+#include "ChatBox.h"
+#include "GameData.h"
 
 Client::Client(GameObject &associated, std::string sprite, float scaleX, float scaleY, bool reachedEndpoint, float frameTime, int frameCount) : Component(associated)
 {
@@ -39,12 +41,12 @@ void Client::Update(float dt)
     else if (GameData::clientCanLeave)
     {
         this->speed = Vec2(600, 0);
-        if(this->currentPoint > GAME_SCREEN_WIDTH){
+        if (this->currentPoint > GAME_SCREEN_WIDTH)
+        {
             associated.RequestDelete();
             GameData::clientCanLeave = false;
             GameData::nextClient = true;
         }
-
     }
     // To avoid big jumps when beginning session
     if (dt > 0.1)

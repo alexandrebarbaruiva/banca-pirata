@@ -9,8 +9,7 @@
  *
  */
 #ifndef CALENDAR_HEADER
-#define SPRITE_HEADER
-#define INCLUDE_SDL_IMAGE
+#define CALENDAR_HEADER
 #include "SDL_include.h"
 #include "Component.h"
 #include "Text.h"

@@ -17,14 +17,12 @@
 #include "Camera.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
-#include "Collision.cpp"
-#include "TitleState.h"
 #include "EndState.h"
-#include "GameData.h"
 #include "ReputationArrow.h"
 #include "Client.h"
 #include "ChangeScreen.h"
 #include "ComputerBox.h"
+#include "GameData.h"
 
 SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -33,13 +31,13 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 #endif
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/PlanoDeFundo_Tela2.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, SCREEN2_PATH + "PlanoDeFundo_Tela2.png"));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
 	// Mesa Tela
 	GameObject *tableGO = new GameObject();
-	tableGO->AddComponent(new Sprite(*tableGO, "assets/img/placeholders/Mesa_Tela2.png", 1, 1.0));
+	tableGO->AddComponent(new Sprite(*tableGO, SCREEN2_PATH + "Mesa_Tela2.png"));
 	tableGO->box.SetOrigin(0, 0);
 	AddObject(tableGO);
 
@@ -51,7 +49,7 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 	// Caixa diálogo
 	GameObject *dialogBoxGO = new GameObject();
-	dialogBoxGO->AddComponent(new Sprite(*dialogBoxGO, "assets/img/placeholders/tela2-caixa de dialogo.png", 1, 1.0));
+	dialogBoxGO->AddComponent(new Sprite(*dialogBoxGO, SCREEN2_PATH + "tela2-caixa de dialogo.png"));
 	dialogBoxGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
 	AddObject(dialogBoxGO);
 
@@ -64,7 +62,7 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 	// HUD Dia + Dinheiro
 	GameObject *hudGO = new GameObject();
-	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 1, 1));
+	hudGO->AddComponent(new GameItem(*hudGO, HUD_PATH + "dia_dinheiro.png", 1, 1));
 	hudGO->box.SetOrigin(0, 0);
 	AddObject(hudGO);
 
@@ -79,26 +77,20 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	AddObject(moneyHudText);
 
 	// HUD Reputação
-	GameObject *hudReputationGO2 = new GameObject();
-	hudReputationGO2->AddComponent(new GameItem(*hudReputationGO2, "assets/img/placeholders/tela 1-Rep.png", 1, 1));
-	hudReputationGO2->box.SetOrigin(960, 0);
-	AddObject(hudReputationGO2);
-
-	// HUD Seta da Reputação
 	GameObject *hudReputationArrowGO = new GameObject();
-	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, "assets/img/placeholders/tela 1-Rep_seta.png", GameData::currentRep, 1, 1));
-	hudReputationArrowGO->box.SetOrigin(960, 60);
+	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, GameData::currentRep, false));
+	hudReputationArrowGO->box.SetOrigin(960, 0);
 	AddObject(hudReputationArrowGO);
 
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
-	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
+	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, HUD_PATH + "Pause.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
 	// Cliente frontal
 	GameObject *clienteGO = new GameObject();
-	clienteGO->AddComponent(new GameItem(*clienteGO, "assets/img/placeholders/emo1t2.png", 1, 1));
+	clienteGO->AddComponent(new GameItem(*clienteGO, NPCS_PATH + "emo1t2.png"));
 	clienteGO->box.SetBottom(0, dialogBoxGO->box.y);
 	AddObject(clienteGO);
 }

@@ -15,7 +15,6 @@
 #include "Button.h"
 #include "Text.h"
 #include "InputManager.h"
-#include "StageState.h"
 #include "Camera.h"
 #include "Game.h"
 #include "Music.h"

@@ -10,6 +10,7 @@
  */
 #include "GameData.h"
 
+/* save file */
 bool GameData::playerVictory;
 int GameData::currentMinute;
 int GameData::currentHour;
@@ -17,8 +18,26 @@ int GameData::currentDay;
 int GameData::currentMoney;
 int GameData::currentRep;
 int GameData::currentSus;
+
+/* game functions */
 bool GameData::clientCanLeave;
 bool GameData::nextClient;
+
+/* game constant paths */
+std::string BASE_ASSET_PATH = "assets/img/";
+std::string TITLE_PATH = "assets/img/Titulo/";
+std::string SCREEN1_PATH = "assets/img/Tela 1/";
+std::string SCREEN2_PATH = "assets/img/Tela 2/";
+std::string SCREEN3_PATH = "assets/img/Tela 3/";
+std::string HUD_PATH = "assets/img/HUD/";
+std::string GAMES_PATH = "assets/img/Jogos/";
+std::string COVERS_PATH = "assets/img/Jogos/Capas/";
+std::string ICONS_PATH = "assets/img/Jogos/Icones/";
+std::string NPCS_PATH = "assets/img/NPCs/";
+std::string AUDIO_PATH = "assets/audio";
+std::string FONT_PATH = "assets/font";
+
+// TODO: change to allGames and start saving available games on save
 std::string GameData::availableGames[10] = {"sonic", "fifa", "kirby", "mkombat", "pwaa", "dance", "gta", "mgear", "pokemon", "sims"};
 
 // Save file has the following structure.
@@ -60,7 +79,7 @@ void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyIn
 
     // Write moneyInGame
     saveFile << "susInGame " << susInGame;
-    saveFile << "\n"; 
+    saveFile << "\n";
 
     saveFile.close();
 }
@@ -73,6 +92,17 @@ void GameData::Reset()
     GameData::currentMoney = 0;
     GameData::currentRep = 50;
     GameData::currentSus = 0;
+
+    GameData::clientCanLeave = false;
+    GameData::nextClient = true;
+
+    GameData::LoadNPCs();
+}
+
+void GameData::LoadNPCs()
+{
+    // get names from txt file
+    // add to vector NPCs
 }
 
 void GameData::Load()

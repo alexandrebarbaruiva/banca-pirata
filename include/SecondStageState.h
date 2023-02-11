@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef STAGESTATE_HEADER
-#define STAGESTATE_HEADER
+#ifndef SECONDSTAGESTATE_HEADER
+#define SECONDSTAGESTATE_HEADER
 #include "Sprite.h"
 #include "State.h"
 #include "TileSet.h"

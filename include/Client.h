@@ -14,8 +14,6 @@
 #include "Sprite.h"
 #include "Collider.h"
 #include "Vec2.h"
-#include "ChatBox.h"
-#include "GameData.h"
 
 class Client : public Component
 {

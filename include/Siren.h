@@ -11,7 +11,6 @@
 #ifndef SIREN_HEADER
 #define SIREN_HEADER
 #include "Component.h"
-#include "GameData.h"
 #include "Sprite.h"
 #include "Collider.h"
 #include "Vec2.h"
@@ -20,7 +19,7 @@ class Siren : public Component
 {
 private:
 public:
-    Siren(GameObject &associated, int reputationScore, std::string spriteOn = "assets/img/placeholders/tela 1-sus.png", std::string spriteOff = "assets/img/placeholders/tela 1-sus-vazio.png", float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
+    Siren(GameObject &associated, int reputationScore, float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
 
     std::string type = "Siren";
     std::string spriteOn;

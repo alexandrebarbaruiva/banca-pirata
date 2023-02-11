@@ -9,12 +9,13 @@
  *
  */
 #include "Siren.h"
+#include "GameData.h"
 
-Siren::Siren(GameObject &associated, int reputationScore, std::string spriteOn, std::string spriteOff, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated), reputationScore(reputationScore)
+Siren::Siren(GameObject &associated, int reputationScore, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated), reputationScore(reputationScore)
 {
-    this->spriteOn = spriteOn;
-    this->spriteOff = spriteOff;
-    Sprite *spriteItem = new Sprite(associated, spriteOff, 1, 1.0);
+    this->spriteOn = HUD_PATH + "sus.png";
+    this->spriteOff = HUD_PATH + "sus-vazio.png";
+    Sprite *spriteItem = new Sprite(associated, this->spriteOff, 1, 1.0);
     spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
@@ -30,7 +31,7 @@ void Siren::Update(float dt)
 #endif
         this->isOn = true;
         associated.RemoveComponent(associated.GetComponent("Sprite"));
-        Sprite *spriteItem = new Sprite(associated, spriteOn, 1, 1.0);
+        Sprite *spriteItem = new Sprite(associated, this->spriteOn);
         // spriteItem->SetScale(scaleX, scaleY);
         associated.AddComponent(spriteItem);
     }
@@ -42,7 +43,7 @@ void Siren::Update(float dt)
 #endif
         this->isOn = false;
         associated.RemoveComponent(associated.GetComponent("Sprite"));
-        Sprite *spriteItem = new Sprite(associated, spriteOff, 1, 1.0);
+        Sprite *spriteItem = new Sprite(associated, this->spriteOff);
         // spriteItem->SetScale(scaleX, scaleY);
         associated.AddComponent(spriteItem);
     }

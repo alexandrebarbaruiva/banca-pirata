@@ -16,7 +16,6 @@
 #include "SDL_include.h"
 #include "State.h"
 #include "InputManager.h"
-#include "InputManager.h"
 #include "Constants.h"
 #include "Resources.h"
 #include <stack>
