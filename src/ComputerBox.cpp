@@ -10,6 +10,7 @@
  */
 #include "ComputerBox.h"
 #include "GameAssetIcon.h"
+#include "GameData.h"
 #include <algorithm>
 #include <string>
 
@@ -24,14 +25,14 @@ void ComputerBox::Start()
     State *state = &Game::GetInstance().GetCurrentState();
 
     GameObject *computerWindowGO = new GameObject();
-    computerWindowGO->AddComponent(new Sprite(*computerWindowGO, "assets/img/placeholders/Tela2- Janela fundo.png"));
+    computerWindowGO->AddComponent(new Sprite(*computerWindowGO, SCREEN2_PATH + "Tela2- Janela fundo.png"));
     computerWindowGO->box.SetOrigin(1150, 170);
 
     state->AddObject(computerWindowGO);
 
     // Icone pra mudar tela
     GameObject *iconeGO = new GameObject();
-    iconeGO->AddComponent(new Sprite(*iconeGO, "assets/img/placeholders/tela2-Botao gravar hover.png"));
+    iconeGO->AddComponent(new Sprite(*iconeGO, SCREEN2_PATH + "tela2-Botao gravar hover.png"));
     iconeGO->box.SetOrigin(1655, 600);
     state->AddObject(iconeGO);
 
@@ -43,7 +44,7 @@ void ComputerBox::Start()
 void ComputerBox::Update(float dt)
 {
     State *state = &Game::GetInstance().GetCurrentState();
-    std::string tabAsset = "assets/img/placeholders/Tela2- Janela aba";
+    std::string tabAsset = SCREEN2_PATH + "Tela2- Janela aba";
     for (auto tabIcon : tabIconArray)
     {
         if (tabIcon.lock()->GetComponent("GameAssetIcon") != nullptr)
@@ -64,6 +65,7 @@ void ComputerBox::Update(float dt)
                 tabArray.push_back(state->AddObject(gameTabGO));
 
                 ComputerBox::UpdateGameIcon();
+                ComputerBox::UpdateGameSelector();
             }
         }
     }
@@ -90,12 +92,9 @@ void ComputerBox::Update(float dt)
                 int gamePositionX = (int)((gameIcon.lock()->box.x - 1170) / 125);      // Alternates between 0, 1, 2, 3, 4 and 5
                 int gamePositionY = (int)((gameIcon.lock()->box.y - 270) / (150 / 5)); // Alternates between 0 and 5
                 this->selectedGame[this->selectedTab - 1] = gamePositionX + gamePositionY;
+                this->selectedGamePosition[this->selectedTab - 1] = gameIcon.lock()->box.Center();
 
-                selectedGameIcon = new GameObject();
-                selectedGameIcon->AddComponent(new Sprite(*selectedGameIcon, "assets/img/placeholders/Seletor.png"));
-                selectedGameIcon->box.SetCenter(gameIcon.lock()->box.Center());
-                state->AddObject(selectedGameIcon);
-
+                ComputerBox::UpdateGameSelector();
                 ComputerBox::UpdateTabIcon();
                 ComputerBox::UpdateGameCover();
             }
@@ -108,7 +107,7 @@ void ComputerBox::UpdateTab()
     GameObject *gameTabGO;
 
     State *state = &Game::GetInstance().GetCurrentState();
-    std::string tabAsset = "assets/img/placeholders/Tela2- Janela aba";
+    std::string tabAsset = SCREEN2_PATH + "Tela2- Janela aba";
 
     for (auto tab : tabArray)
     {
@@ -145,11 +144,11 @@ void ComputerBox::UpdateTabIcon()
 
     for (int tab = 3; tab > 0; tab--)
     {
-        gameAsset = "assets/img/placeholders/tela2-games/Icone-bloqueado.png";
+        gameAsset = ICONS_PATH + "Icone-bloqueado.png";
 
         if (selectedGame[tab - 1] >= 0)
         {
-            gameAsset = ("assets/img/placeholders/tela2-games/Icone-" + GameData::availableGames[selectedGame[tab - 1]] + ".png");
+            gameAsset = (ICONS_PATH + "Icone-" + GameData::availableGames[selectedGame[tab - 1]] + ".png");
         }
 
         gameIconGO = new GameObject();
@@ -178,7 +177,7 @@ void ComputerBox::UpdateGameIcon()
     {
         for (int column = 0; column < 5; column++)
         {
-            gameAsset = ("assets/img/placeholders/tela2-games/Icone-" + GameData::availableGames[column + (row * 5)] + ".png");
+            gameAsset = (ICONS_PATH + "Icone-" + GameData::availableGames[column + (row * 5)] + ".png");
             gameIconGO = new GameObject();
             gameIconGO->AddComponent(new GameAssetIcon(*gameIconGO, gameAsset));
             gameIconGO->box.SetOrigin(1170 + (125 * column), 270 + (150 * row));
@@ -204,11 +203,9 @@ void ComputerBox::UpdateGameCover()
 
     for (int coverLayer = 0; coverLayer < 3; coverLayer++)
     {
-        gameAsset = "assets/img/placeholders/tela2-games/Placeholder-IconesAssets1.png";
-
         if (selectedGame[coverLayer] >= 0)
         {
-            gameAsset = ("assets/img/placeholders/Jogos/Asset-" +
+            gameAsset = (GAMES_PATH + "Asset-" +
                          GameData::availableGames[selectedGame[coverLayer]] +
                          "-" + coverOptions[coverLayer] +
                          ".png");
@@ -217,6 +214,19 @@ void ComputerBox::UpdateGameCover()
             gameCoverGO->box.SetOrigin(780, 200);
             gameCoverArray.push_back(state->AddObject(gameCoverGO));
         }
+    }
+}
+
+void ComputerBox::UpdateGameSelector()
+{
+    if (selectedTab > 0)
+    {
+        State *state = &Game::GetInstance().GetCurrentState();
+
+        selectedGameIcon = new GameObject();
+        selectedGameIcon->AddComponent(new Sprite(*selectedGameIcon, SCREEN2_PATH + "tela2-Seletor.png"));
+        selectedGameIcon->box.SetCenter(selectedGamePosition[selectedTab - 1]);
+        state->AddObject(selectedGameIcon);
     }
 }
 

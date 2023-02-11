@@ -11,21 +11,17 @@
 #include "StageState.h"
 #include "Constants.h"
 #include "Sound.h"
-#include "TileMap.h"
-#include "Game.h"
 #include "Text.h"
 #include "Clock.h"
 #include "Calendar.h"
 #include "Camera.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
-#include "Collision.cpp"
-#include "TitleState.h"
-#include "EndState.h"
-#include "GameData.h"
 #include "ReputationArrow.h"
 #include "Client.h"
 #include "SirenBox.h"
+#include "GameData.h"
+
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -39,14 +35,14 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/CenarioPixel.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, SCREEN1_PATH + "CenarioPixel.png", 1, 1.0));
 	bg->AddComponent(new CameraFollower(*bg));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
 	// HUD Dia + Hora + Dinheiro
 	GameObject *hudGO = new GameObject();
-	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 1, 1));
+	hudGO->AddComponent(new GameItem(*hudGO, HUD_PATH + "dia_dinheiro.png", 1, 1));
 	hudGO->box.SetOrigin(0, 0);
 	AddObject(hudGO);
 
@@ -66,20 +62,14 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	AddObject(moneyHudText);
 
 	// HUD Reputação
-	GameObject *hudReputationGO2 = new GameObject();
-	hudReputationGO2->AddComponent(new GameItem(*hudReputationGO2, "assets/img/placeholders/tela 1-Rep.png", 1, 1));
-	hudReputationGO2->box.SetOrigin(960, 0);
-	AddObject(hudReputationGO2);
-
-	// HUD Seta da Reputação
 	GameObject *hudReputationArrowGO = new GameObject();
-	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, "assets/img/placeholders/tela 1-Rep_seta.png", GameData::currentRep, 1, 1));
-	hudReputationArrowGO->box.SetOrigin(960, 60);
+	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, GameData::currentRep));
+	hudReputationArrowGO->box.SetOrigin(960, 0);
 	AddObject(hudReputationArrowGO);
 
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
-	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
+	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, HUD_PATH + "Pause.png", 1, 1));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
@@ -91,19 +81,19 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 
 	// Balcão
 	GameObject *balcaoGO = new GameObject();
-	balcaoGO->AddComponent(new GameItem(*balcaoGO, "assets/img/placeholders/balcão.png", 1, 1));
-	balcaoGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
+	balcaoGO->AddComponent(new GameItem(*balcaoGO, SCREEN1_PATH + "Balcao_Tela1.png", 1, 1));
+	balcaoGO->box.SetOrigin(0, 0);
 	AddObject(balcaoGO);
 
 	// Lojeiro
 	GameObject *lojeiroGO = new GameObject();
-	lojeiroGO->AddComponent(new GameItem(*lojeiroGO, "assets/img/placeholders/lojeiro_placeholder.png", 1, 1));
-	lojeiroGO->box.SetBottom(1290, balcaoGO->box.y);
+	lojeiroGO->AddComponent(new GameItem(*lojeiroGO, SCREEN1_PATH + "lojeiro.png", 1, 1));
+	lojeiroGO->box.SetBottom(1290, 810);
 	AddObject(lojeiroGO);
 
 	// Clientes
 	GameObject *clienteGO = new GameObject();
-	clienteGO->AddComponent(new Client(*clienteGO, "assets/img/placeholders/velinho.png", 1, 1));
+	clienteGO->AddComponent(new Client(*clienteGO, NPCS_PATH + "emo1t1.png", 1, 1));
 	clienteGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
 
 	AddObject(clienteGO);
@@ -144,12 +134,11 @@ void StageState::Update(float dt)
 	if (GameData::nextClient)
 	{
 		GameObject *cliente2GO = new GameObject();
-		cliente2GO->AddComponent(new Client(*cliente2GO, "assets/img/placeholders/velinho.png", 1, 1));
+		cliente2GO->AddComponent(new Client(*cliente2GO, NPCS_PATH + "emo1t1.png"));
 		cliente2GO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
 
 		AddObject(cliente2GO);
 	}
-	
 
 	InputManager input = InputManager::GetInstance();
 	// check if quit was requested

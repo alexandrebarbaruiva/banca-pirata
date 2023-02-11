@@ -9,6 +9,7 @@
  *
  */
 #include "ChatBox.h"
+#include "SecondStageState.h"
 
 ChatBox::ChatBox(GameObject &associated, bool clickable, std::string sprite, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
 {

@@ -9,12 +9,15 @@
  *
  */
 #include "TitleState.h"
+#include "StageState.h"
+#include "GameData.h"
+
 
 TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 {
     // Background
     GameObject *bg = new GameObject();
-    Sprite *spriteBackground = new Sprite(*bg, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0f);
+    Sprite *spriteBackground = new Sprite(*bg, BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0f);
     bg->AddComponent(spriteBackground);
     bg->box.x = 0;
     bg->box.y = 0;

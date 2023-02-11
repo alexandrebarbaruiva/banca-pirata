@@ -9,6 +9,7 @@
  *
  */
 #include "ChangeScreen.h"
+#include "ThirdStageState.h"
 
 ChangeScreen::ChangeScreen(GameObject &associated, bool clickable, std::string sprite, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
 {

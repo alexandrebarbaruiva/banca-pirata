@@ -12,8 +12,6 @@
 #define COMPUTER_BOX_HEADER
 #include "Component.h"
 #include "Sprite.h"
-#include "State.h"
-#include "Siren.h"
 #include "Collider.h"
 
 class ComputerBox : public Component
@@ -28,6 +26,7 @@ private:
     bool changedTab = false;
     int selectedTab = 1;
     int selectedGame[3] = {-1, -1, -1};
+    Vec2 selectedGamePosition[3];
 
 public:
     ComputerBox(GameObject &associated);
@@ -40,6 +39,7 @@ public:
     void UpdateTabIcon();
     void UpdateGameIcon();
     void UpdateGameCover();
+    void UpdateGameSelector();
     void Render();
     bool Is(std::string type);
     void NotifyCollision(GameObject &other);

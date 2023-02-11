@@ -9,7 +9,6 @@
  *
  */
 #include "EndState.h"
-#include "GameData.h"
 #include "Sprite.h"
 #include "Camera.h"
 #include "InputManager.h"
@@ -19,26 +18,26 @@
 
 EndState::EndState()
 {
-    GameObject *bg = new GameObject();
-    Sprite *result;
-    if (GameData::playerVictory)
-    {
-        result = new Sprite(*bg, "assets/img/win.jpg");
-        backgroundMusic = Music("assets/audio/endStateWin.ogg");
-    }
-    else
-    {
-        result = new Sprite(*bg, "assets/img/lose.jpg");
-        backgroundMusic = Music("assets/audio/endStateLose.ogg");
-    }
-    bg->AddComponent(result);
-    bg->box.SetOrigin({0, 0});
-    AddObject(bg);
+    // GameObject *bg = new GameObject();
+    // Sprite *result;
+    // if (GameData::playerVictory)
+    // {
+    //     result = new Sprite(*bg, "assets/img/win.jpg");
+    //     backgroundMusic = Music("assets/audio/endStateWin.ogg");
+    // }
+    // else
+    // {
+    //     result = new Sprite(*bg, "assets/img/lose.jpg");
+    //     backgroundMusic = Music("assets/audio/endStateLose.ogg");
+    // }
+    // bg->AddComponent(result);
+    // bg->box.SetOrigin({0, 0});
+    // AddObject(bg);
 
-    GameObject *text = new GameObject();
-    text->box.SetOrigin({GAME_SCREEN_WIDTH / 2, 500});
-    text->AddComponent(new Text(*text, "assets/font/pixelated.ttf", 50, Text::BLENDED, "ESC to quit  SPACE to play again", {255, 0, 0, SDL_ALPHA_OPAQUE}));
-    AddObject(text);
+    // GameObject *text = new GameObject();
+    // text->box.SetOrigin({GAME_SCREEN_WIDTH / 2, 500});
+    // text->AddComponent(new Text(*text, "assets/font/pixelated.ttf", 50, Text::BLENDED, "ESC to quit  SPACE to play again", {255, 0, 0, SDL_ALPHA_OPAQUE}));
+    // AddObject(text);
 }
 
 void EndState::Update(float dt)

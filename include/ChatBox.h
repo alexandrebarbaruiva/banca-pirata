@@ -11,7 +11,6 @@
 #ifndef CHATBOX_HEADER
 #define CHATBOX_HEADER
 #include "Component.h"
-#include "SecondStageState.h"
 #include "Sprite.h"
 #include "Collider.h"
 #include "Vec2.h"
@@ -20,7 +19,7 @@ class ChatBox : public Component
 {
 private:
 public:
-    ChatBox(GameObject &associated, bool clickable = false, std::string sprite = "assets/img/placeholders/tela 1-balao.png", float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
+    ChatBox(GameObject &associated, bool clickable = false, std::string sprite = SCREEN1_PATH + "tela 1-balao.png", float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
 
     std::string type = "ChatBox";
 

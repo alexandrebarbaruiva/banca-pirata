@@ -12,7 +12,6 @@
 #define SIRENBOX_HEADER
 #include "Component.h"
 #include "Sprite.h"
-#include "State.h"
 #include "Siren.h"
 #include "Collider.h"
 

@@ -11,7 +11,6 @@
 #ifndef GAME_ASSET_ICON_HEADER
 #define GAME_ASSET_ICON_HEADER
 #include "Component.h"
-#include "GameData.h"
 #include "Sprite.h"
 #include "Collider.h"
 #include "Vec2.h"

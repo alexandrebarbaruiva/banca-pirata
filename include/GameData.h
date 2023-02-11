@@ -15,12 +15,14 @@
 #include <fstream>
 #include <ctime>
 #include <unordered_map>
+#include <vector>
 
 class GameData
 {
 private:
     /* data */
 public:
+    /* save file */
     static bool playerVictory;
     static int currentMinute;
     static int currentHour;
@@ -28,9 +30,14 @@ public:
     static int currentMoney;
     static int currentRep;
     static int currentSus;
+
+
+    /* game functions */
     static bool clientCanLeave;
     static bool nextClient;
+
     static std::string availableGames[10];
+    static std::vector<std::string> npcNames;
 
     /// @brief Utility to write save data to save file
     /// @param saveNumber save counter
@@ -39,6 +46,8 @@ public:
     static void Save(int minuteInGame, int hourInGame, int dayInGame, int moneyInGame, int repInGame, int susInGame);
 
     static void Reset();
+
+    static void LoadNPCs();
 
     static void Load();
 };
