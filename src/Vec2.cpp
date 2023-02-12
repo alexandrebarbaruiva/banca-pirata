@@ -32,6 +32,11 @@ Vec2 Vec2::operator+=(const Vec2 &vector) const
     return *this + vector;
 }
 
+bool Vec2::operator!=(const Vec2 &vector)
+{
+    return ((this->x != vector.x) or (this->y != vector.y));
+}
+
 Vec2 Vec2::operator-(const Vec2 &vector) const
 {
     return Vec2(this->x - vector.x, this->y - vector.y);

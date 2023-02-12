@@ -44,6 +44,7 @@ public:
     virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject *object);
     virtual std::vector<std::weak_ptr<GameObject>> QueryObjectsByComponent(std::string component);
 
+    void RequestPop();
     bool PopRequested();
     bool QuitRequested();
 };

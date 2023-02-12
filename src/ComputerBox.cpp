@@ -11,6 +11,7 @@
 #include "ComputerBox.h"
 #include "GameAssetIcon.h"
 #include "GameData.h"
+#include "GameRecorderButton.h"
 #include <algorithm>
 #include <string>
 
@@ -27,14 +28,13 @@ void ComputerBox::Start()
     GameObject *computerWindowGO = new GameObject();
     computerWindowGO->AddComponent(new Sprite(*computerWindowGO, SCREEN2_PATH + "Tela2- Janela fundo.png"));
     computerWindowGO->box.SetOrigin(1150, 170);
-
     state->AddObject(computerWindowGO);
 
     // Icone pra mudar tela
-    GameObject *iconeGO = new GameObject();
-    iconeGO->AddComponent(new Sprite(*iconeGO, SCREEN2_PATH + "tela2-Botao gravar hover.png"));
-    iconeGO->box.SetOrigin(1655, 600);
-    state->AddObject(iconeGO);
+    gameRecorderButton = new GameObject();
+    gameRecorderButton->AddComponent(new GameRecorderButton(*gameRecorderButton));
+    gameRecorderButton->box.SetOrigin(1655, 600);
+    state->AddObject(gameRecorderButton);
 
     ComputerBox::UpdateTab();
     ComputerBox::UpdateTabIcon();
@@ -98,6 +98,14 @@ void ComputerBox::Update(float dt)
                 ComputerBox::UpdateTabIcon();
                 ComputerBox::UpdateGameCover();
             }
+        }
+    }
+    if (this->selectedGame[0] != -1 and this->selectedGame[1] != -1 and this->selectedGame[2] != -1)
+    {
+        if (gameRecorderButton->GetComponent("GameRecorderButton"))
+        {
+            GameRecorderButton *grButton = (GameRecorderButton *)gameRecorderButton->GetComponent("GameRecorderButton");
+            grButton->clickable = true;
         }
     }
 }
@@ -219,13 +227,14 @@ void ComputerBox::UpdateGameCover()
 
 void ComputerBox::UpdateGameSelector()
 {
-    if (selectedTab > 0)
+    if (selectedTab > 0 and (selectedGamePosition[selectedTab - 1] != Vec2(0, 0)))
     {
         State *state = &Game::GetInstance().GetCurrentState();
 
         selectedGameIcon = new GameObject();
         selectedGameIcon->AddComponent(new Sprite(*selectedGameIcon, SCREEN2_PATH + "tela2-Seletor.png"));
         selectedGameIcon->box.SetCenter(selectedGamePosition[selectedTab - 1]);
+
         state->AddObject(selectedGameIcon);
     }
 }

@@ -21,17 +21,18 @@ private:
     std::vector<std::weak_ptr<GameObject>> tabIconArray;
     std::vector<std::weak_ptr<GameObject>> gameIconArray;
     std::vector<std::weak_ptr<GameObject>> gameCoverArray;
+    GameObject *gameRecorderButton;
     GameObject *selectedGameIcon;
-    std::string coverOptions[3] = {"fundo" , "1", "2"};
+    std::string coverOptions[3] = {"fundo", "1", "2"};
     bool changedTab = false;
     int selectedTab = 1;
-    int selectedGame[3] = {-1, -1, -1};
-    Vec2 selectedGamePosition[3];
+    Vec2 selectedGamePosition[3] = {Vec2(0,0), Vec2(0,0), Vec2(0,0)};
 
 public:
     ComputerBox(GameObject &associated);
 
     std::string type = "ComputerBox";
+    int selectedGame[3] = {-1, -1, -1};
 
     void Start();
     void Update(float dt);

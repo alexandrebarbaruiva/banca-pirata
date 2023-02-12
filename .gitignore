@@ -42,6 +42,7 @@ savegame
 
 # Assets
 assets/img/placeholders/
+assets/**/*.txt
 assets/audio/
 assets/font/
 assets/map/

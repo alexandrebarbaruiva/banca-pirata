@@ -36,7 +36,6 @@ void ChangeScreen::Update(float dt)
         std::cout << RESET;
 
 #endif
-
         associated.RequestDelete();
         this->isClicked = true;
 
