@@ -22,6 +22,11 @@ State::~State()
 	objectArray.clear();
 }
 
+void State::RequestPop()
+{
+	this->popRequested = true;
+}
+
 bool State::PopRequested()
 {
 	return popRequested;

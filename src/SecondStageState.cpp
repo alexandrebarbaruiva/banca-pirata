@@ -97,6 +97,8 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 SecondStageState::~SecondStageState()
 {
+	this->Pause();
+	GameData::clientCanLeave = true;
 	objectArray.clear();
 }
 
@@ -137,8 +139,6 @@ void SecondStageState::Update(float dt)
 
 	if (input.KeyPress(ESCAPE_KEY))
 	{
-		this->Pause();
-		GameData::clientCanLeave = true;
 		popRequested = true;
 	}
 

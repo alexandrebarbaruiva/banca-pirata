@@ -26,6 +26,7 @@ public:
 
     Vec2 operator+(const Vec2 &vector) const;
     Vec2 operator+=(const Vec2 &vector) const;
+    bool operator!=(const Vec2 &vector);
     Vec2 operator-(const Vec2 &vector) const;
     Vec2 operator*(const float vector) const;
 
