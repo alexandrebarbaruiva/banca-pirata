@@ -300,7 +300,8 @@ void ThirdStageState::Update(float dt)
 				if(game->gameChoosed)
 				{
 
-					GameData::ownedGames.emplace_back(game->name);
+					//TODO adicionar jogas ao save
+					//GameData::ownedGames.emplace_back(game->name);
 					GameData::currentMoney -= 30;
 				}
 			}
@@ -340,7 +341,7 @@ void ThirdStageState::Update(float dt)
 			GameData::endDay = false;
             GameData::currentDay++;
 			//Save Game
-			GameData::Save(GameData::currentMinute, GameData::currentHour, GameData::currentDay, GameData::currentMoney, GameData::currentRep, GameData::currentSus, GameData::ownedGames);
+			GameData::Save(GameData::currentMinute, GameData::currentHour, GameData::currentDay, GameData::currentMoney, GameData::currentRep, GameData::currentSus);
         	this->Pause();
 			popRequested = true;
         	//Game::GetInstance().Push(stage);
