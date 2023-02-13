@@ -50,15 +50,9 @@ PauseState::PauseState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 	AddObject(moneyHudText);
 
 	// HUD Reputação
-	GameObject *hudReputationGO2 = new GameObject();
-	hudReputationGO2->AddComponent(new GameItem(*hudReputationGO2, "assets/img/placeholders/tela 1-Rep.png", 1, 1));
-	hudReputationGO2->box.SetOrigin(960, 0);
-	AddObject(hudReputationGO2);
-
-	// HUD Seta da Reputação
 	GameObject *hudReputationArrowGO = new GameObject();
-	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, "assets/img/placeholders/tela 1-Rep_seta.png", GameData::currentRep, 1, 1));
-	hudReputationArrowGO->box.SetOrigin(960, 60);
+	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, GameData::currentRep));
+	hudReputationArrowGO->box.SetOrigin(960, 0);
 	AddObject(hudReputationArrowGO);
 
 	// HUD Pause

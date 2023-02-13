@@ -22,6 +22,8 @@
 #include "Client.h"
 #include "SirenBox.h"
 #include "GameData.h"
+#include "Button.h"
+#include "PauseState.h"
 
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
