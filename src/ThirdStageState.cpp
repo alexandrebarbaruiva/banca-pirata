@@ -1,7 +1,7 @@
 /**
- * @file SecondStageState.cpp
+ * @file ThirdStageState.cpp
  * @author Alexandre Augusto de Sá dos Santos (150056940@aluno.unb.br)
- * @brief SecondStageState class implementation file. Where happens the first part of the game.
+ * @brief ThirdStageState class implementation file. Where happens the first part of the game.
  * @version 0.1
  * @date 2022-06-26
  *

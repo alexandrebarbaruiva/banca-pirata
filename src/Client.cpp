@@ -44,6 +44,7 @@ void Client::Update(float dt)
         if (this->currentPoint > GAME_SCREEN_WIDTH)
         {
             associated.RequestDelete();
+            GameData::changeCurrentClient();
             GameData::clientCanLeave = false;
             GameData::nextClient = true;
         }

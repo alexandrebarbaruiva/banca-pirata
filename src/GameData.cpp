@@ -9,6 +9,8 @@
  *
  */
 #include "GameData.h"
+#include <cstdlib>
+#include <ctime>
 
 /* save file */
 bool GameData::playerVictory;
@@ -22,6 +24,9 @@ int GameData::currentSus;
 /* game functions */
 bool GameData::clientCanLeave;
 bool GameData::nextClient;
+std::vector<std::string> GameData::clientNames{"emo1", "emo2", "emo3", "exe1", "exe2", "exe3", "pol1", "pol2", "pol3", "pol4"};
+std::string GameData::currentClient;
+int GameData::currentClientPos;
 
 /* game constant paths */
 std::string BASE_ASSET_PATH = "assets/img/";
@@ -96,13 +101,28 @@ void GameData::Reset()
     GameData::clientCanLeave = false;
     GameData::nextClient = true;
 
-    GameData::LoadNPCs();
+    GameData::LoadClients();
 }
 
-void GameData::LoadNPCs()
+void GameData::LoadClients()
 {
     // get names from txt file
-    // add to vector NPCs
+    // add to vector clients
+    // set random client
+    GameData::changeCurrentClient();
+}
+
+void GameData::changeCurrentClient()
+{
+    // set up next client
+    srand(time(0));
+    int newClient = rand() % GameData::clientNames.size();
+    while (GameData::currentClientPos == newClient)
+    {
+        newClient = rand() % GameData::clientNames.size();
+    }
+
+    GameData::currentClient = GameData::clientNames.at(newClient);
 }
 
 void GameData::Load()

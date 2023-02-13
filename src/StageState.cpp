@@ -90,13 +90,6 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	lojeiroGO->AddComponent(new GameItem(*lojeiroGO, SCREEN1_PATH + "lojeiro.png", 1, 1));
 	lojeiroGO->box.SetBottom(1290, 810);
 	AddObject(lojeiroGO);
-
-	// Clientes
-	GameObject *clienteGO = new GameObject();
-	clienteGO->AddComponent(new Client(*clienteGO, NPCS_PATH + "emo1t1.png", 1, 1));
-	clienteGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
-
-	AddObject(clienteGO);
 }
 
 StageState::~StageState()
@@ -134,7 +127,7 @@ void StageState::Update(float dt)
 	if (GameData::nextClient)
 	{
 		GameObject *cliente2GO = new GameObject();
-		cliente2GO->AddComponent(new Client(*cliente2GO, NPCS_PATH + "emo1t1.png"));
+		cliente2GO->AddComponent(new Client(*cliente2GO, NPCS_PATH + GameData::currentClient + "t1.png"));
 		cliente2GO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
 
 		AddObject(cliente2GO);

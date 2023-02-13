@@ -19,7 +19,7 @@ class ChatBox : public Component
 {
 private:
 public:
-    ChatBox(GameObject &associated, bool clickable = false, std::string sprite = SCREEN1_PATH + "tela 1-balao.png", float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
+    ChatBox(GameObject &associated, bool clickable = false, std::string sprite = SCREEN1_PATH + "Spritesheet-balao.png", float scaleX = 1, float scaleY = 1, float frameTime = 0.2, int frameCount = 5);
 
     std::string type = "ChatBox";
 
