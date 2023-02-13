@@ -341,7 +341,7 @@ void ThirdStageState::Update(float dt)
 			GameData::endDay = false;
             GameData::currentDay++;
 			//Save Game
-			GameData::Save(GameData::currentMinute, GameData::currentHour, GameData::currentDay, GameData::currentMoney, GameData::currentRep, GameData::currentSus);
+			GameData::Save(GameData::currentMinute, GameData::currentHour, GameData::currentDay, GameData::currentMoney, GameData::currentRep, GameData::currentSus, GameData::ownedGames);
         	this->Pause();
 			popRequested = true;
         	//Game::GetInstance().Push(stage);
