@@ -36,12 +36,9 @@ void ChangeScreen::Update(float dt)
         std::cout << RESET;
 
 #endif
-        associated.RequestDelete();
-        this->isClicked = true;
 
-        // Create Screen 3 here
-        State *stage = new ThirdStageState();
-        Game::GetInstance().Push(stage);
+        
+        this->isClicked = true;
     }
 }
 

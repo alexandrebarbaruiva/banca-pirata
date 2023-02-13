@@ -15,11 +15,16 @@
 #include "Camera.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
+#include "GameData.h"
 #include "ReputationArrow.h"
 #include "SirenBox.h"
 #include "Client.h"
+#include "Clock.h"
+#include "Calendar.h"
+#include "Carrinho.h"
 #include "AssetGame.h"
-#include "GameData.h"
+#include "AssetItem.h"
+#include "ChangeScreen.h"
 
 ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -33,6 +38,8 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
+	
+
 	// HUD Dia + Dinheiro
 	GameObject *hudGO = new GameObject();
 	hudGO->AddComponent(new GameItem(*hudGO, HUD_PATH + "dia_dinheiro.png"));
@@ -40,9 +47,18 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	AddObject(hudGO);
 
 	GameObject *dayHudText = new GameObject();
-	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	dayHudText->AddComponent(new Calendar(*dayHudText, GameData::currentDay));
 	dayHudText->box.SetOrigin(115, 35);
 	AddObject(dayHudText);
+
+	GameObject *timeHudText = new GameObject();
+	stageClock = new Clock(*timeHudText, 18, 0);
+    GameData::currentMinute = 0;
+    GameData::currentHour = 8;
+	stageClock->Pause();
+	timeHudText->AddComponent(stageClock);
+	timeHudText->box.SetOrigin(300, 35);
+	AddObject(timeHudText);
 
 	GameObject *moneyHudText = new GameObject();
 	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
@@ -93,18 +109,19 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// GameAsset 1
 	GameObject *gameAsset1GO = new GameObject();
-	AssetGame *assetGame1 = new AssetGame(*gameAsset1GO, COVERS_PATH + "capa-placeholder.png", "Violento", "Radical", "Esportivo", 10);
-	// gameAsset1GO->AddComponent(assetGame1);
+	AssetGame *assetGame1 = new AssetGame(*gameAsset1GO, "gta", "Violento", "Radical", "Esportivo", 30);
+	gameAsset1GO->AddComponent(assetGame1);
+	AddObject(gameAsset1GO);
 
 	// Capa Game 1
 	GameObject *capaGO = new GameObject();
-	capaGO->AddComponent(new GameItem(*capaGO, assetGame1->spriteName, 0.8, 0.8, false, 1, 1));
+	capaGO->AddComponent(new AssetItem(*capaGO, assetGame1, assetGame1->spriteName, 0.8, 0.8, false, 1, 1));
 	capaGO->box.SetOrigin(800, 220);
 	AddObject(capaGO);
 
 	// Marcador de Preço Game 1
 	GameObject *marcaPrecoGame1GO = new GameObject();
-	marcaPrecoGame1GO->AddComponent(new GameItem(*marcaPrecoGame1GO, SCREEN3_PATH + "Loja-fundo preco.png", 1, 1));
+	marcaPrecoGame1GO->AddComponent(new AssetItem(*marcaPrecoGame1GO, assetGame1, SCREEN3_PATH + "Loja-fundo preco.png", 1, 1));
 	marcaPrecoGame1GO->box.SetOrigin(1000, 200);
 	AddObject(marcaPrecoGame1GO);
 
@@ -134,8 +151,8 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Carrinho Game 1
 	GameObject *carrinho1GO = new GameObject();
-	carrinho1GO->AddComponent(new GameItem(*carrinho1GO, SCREEN3_PATH + "Loja-compra.png", 0.6, 0.6, false, 1, 1));
-	carrinho1GO->box.SetOrigin(1020, 610);
+	carrinho1GO->AddComponent(new Carrinho(*carrinho1GO, assetGame1));
+	carrinho1GO->box.SetOrigin(1010, 600);
 	AddObject(carrinho1GO);
 
 	// Alternativa de Asset
@@ -146,18 +163,19 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// GameAsset 2
 	GameObject *gameAsset2GO = new GameObject();
-	AssetGame *assetGame2 = new AssetGame(*gameAsset2GO, COVERS_PATH + "Capa kirby.png", "Fofo", "Casual", "Radical", 20);
-	// gameAsset1GO->AddComponent(assetGame1);
+	AssetGame *assetGame2 = new AssetGame(*gameAsset2GO, "pokemon", "Fofo", "Casual", "Radical", 30);
+	gameAsset2GO->AddComponent(assetGame2);
+	AddObject(gameAsset2GO);
 
 	// Capa Game 2
 	GameObject *capa2GO = new GameObject();
-	capa2GO->AddComponent(new GameItem(*capa2GO, assetGame2->spriteName, 0.8, 0.8, false, 1, 1));
+	capa2GO->AddComponent(new AssetItem(*capa2GO, assetGame2, assetGame2->spriteName, 0.8, 0.8, false, 1, 1));
 	capa2GO->box.SetOrigin(1400, 220);
 	AddObject(capa2GO);
 
 	// Marcador de Preço Game 2
 	GameObject *marcaPrecoGame2GO = new GameObject();
-	marcaPrecoGame2GO->AddComponent(new GameItem(*marcaPrecoGame2GO, SCREEN3_PATH + "Loja-fundo preco.png", 1, 1));
+	marcaPrecoGame2GO->AddComponent(new AssetItem(*marcaPrecoGame2GO, assetGame2, SCREEN3_PATH + "Loja-fundo preco.png", 1, 1));
 	marcaPrecoGame2GO->box.SetOrigin(1600, 200);
 	AddObject(marcaPrecoGame2GO);
 
@@ -187,8 +205,8 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 
 	// Carrinho Game 2
 	GameObject *carrinho2GO = new GameObject();
-	carrinho2GO->AddComponent(new GameItem(*carrinho2GO, SCREEN3_PATH + "Loja-compra.png", 0.6, 0.6, false, 1, 1));
-	carrinho2GO->box.SetOrigin(1620, 610);
+	carrinho2GO->AddComponent(new Carrinho(*carrinho2GO, assetGame2));
+	carrinho2GO->box.SetOrigin(1610, 600);
 	AddObject(carrinho2GO);
 
 	// End Of Day Post-it
@@ -198,10 +216,10 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	AddObject(postItGO);
 
 	// Botao Desligar PC
-	GameObject *botaoDesligaGO = new GameObject();
-	botaoDesligaGO->AddComponent(new GameItem(*botaoDesligaGO, SCREEN3_PATH + "Loja-desliga.png", 1.0, 1.0, false, 1, 1));
-	botaoDesligaGO->box.SetOrigin(1800, 745);
-	AddObject(botaoDesligaGO);
+	GameObject *iconeGO = new GameObject();
+	iconeGO->AddComponent(new ChangeScreen(*iconeGO));
+	iconeGO->box.SetOrigin(1800, 745);
+	AddObject(iconeGO);
 }
 
 ThirdStageState::~ThirdStageState()
@@ -233,22 +251,78 @@ void ThirdStageState::Resume()
 
 void ThirdStageState::Update(float dt)
 {
+
+	// Update every object
+	UpdateArray(dt);
+
 	// update camera
 	Camera::Update(dt);
 
 	InputManager input = InputManager::GetInstance();
+    std::string pressedButton;
 
+    std::vector<std::weak_ptr<GameObject>> carrinhos = this->QueryObjectsByComponent("Carrinho");
+	for (unsigned i = 0; i < carrinhos.size(); i++)
+	{
+		for (unsigned j = i + 1; j < carrinhos.size(); j++)
+		{
+			Carrinho *carrinho1 = ((Carrinho *)(carrinhos[i].lock()->GetComponent("Carrinho")));
+			Carrinho *carrinho2 = ((Carrinho *)(carrinhos[j].lock()->GetComponent("Carrinho")));
+			if (GameData::currentMoney > 30)
+			{
+				if (carrinho1->clickable && carrinho1->isClicked)
+				{
+					carrinho1->Choosed();
+					carrinho2->UnChoosed();
+					carrinho1->isClicked = false;
+				}
+				if (carrinho2->clickable && carrinho2->isClicked)
+				{
+					carrinho2->Choosed();
+					carrinho1->UnChoosed();
+					carrinho2->isClicked = false;
+				}
+			}
+		}
+	}
+
+	std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("ChangeScreen");
+    for (unsigned i = 0; i < buttons.size(); i++)
+    {
+		ChangeScreen *button = ((ChangeScreen *) (buttons[i].lock()->GetComponent("ChangeScreen")));
+        if (button->isClicked)
+        {
+
+			std::vector<std::weak_ptr<GameObject>> games = this->QueryObjectsByComponent("AssetGame");
+			for (unsigned a = 0; a < games.size(); a++)
+			{
+				AssetGame *game = ((AssetGame *) (games[a].lock()->GetComponent("AssetGame")));
+				if(game->gameChoosed)
+				{
+
+					//TODO adicionar jogas ao save
+					//GameData::ownedGames.emplace_back(game->name);
+					GameData::currentMoney -= 30;
+				}
+			}
+            button->isClicked = false;
+            pressedButton = button->type;
+
+        	//associated.RequestDelete();
+        	//this->isClicked = true;
+        }
+    }
 	// check if quit was requested
 	if (input.QuitRequested())
 	{
 		quitRequested = true;
 	}
 
-	if (input.KeyPress(ESCAPE_KEY))
-	{
-		this->Pause();
-		popRequested = true;
-	}
+	//if (input.KeyPress(ESCAPE_KEY))
+	//{
+	//	this->Pause();
+	//	popRequested = true;
+	//}
 
 	if (input.MousePress(LEFT_MOUSE_BUTTON))
 	{
@@ -257,41 +331,24 @@ void ThirdStageState::Update(float dt)
 #endif
 	}
 
-	// Update every object
-	UpdateArray(dt);
+
+	if(pressedButton == "ChangeScreen")
+	{
+
+        	// Change to StageState
+        	//State *stage = &Game::GetInstance().GetCurrentState();
+        	//State *stage = new StageState(true);
+			GameData::endDay = false;
+            GameData::currentDay++;
+			//Save Game
+			GameData::Save(GameData::currentMinute, GameData::currentHour, GameData::currentDay, GameData::currentMoney, GameData::currentRep, GameData::currentSus, GameData::ownedGames);
+        	this->Pause();
+			popRequested = true;
+        	//Game::GetInstance().Push(stage);
+	}
 
 	srand(time(NULL));
 
-	// check collidable objects
-	// TODO: improve here
-	// std::vector<std::weak_ptr<GameObject>> collidable = QueryObjectsByComponent("Collider");
-	// for (unsigned i = 0; i < collidable.size(); i++)
-	// {
-	// 	for (unsigned j = i + 1; j < collidable.size(); j++)
-	// 	{
-	// 		if (Collision::IsColliding(collidable[i].lock()->box, collidable[j].lock()->box, collidable[i].lock()->angleDeg * PI / 180, collidable[j].lock()->angleDeg * PI / 180))
-	// 		{
-	// 			GameObject *g1 = collidable[i].lock().get();
-	// 			GameObject *g2 = collidable[j].lock().get();
-	// 			g1->NotifyCollision(*g2);
-	// 			g2->NotifyCollision(*g1);
-	// 		}
-	// 	}
-	// }
-
-	// if (Alien::alienCount <= 0)
-	// {
-	// 	GameData::playerVictory = true;
-	// 	popRequested = true;
-	// 	Game::GetInstance().Push(new EndState());
-	// }
-
-	// if (PenguinBody::player == nullptr)
-	// {
-	// 	GameData::playerVictory = false;
-	// 	popRequested = true;
-	// 	Game::GetInstance().Push(new EndState());
-	// }
 }
 
 void ThirdStageState::Render()

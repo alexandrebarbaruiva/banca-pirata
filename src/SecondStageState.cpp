@@ -9,20 +9,25 @@
  *
  */
 #include "SecondStageState.h"
+#include "ThirdStageState.h"
 #include "Constants.h"
 #include "Sound.h"
 #include "TileMap.h"
 #include "Game.h"
 #include "Text.h"
 #include "Camera.h"
+#include "Wallet.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
+#include "Collision.cpp"
+#include "TitleState.h"
 #include "EndState.h"
+#include "GameData.h"
 #include "ReputationArrow.h"
 #include "Client.h"
+#include "Calendar.h"
 #include "ChangeScreen.h"
 #include "ComputerBox.h"
-#include "GameData.h"
 
 SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -67,12 +72,18 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	AddObject(hudGO);
 
 	GameObject *dayHudText = new GameObject();
-	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	dayHudText->AddComponent(new Calendar(*dayHudText, GameData::currentDay));
 	dayHudText->box.SetOrigin(115, 35);
 	AddObject(dayHudText);
 
+	GameObject *timeHudText = new GameObject();
+	stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute);
+	timeHudText->AddComponent(stageClock);
+	timeHudText->box.SetOrigin(300, 35);
+	AddObject(timeHudText);
+
 	GameObject *moneyHudText = new GameObject();
-	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	moneyHudText->AddComponent(new Wallet(*moneyHudText, GameData::currentMoney));
 	moneyHudText->box.SetOrigin(500, 35);
 	AddObject(moneyHudText);
 
@@ -93,6 +104,13 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	clienteGO->AddComponent(new GameItem(*clienteGO, NPCS_PATH + GameData::currentClient + "t2.png"));
 	clienteGO->box.SetBottom(0, dialogBoxGO->box.y);
 	AddObject(clienteGO);
+
+	
+
+	gradeGO = nullptr;	
+
+	gradeFechada = false;
+
 }
 
 SecondStageState::~SecondStageState()
@@ -153,6 +171,70 @@ void SecondStageState::Update(float dt)
 	UpdateArray(dt);
 
 	srand(time(NULL));
+
+	//Mecanismo para terminar o dia
+	Vec2 speed = Vec2(0,600);
+
+	if(GameData::endDay && !gradeFechada )
+	{
+		if (gradeGO == nullptr)
+		{
+			// Grade fechando a loja
+			gradeGO = new GameObject();
+			gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+			gradeGO->box.SetOrigin(0, -1080);
+			AddObject(gradeGO);
+		}
+		stageClock->Pause();
+		if(gradeGO->box.y <= 0) 
+		{
+			gradeGO->box = gradeGO->box + (speed * dt);
+		}
+		else
+		{
+			gradeFechada = true;
+			//this->Pause();
+        	State *stage3 = new ThirdStageState();
+        	Game::GetInstance().Push(stage3);
+			//popRequested = true;
+		}
+	}
+	if(gradeFechada) 
+	{
+
+		popRequested = true;
+		gradeGO->box.SetOrigin(0, -1080);
+		if(gradeGO->box.y > -1080) 
+		{
+			gradeGO->box.SetOrigin(0, -1080);
+			//std::cout << "pos grade: " << gradeGO->box.Center().y << std::endl;
+		}
+		else
+		{
+			gradeFechada = false;
+		}
+	}
+
+	// Update de GOs do HUD
+	std::vector<std::weak_ptr<GameObject>> calendarios = this->QueryObjectsByComponent("Calendar");
+	for (unsigned i = 0; i < calendarios.size(); i++)
+	{
+		Calendar *calendario = ((Calendar *)(calendarios[i].lock()->GetComponent("Calendar")));
+		calendario->Update(dt);
+	}
+	std::vector<std::weak_ptr<GameObject>> relogios = this->QueryObjectsByComponent("Clock");
+	for (unsigned i = 0; i < relogios.size(); i++)
+	{
+		Clock *relogio = ((Clock *)(relogios[i].lock()->GetComponent("Clock")));
+		relogio->AssertClock();
+	}
+	std::vector<std::weak_ptr<GameObject>> wallets = this->QueryObjectsByComponent("Wallet");
+	for (unsigned i = 0; i < wallets.size(); i++)
+	{
+		Wallet *wallet = ((Wallet *)(wallets[i].lock()->GetComponent("Wallet")));
+		wallet->Update(dt);
+		//texto->SetText("R$ " + std::to_string(GameData::currentMoney));
+	}
 
 	// check collidable objects
 	// TODO: improve here

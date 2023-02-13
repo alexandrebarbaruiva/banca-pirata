@@ -24,6 +24,7 @@ private:
     int minutes;
     std::string clockTime;
     Text *textClock;
+    bool paused;
 
 public:
     Clock(GameObject &associated, int initialHour = 8, int initialMinute = 0);
@@ -35,10 +36,13 @@ public:
     void Render();
     bool Is(std::string type);
     void Restart();
+    void Pause();
+    void Resume();
     std::string GetClock();
     int GetHours();
     int GetMinutes();
     void WriteClock();
+    void AssertClock();
 };
 
 #endif

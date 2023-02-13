@@ -15,12 +15,16 @@
 #include "TileSet.h"
 #include "GameItem.h"
 #include "Music.h"
+#include "Clock.h"
 
 class SecondStageState : public State
 {
 private:
     Music backgroundMusic;
     TileSet *tileSet;
+    Clock *stageClock;
+	GameObject *gradeGO;	
+    bool gradeFechada;
 
 public:
     SecondStageState();

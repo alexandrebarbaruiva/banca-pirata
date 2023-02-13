@@ -13,6 +13,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <ctime>
 #include <unordered_map>
 #include <vector>
@@ -30,6 +31,8 @@ public:
     static int currentMoney;
     static int currentRep;
     static int currentSus;
+    static bool endDay;
+    static std::vector<std::string> ownedGames;
 
     /* game functions */
     static bool clientCanLeave;
@@ -44,7 +47,7 @@ public:
     /// @param saveNumber save counter
     /// @param dayInGame day in game when save method was called
     /// @param dayInGame money in game when save method was called
-    static void Save(int minuteInGame, int hourInGame, int dayInGame, int moneyInGame, int repInGame, int susInGame);
+    static void Save(int minuteInGame, int hourInGame, int dayInGame, int moneyInGame, int repInGame, int susInGame, std::vector<std::string> ownedGamesInGame);
 
     static void Reset();
 

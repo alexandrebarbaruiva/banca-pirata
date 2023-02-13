@@ -80,6 +80,11 @@ Rect Rect::operator+(const Vec2 &vector) const
     return Rect(this->x + vector.x, this->y + vector.y, this->w, this->h);
 }
 
+Rect Rect::operator-(const Vec2 &vector) const
+{
+    return Rect(this->x - vector.x, this->y - vector.y, this->w, this->h);
+}
+
 Rect Rect::operator+=(const Vec2 &vector) const
 {
     return *this + vector;

@@ -9,6 +9,8 @@ Clock::Clock(GameObject &associated, int initialHour, int initialMinute) : Compo
     hours = initialHour;
     minutes = initialMinute;
 
+    paused = false;
+
     WriteClock();
 
     textClock = new Text(associated, "assets/font/five.ttf", 40, Text::SOLID, (this->clockTime), {255, 255, 255, SDL_ALPHA_OPAQUE});
@@ -21,37 +23,37 @@ Clock::~Clock()
 
 void Clock::Update(float dt)
 {
-
-    time += dt;
-
-    if (time >= 1)
+    if (!paused)
     {
-        if (minutes < 59)
+        time += dt;
+
+        if (time >= 1)
         {
-            minutes++;
-            // std::cout << "minute: " << minutes << std::endl;
-        }
-        else
-        {
-            minutes = 0;
-            if (hours < 17)
+            if (minutes < 59)
             {
-                hours++;
+                minutes++;
             }
             else
             {
-                std::cout << "Passou o dia" << std::endl;
-                hours = 0;
-                GameData::currentDay++;
+                minutes = 0;
+                if (hours < 17)
+                {
+                    hours++;
+                }
+                else
+                {
+                    GameData::endDay = true;
+                    hours = 18;
+                }
             }
+
+            time = 0;
+            WriteClock();
+            GameData::currentMinute = minutes;
+            GameData::currentHour = hours;
+
+            textClock->SetText(this->clockTime);
         }
-
-        time = 0;
-        WriteClock();
-        GameData::currentMinute = minutes;
-        GameData::currentHour = hours;
-
-        textClock->SetText(this->clockTime);
     }
 }
 
@@ -62,7 +64,21 @@ void Clock::Restart()
     hours = 8;
     minutes = 0;
 
+    GameData::currentMinute = minutes;
+    GameData::currentHour = hours;
+
     this->clockTime = "08:00";
+    textClock->SetText(this->clockTime);
+}
+
+void Clock::Pause()
+{
+    paused = true;
+}
+
+void Clock::Resume()
+{
+    paused = false;
 }
 
 std::string Clock::GetClock()
@@ -103,6 +119,15 @@ void Clock::WriteClock()
     this->clockTime = hourString + ":" + minuteString;
 }
 
+void Clock::AssertClock() {
+    if(this->hours != GameData::currentHour) {
+        this->hours = GameData::currentHour;
+        this->minutes = GameData::currentMinute;
+
+        WriteClock();
+        textClock->SetText(this->clockTime);
+    }
+}
 void Clock::Render()
 {
 }

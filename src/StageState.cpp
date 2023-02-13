@@ -9,11 +9,12 @@
  *
  */
 #include "StageState.h"
+#include "ThirdStageState.h"
 #include "Constants.h"
 #include "Sound.h"
 #include "Text.h"
-#include "Clock.h"
 #include "Calendar.h"
+#include "Wallet.h"
 #include "Camera.h"
 #include "InputManager.h"
 #include "CameraFollower.h"
@@ -52,12 +53,15 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	AddObject(dayHudText);
 
 	GameObject *timeHudText = new GameObject();
-	timeHudText->AddComponent(new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute));
+	stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentMinute);
+	stageClock->Resume();
+	timeHudText->AddComponent(stageClock);
 	timeHudText->box.SetOrigin(300, 35);
 	AddObject(timeHudText);
 
 	GameObject *moneyHudText = new GameObject();
-	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	//moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	moneyHudText->AddComponent(new Wallet(*moneyHudText, GameData::currentMoney));
 	moneyHudText->box.SetOrigin(500, 35);
 	AddObject(moneyHudText);
 
@@ -90,6 +94,15 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	lojeiroGO->AddComponent(new GameItem(*lojeiroGO, SCREEN1_PATH + "lojeiro.png", 1, 1));
 	lojeiroGO->box.SetBottom(1290, 810);
 	AddObject(lojeiroGO);
+
+
+	gradeGO = nullptr;
+	gradeFechada = false;
+	//std::cout << "Games Loaded: ";
+	//for (std::string i: GameData::ownedGames)
+	//{
+	//	std::cout << i << " ";
+	//}
 }
 
 StageState::~StageState()
@@ -153,6 +166,85 @@ void StageState::Update(float dt)
 #endif
 	}
 
+	//Mecanismo para terminar o dia
+	Vec2 speed = Vec2(0,600);
+
+	//if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada)
+	if(GameData::endDay && !gradeFechada)
+	{
+		// Fechando elementos que sobrepoe grade
+		//std::vector<std::weak_ptr<GameObject>> sirenes = this->QueryObjectsByComponent("SirenBox");
+		//for (unsigned i = 0; i < sirenes.size(); i++)
+		//{
+		//	SirenBox *sirene = ((SirenBox *)(sirenes[i].lock()->GetComponent("SirenBox")));
+		//	//sirene->~SirenBox();
+		//	//TODO esconder sirene
+		//}
+		//std::vector<std::weak_ptr<GameObject>> clientes = this->QueryObjectsByComponent("Client");
+		//for (unsigned i = 0; i < clientes.size(); i++)
+		//{
+		//	Client *client = ((Client *)(clientes[i].lock()->GetComponent("Client")));
+		//	//client->~Client();
+		//	//TODO esconder chat de cliente
+		//}
+		if (gradeGO == nullptr)
+		{
+			// Grade fechando a loja
+			gradeGO = new GameObject();
+			gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+			gradeGO->box.SetOrigin(0, -1080);
+			AddObject(gradeGO);
+		}
+
+		stageClock->Pause();
+		if (gradeGO->box.y <= 0)
+		{
+			gradeGO->box = gradeGO->box + (speed * dt);
+		}
+		else
+		{
+			gradeFechada = true;
+			this->Pause();
+        	State *stage3 = new ThirdStageState();
+        	Game::GetInstance().Push(stage3);
+		}
+	}
+	if(gradeFechada) 
+	{
+
+		if(gradeGO->box.y > -1080) 
+		{
+			gradeGO->box = gradeGO->box - (speed * dt);
+			//std::cout << "pos grade: " << gradeGO->box.Center().y << std::endl;
+		}
+		else
+		{
+			stageClock->Restart();
+			stageClock->Resume();
+			gradeFechada = false;
+		}
+	}
+
+	// Update de GOs do HUD
+	std::vector<std::weak_ptr<GameObject>> calendarios = this->QueryObjectsByComponent("Calendar");
+	for (unsigned i = 0; i < calendarios.size(); i++)
+	{
+		Calendar *calendario = ((Calendar *)(calendarios[i].lock()->GetComponent("Calendar")));
+		calendario->Update(dt);
+	}
+	std::vector<std::weak_ptr<GameObject>> relogios = this->QueryObjectsByComponent("Clock");
+	for (unsigned i = 0; i < relogios.size(); i++)
+	{
+		Clock *relogio = ((Clock *)(relogios[i].lock()->GetComponent("Clock")));
+		relogio->AssertClock();
+	}
+	std::vector<std::weak_ptr<GameObject>> wallets = this->QueryObjectsByComponent("Wallet");
+	for (unsigned i = 0; i < wallets.size(); i++)
+	{
+		Wallet *wallet = ((Wallet *)(wallets[i].lock()->GetComponent("Wallet")));
+		wallet->Update(dt);
+		//texto->SetText("R$ " + std::to_string(GameData::currentMoney));
+	}
 	// Update every object
 	UpdateArray(dt);
 
