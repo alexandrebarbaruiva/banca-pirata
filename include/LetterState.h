@@ -1,34 +1,35 @@
 /**
- * @file TitleState.h
- * @author Alexandre Augusto de Sá dos Santos (150056940@aluno.unb.br)
- * @brief TitleState class header file
+ * @file LetterState.h
+ * @author João Paulo Vaz Mendes (170002934@aluno.unb.br)
+ * @brief LetterState class header file
  * @version 0.1
- * @date 2022-07-11
+ * @date 2023-02-09
  *
- * @copyright Copyright (c) 2022
+ * @copyright Copyright (c) 2023
  *
  */
-#ifndef TITLESTATE_HEADER
-#define TITLESTATE_HEADER
+#ifndef LETTERSTATE_HEADER
+#define LETTERSTATE_HEADER
 #include "State.h"
 #include "Sprite.h"
 #include "Button.h"
 #include "Text.h"
 #include "InputManager.h"
 #include "StageState.h"
-#include "LetterState.h"
 #include "Camera.h"
 #include "Game.h"
 #include "Music.h"
 
-class TitleState : public State
+class LetterState : public State
 {
 private:
     Music backgroundMusic;
+    bool cartaFechada;
 
 public:
-    TitleState();
-    ~TitleState();
+
+    LetterState();
+    ~LetterState();
 
     void LoadAssets();
     void Update(float dt);
