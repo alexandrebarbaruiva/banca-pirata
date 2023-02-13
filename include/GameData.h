@@ -31,13 +31,14 @@ public:
     static int currentRep;
     static int currentSus;
 
-
     /* game functions */
     static bool clientCanLeave;
     static bool nextClient;
 
     static std::string availableGames[10];
-    static std::vector<std::string> npcNames;
+    static std::vector<std::string> clientNames;
+    static std::string currentClient;
+    static int currentClientPos;
 
     /// @brief Utility to write save data to save file
     /// @param saveNumber save counter
@@ -47,7 +48,9 @@ public:
 
     static void Reset();
 
-    static void LoadNPCs();
+    static void LoadClients();
+
+    static void changeCurrentClient();
 
     static void Load();
 };

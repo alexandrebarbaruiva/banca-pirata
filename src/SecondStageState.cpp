@@ -90,7 +90,7 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 	// Cliente frontal
 	GameObject *clienteGO = new GameObject();
-	clienteGO->AddComponent(new GameItem(*clienteGO, NPCS_PATH + "emo1t2.png"));
+	clienteGO->AddComponent(new GameItem(*clienteGO, NPCS_PATH + GameData::currentClient + "t2.png"));
 	clienteGO->box.SetBottom(0, dialogBoxGO->box.y);
 	AddObject(clienteGO);
 }
