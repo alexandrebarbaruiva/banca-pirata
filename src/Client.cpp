@@ -14,6 +14,7 @@
 
 Client::Client(GameObject &associated, std::string sprite, float scaleX, float scaleY, bool reachedEndpoint, float frameTime, int frameCount) : Component(associated)
 {
+    GameData::nextClient = false;
     Sprite *spriteItem = new Sprite(associated, sprite, frameCount, frameTime);
     this->endPoint = 710;
     this->speed = Vec2(600, 0);
@@ -23,7 +24,6 @@ Client::Client(GameObject &associated, std::string sprite, float scaleX, float s
     spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
-    GameData::nextClient = false;
 #ifdef DEBUG
     std::cout << "Client destination point on " << this->endPoint << "\n";
 #endif

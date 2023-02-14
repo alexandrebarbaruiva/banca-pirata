@@ -26,7 +26,6 @@
 #include "PauseState.h"
 #include "EndState.h"
 
-
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
 {
 	// Remove any previous save data from state
@@ -63,7 +62,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	AddObject(timeHudText);
 
 	GameObject *moneyHudText = new GameObject();
-	//moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	// moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	moneyHudText->AddComponent(new Wallet(*moneyHudText, GameData::currentMoney));
 	moneyHudText->box.SetOrigin(500, 35);
 	AddObject(moneyHudText);
@@ -76,8 +75,8 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
-	//hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
-	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1, HUD_PATH + "Pause.png"));
+	// hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
+	hudPauseGO->AddComponent(new Button(*hudPauseGO, "pause", 1, 1, HUD_PATH + "Pause.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
@@ -99,11 +98,10 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	lojeiroGO->box.SetBottom(1290, 810);
 	AddObject(lojeiroGO);
 
-
 	gradeGO = nullptr;
 	gradeFechada = false;
 	std::cout << "Games Loaded: ";
-	for (std::string i: GameData::ownedGames)
+	for (std::string i : GameData::ownedGames)
 	{
 		std::cout << i << " ";
 	}
@@ -157,6 +155,7 @@ void StageState::Update(float dt)
 
 		if (GameData::nextClient)
 		{
+			GameData::nextClient = false;
 			GameObject *cliente2GO = new GameObject();
 			cliente2GO->AddComponent(new Client(*cliente2GO, NPCS_PATH + GameData::currentClient + "t1.png"));
 			cliente2GO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
@@ -221,7 +220,7 @@ void StageState::Update(float dt)
 			{
 				// Grade fechando a loja
 				gradeGO = new GameObject();
-				gradeGO->AddComponent(new Sprite(*gradeGO,  BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0));
+				gradeGO->AddComponent(new Sprite(*gradeGO, BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0));
 				gradeGO->box.SetOrigin(0, -1080);
 				AddObject(gradeGO);
 			}
