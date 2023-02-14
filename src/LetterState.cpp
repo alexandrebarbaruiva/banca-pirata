@@ -72,29 +72,29 @@ void LetterState::Update(float dt)
 	    cartaGO->box.SetOrigin(70, 0);
 	    AddObject(cartaGO);
 
-        std::string textocarta = "Sua mae me disse que voce estava atras de um bico pra ganhar uma graninha \n\n\n extra, e olha so que sorte a sua, acabou de abrir uma vaga com o seu nome \n\n\n na banquinha do seu tio! E não tem momento melhor pra isso, por que o tio\n\n\n ta precisando tirar umas \u0022ferias especiais\u0022 por causa de um\n\n\n desentendimento com um amigo, voce entende, ne? Enfim, o combinado e\n\n\n o seguinte: voce precisa juntar R$500,00 ate o fim do mes pra esse meu\n\n\n amigo, fora isso, pode ficar com o resto! Dificil de recusar, nao? E a parte\n\n\n de administrar a banca e moleza, e so lembrar daquelas vezes que voce\n\n\n veio me ajudar quando era mais novo e das dicas que eu te dei.\n\n\n Voce consegue garoto, confio em voce.";
+        std::string textocarta = "Sua mãe me disse que voce estava atras de um bico pra ganhar uma graninha \n\n extra, e olha so que sorte a sua, acabou de abrir uma vaga com o seu nome \n\n\n na banquinha do seu tio! E não tem momento melhor pra isso, por que o tio\n\n ta precisando tirar umas \u0022ferias especiais\u0022 por causa de um\n\n\n desentendimento com um amigo, voce entende, ne? Enfim, o combinado e\n\n o seguinte: voce precisa juntar R$500,00 ate o fim do mes pra esse meu\n\n amigo, fora isso, pode ficar com o resto! Dificil de recusar, nao? E a parte\n\n de administrar a banca e moleza, e so lembrar daquelas vezes que voce\n\n veio me ajudar quando era mais novo e das dicas que eu te dei.\n\n Voce consegue garoto, confio em voce.";
 
         GameObject *textoCartaGO1 = new GameObject();
-        textoCartaGO1->AddComponent(new Text(*textoCartaGO1, "assets/font/up.ttf", 40, Text::BLENDED, "Fala, garoto!", {0, 0, 0, SDL_ALPHA_OPAQUE}));
-        textoCartaGO1->box.SetOrigin(610,140);
+        textoCartaGO1->AddComponent(new Text(*textoCartaGO1, "assets/font/Karma Suture.otf", 40, Text::BLENDED, "Fala, garoto!", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO1->box.SetOrigin(610,135);
         AddObject(textoCartaGO1);
         GameObject *textoCartaGO2 = new GameObject();
-        textoCartaGO2->AddComponent(new Text(*textoCartaGO2, "assets/font/up.ttf", 20, Text::BLENDED, textocarta, {0, 0, 0, SDL_ALPHA_OPAQUE}));
-        textoCartaGO2->box.SetOrigin(610,215);
+        textoCartaGO2->AddComponent(new Text(*textoCartaGO2, "assets/font/Karma Suture.otf", 20, Text::BLENDED, textocarta, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO2->box.SetOrigin(610,210);
         AddObject(textoCartaGO2);
         std::string textocarta3 = "Um Abraco"; 
         GameObject *textoCartaGO3 = new GameObject();
-        textoCartaGO3->AddComponent(new Text(*textoCartaGO3, "assets/font/up.ttf", 30, Text::BLENDED, textocarta3, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO3->AddComponent(new Text(*textoCartaGO3, "assets/font/Karma Suture.otf", 30, Text::BLENDED, textocarta3, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         textoCartaGO3->box.SetOrigin(610,800);
         AddObject(textoCartaGO3);
         std::string textocarta4 = "Seu Tio"; 
         GameObject *textoCartaGO4 = new GameObject();
-        textoCartaGO4->AddComponent(new Text(*textoCartaGO4, "assets/font/up.ttf", 30, Text::BLENDED, textocarta4, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO4->AddComponent(new Text(*textoCartaGO4, "assets/font/Karma Suture.otf", 30, Text::BLENDED, textocarta4, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         textoCartaGO4->box.SetOrigin(610,865);
         AddObject(textoCartaGO4);
         std::string textocartaFinal = "PS: e muito importante que voce consiga esse dinheiro, ouviu?\n\n\n Se nao conseguir, feche a banca e nao volte mais.";
         GameObject *textoCartaGO5 = new GameObject();
-        textoCartaGO5->AddComponent(new Text(*textoCartaGO5, "assets/font/up.ttf", 20, Text::BLENDED, textocartaFinal, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO5->AddComponent(new Text(*textoCartaGO5, "assets/font/Karma Suture.otf", 20, Text::BLENDED, textocartaFinal, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         textoCartaGO5->box.SetOrigin(610,935);
         AddObject(textoCartaGO5);
 

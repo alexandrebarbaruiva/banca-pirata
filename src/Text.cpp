@@ -146,7 +146,8 @@ void Text::ResetTexture()
         SDL_DestroyTexture(texture);
     }
     font = Resources::GetFont(fontFile, fontSize);
-    SDL_Surface *surf = TTF_RenderText_Blended_Wrapped(font.get(), text.c_str(), color, sizeWrapped);
+    //SDL_Surface *surf = TTF_RenderText_Blended_Wrapped(font.get(), text.c_str(), color, sizeWrapped);
+    SDL_Surface *surf = TTF_RenderUTF8_Blended_Wrapped(font.get(), text.c_str(), color, sizeWrapped);
     texture = SDL_CreateTextureFromSurface(Game::GetInstance().GetRenderer(), surf);
     associated.box.w = surf->w;
     associated.box.h = surf->h;
