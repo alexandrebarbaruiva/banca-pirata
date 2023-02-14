@@ -37,10 +37,9 @@ PauseState::PauseState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 
 	GameObject *timeHudText = new GameObject();
     stageClock = new Clock(*timeHudText, GameData::currentHour, GameData::currentHour);
-    //Mudar quando der merge em Clock
-    //stageClock->Pause();
-	//timeHudText->AddComponent(stageClock);
-	timeHudText->AddComponent(new Text(*timeHudText, "assets/font/five.ttf", 40, Text::SOLID, (stageClock->GetClock()), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    stageClock->Pause();
+	timeHudText->AddComponent(stageClock);
+	//timeHudText->AddComponent(new Text(*timeHudText, "assets/font/five.ttf", 40, Text::SOLID, (stageClock->GetClock()), {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	timeHudText->box.SetOrigin(300, 35);
 	AddObject(timeHudText);
 
@@ -58,14 +57,21 @@ PauseState::PauseState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
 	//hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
-	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1,"assets/img/placeholders/Tela 1-Pause.png"));
+	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1, HUD_PATH + "Pause-press.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
+
+	// Caixa HUD Sirene
+	GameObject *caixaSireneGO = new GameObject();
+	caixaSireneGO->AddComponent(new GameItem(*caixaSireneGO, SCREEN3_PATH + "Loja-fundo-suspeita.png", 1, 1));
+	caixaSireneGO->box.SetOrigin(-50, 330);
+	AddObject(caixaSireneGO);
 
 	// HUD Sirene
 	GameObject *hudGOSirene = new GameObject();
 	hudGOSirene->AddComponent(new SirenBox(*hudGOSirene));
-	hudGOSirene->box.SetOrigin(1800, 355);
+	hudGOSirene->box.SetOrigin(0, 355);
+	//hudGOSirene->box.SetOrigin(1800, 355);
 	AddObject(hudGOSirene);
 
 	GameObject *letreiroPause = new GameObject();
@@ -144,6 +150,9 @@ void PauseState::Update(float dt)
 	InputManager input = InputManager::GetInstance();
     std::string pressedButton;
     std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+   stageClock->AssertClock(); 
+   stageClock->Pause();
+
     for (unsigned i = 0; i < buttons.size(); i++)
     {
         Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
@@ -168,6 +177,9 @@ void PauseState::Update(float dt)
     if(pressedButton == "menu")
     {
         std::cout << "Menu" << std::endl;
+        GameData::menuRequested = true;
+        this->Pause();
+        popRequested = true;
     }
     if(pressedButton == "sair")
     {

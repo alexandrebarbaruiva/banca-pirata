@@ -76,7 +76,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
 	//hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
-	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1,"assets/img/placeholders/Tela 1-Pause.png"));
+	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1, HUD_PATH + "Pause.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
@@ -168,10 +168,16 @@ void StageState::Update(float dt)
 		quitRequested = true;
 	}
 
-	if (input.KeyPress(ESCAPE_KEY))
+	if(GameData::menuRequested)
 	{
 		this->Pause();
 		popRequested = true;
+	}
+
+	if (input.KeyPress(ESCAPE_KEY))
+	{
+        State *stage = new PauseState();
+        Game::GetInstance().Push(stage);
 	}
 
 	if (input.MousePress(LEFT_MOUSE_BUTTON))
@@ -186,6 +192,49 @@ void StageState::Update(float dt)
 		//std::cout << "Pause apertado" << std::endl;
         State *stage = new PauseState();
         Game::GetInstance().Push(stage);
+	}
+	//Mecanismo para terminar o dia
+	Vec2 speed = Vec2(0,600);
+
+	//if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada)
+	if(GameData::endDay && !gradeFechada)
+	{
+		// Fechando elementos que sobrepoe grade
+		//std::vector<std::weak_ptr<GameObject>> sirenes = this->QueryObjectsByComponent("SirenBox");
+		//for (unsigned i = 0; i < sirenes.size(); i++)
+		//{
+		//	SirenBox *sirene = ((SirenBox *)(sirenes[i].lock()->GetComponent("SirenBox")));
+		//	//sirene->~SirenBox();
+		//	//TODO esconder sirene
+		//}
+		//std::vector<std::weak_ptr<GameObject>> clientes = this->QueryObjectsByComponent("Client");
+		//for (unsigned i = 0; i < clientes.size(); i++)
+		//{
+		//	Client *client = ((Client *)(clientes[i].lock()->GetComponent("Client")));
+		//	//client->~Client();
+		//	//TODO esconder chat de cliente
+		//}
+		if (gradeGO == nullptr)
+		{
+			// Grade fechando a loja
+			gradeGO = new GameObject();
+			gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+			gradeGO->box.SetOrigin(0, -1080);
+			AddObject(gradeGO);
+		}
+
+		stageClock->Pause();
+		if (gradeGO->box.y <= 0)
+		{
+			gradeGO->box = gradeGO->box + (speed * dt);
+		}
+		else
+		{
+			gradeFechada = true;
+			this->Pause();
+        	State *stage3 = new ThirdStageState();
+        	Game::GetInstance().Push(stage3);
+		}
 	}
 	if(gradeFechada) 
 	{

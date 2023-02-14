@@ -25,6 +25,7 @@
 #include "AssetGame.h"
 #include "AssetItem.h"
 #include "ChangeScreen.h"
+#include "PauseState.h"
 
 ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -66,20 +67,21 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	AddObject(moneyHudText);
 
 	// HUD Reputação
-	GameObject *hudReputationGO2 = new GameObject();
-	hudReputationGO2->AddComponent(new GameItem(*hudReputationGO2, HUD_PATH + "Rep.png", 1, 1));
-	hudReputationGO2->box.SetOrigin(960, 0);
-	AddObject(hudReputationGO2);
+	//GameObject *hudReputationGO2 = new GameObject();
+	//hudReputationGO2->AddComponent(new GameItem(*hudReputationGO2, HUD_PATH + "Rep.png", 1, 1));
+	//hudReputationGO2->box.SetOrigin(960, 0);
+	//AddObject(hudReputationGO2);
 
 	// HUD Seta da Reputação
 	GameObject *hudReputationArrowGO = new GameObject();
 	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, GameData::currentRep, 1, 1));
-	hudReputationArrowGO->box.SetOrigin(960, 60);
+	hudReputationArrowGO->box.SetOrigin(960, 0);
 	AddObject(hudReputationArrowGO);
 
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
-	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, HUD_PATH + "Pause.png", 1, 1));
+	//hudPauseGO->AddComponent(new GameItem(*hudPauseGO, HUD_PATH + "Pause.png", 1, 1));
+	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1, HUD_PATH + "Pause.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
@@ -261,6 +263,23 @@ void ThirdStageState::Update(float dt)
 	InputManager input = InputManager::GetInstance();
     std::string pressedButton;
 
+    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+    for (unsigned i = 0; i < buttons.size(); i++)
+    {
+        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
+        if (button->isClicked)
+        {
+            pressedButton = button->name;
+            button->isClicked = false;
+        }
+    }
+	if(pressedButton == "pause")
+	{
+		//std::cout << "Pause apertado" << std::endl;
+        State *stage = new PauseState();
+        Game::GetInstance().Push(stage);
+	}
+
     std::vector<std::weak_ptr<GameObject>> carrinhos = this->QueryObjectsByComponent("Carrinho");
 	for (unsigned i = 0; i < carrinhos.size(); i++)
 	{
@@ -286,11 +305,11 @@ void ThirdStageState::Update(float dt)
 		}
 	}
 
-	std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("ChangeScreen");
-    for (unsigned i = 0; i < buttons.size(); i++)
+	std::vector<std::weak_ptr<GameObject>> powerbuttons = this->QueryObjectsByComponent("ChangeScreen");
+    for (unsigned i = 0; i < powerbuttons.size(); i++)
     {
-		ChangeScreen *button = ((ChangeScreen *) (buttons[i].lock()->GetComponent("ChangeScreen")));
-        if (button->isClicked)
+		ChangeScreen *powerbutton = ((ChangeScreen *) (powerbuttons[i].lock()->GetComponent("ChangeScreen")));
+        if (powerbutton->isClicked)
         {
 
 			std::vector<std::weak_ptr<GameObject>> games = this->QueryObjectsByComponent("AssetGame");
@@ -305,8 +324,8 @@ void ThirdStageState::Update(float dt)
 					GameData::currentMoney -= 30;
 				}
 			}
-            button->isClicked = false;
-            pressedButton = button->type;
+            powerbutton->isClicked = false;
+            pressedButton = powerbutton->type;
 
         	//associated.RequestDelete();
         	//this->isClicked = true;
@@ -318,11 +337,17 @@ void ThirdStageState::Update(float dt)
 		quitRequested = true;
 	}
 
-	//if (input.KeyPress(ESCAPE_KEY))
-	//{
-	//	this->Pause();
-	//	popRequested = true;
-	//}
+	if(GameData::menuRequested)
+	{
+		this->Pause();
+		popRequested = true;
+	}
+
+	if (input.KeyPress(ESCAPE_KEY))
+	{
+        State *stage = new PauseState();
+        Game::GetInstance().Push(stage);
+	}
 
 	if (input.MousePress(LEFT_MOUSE_BUTTON))
 	{

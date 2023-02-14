@@ -10,6 +10,7 @@
  */
 #include "LetterState.h"
 #include "CameraFollower.h"
+#include "GameData.h"
 
 LetterState::LetterState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 {
@@ -27,6 +28,8 @@ LetterState::LetterState() : State(), backgroundMusic("assets/audio/abertura.ogg
 	cartaGO->AddComponent(new Sprite(*cartaGO , "assets/img/placeholders/CartaAnim-Sheet_3.png", 13, 0.2, 2.8));
 	cartaGO->box.SetOrigin(300, 0);
 	AddObject(cartaGO);
+
+    cartaFechada = false;
 }
 
 LetterState::~LetterState()
@@ -60,12 +63,18 @@ void LetterState::Start()
 
 void LetterState::Update(float dt)
 {
-	InputManager input = InputManager::GetInstance();
-    //std::string pressedButton;
+    if (cartaFechada)
+    {
+        std::cout << "Carta já fechou" << std::endl;
+        this->Pause();
+        popRequested = true;
+    }
+    InputManager input = InputManager::GetInstance();
+    // std::string pressedButton;
     std::vector<std::weak_ptr<GameObject>> sprites = this->QueryObjectsByComponent("Sprite");
     if(sprites.size() <= 1)
     {
-        std::cout << "Acabou sprite" << std::endl;
+
 	    GameObject *cartaGO = new GameObject();
 	    cartaGO->AddComponent(new Sprite(*cartaGO, "assets/img/placeholders/Carta.png", 1, 1.0));
 	    //cartaGO->AddComponent(new Sprite(*cartaGO , "assets/img/placeholders/CartaAnim-Sheet_3.png", 13, 0.2, 2.8));
@@ -129,6 +138,7 @@ void LetterState::Update(float dt)
     //if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "continueButton")
     if (input.KeyPress(SPACE_KEY) or input.MousePress(LEFT_MOUSE_BUTTON))
     {
+        cartaFechada = true;
         State *stage = new StageState(true);
         Game::GetInstance().Push(stage);
     }

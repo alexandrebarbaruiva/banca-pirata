@@ -22,6 +22,7 @@ int GameData::currentRep;
 int GameData::currentSus;
 bool GameData::endDay;
 std::vector<std::string> GameData::ownedGames;
+bool GameData::menuRequested;
 
 /* game functions */
 bool GameData::clientCanLeave;
