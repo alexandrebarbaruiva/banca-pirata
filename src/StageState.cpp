@@ -154,6 +154,7 @@ void StageState::Update(float dt)
 
 	if (GameData::nextClient)
 	{
+		GameData::nextClient = false;
 		GameObject *cliente2GO = new GameObject();
 		cliente2GO->AddComponent(new Client(*cliente2GO, NPCS_PATH + GameData::currentClient + "t1.png"));
 		cliente2GO->box.SetBottom(0, GAME_SCREEN_HEIGHT);

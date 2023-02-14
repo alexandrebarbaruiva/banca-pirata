@@ -10,6 +10,7 @@
  */
 #include "ChatBox.h"
 #include "SecondStageState.h"
+#include "GameData.h"
 
 ChatBox::ChatBox(GameObject &associated, bool clickable, std::string sprite, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
 {
@@ -33,6 +34,12 @@ void ChatBox::Update(float dt)
         // Create Screen 2 here
         State *stage = new SecondStageState();
         Game::GetInstance().Push(stage);
+    }
+    if (GameData::endDay)
+    {
+        // Remove chatbox when day ends and sends client away
+        GameData::clientCanLeave = true;
+        associated.RequestDelete();
     }
 }
 
