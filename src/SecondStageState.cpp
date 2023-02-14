@@ -28,6 +28,7 @@
 #include "Calendar.h"
 #include "ChangeScreen.h"
 #include "ComputerBox.h"
+#include "PauseState.h"
 
 SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -95,7 +96,8 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
-	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, HUD_PATH + "Pause.png"));
+	//hudPauseGO->AddComponent(new GameItem(*hudPauseGO, HUD_PATH + "Pause.png"));
+	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1, HUD_PATH + "Pause.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
@@ -147,6 +149,24 @@ void SecondStageState::Update(float dt)
 	// update camera
 	Camera::Update(dt);
 
+    std::string pressedButton;
+    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+    for (unsigned i = 0; i < buttons.size(); i++)
+    {
+        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
+        if (button->isClicked)
+        {
+            pressedButton = button->name;
+            button->isClicked = false;
+        }
+    }
+	if(pressedButton == "pause")
+	{
+		//std::cout << "Pause apertado" << std::endl;
+        State *stage = new PauseState();
+        Game::GetInstance().Push(stage);
+	}
+
 	InputManager input = InputManager::GetInstance();
 
 	// check if quit was requested
@@ -155,9 +175,16 @@ void SecondStageState::Update(float dt)
 		quitRequested = true;
 	}
 
+	if(GameData::menuRequested)
+	{
+		this->Pause();
+		popRequested = true;
+	}
+
 	if (input.KeyPress(ESCAPE_KEY))
 	{
-		popRequested = true;
+        State *stage = new PauseState();
+        Game::GetInstance().Push(stage);
 	}
 
 	if (input.MousePress(LEFT_MOUSE_BUTTON))

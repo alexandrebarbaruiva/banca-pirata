@@ -22,6 +22,8 @@
 #include "Client.h"
 #include "SirenBox.h"
 #include "GameData.h"
+#include "Button.h"
+#include "PauseState.h"
 
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
@@ -73,7 +75,8 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
-	hudPauseGO->AddComponent(new GameItem(*hudPauseGO, HUD_PATH + "Pause.png", 1, 1));
+	//hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
+	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1, HUD_PATH + "Pause.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
@@ -137,6 +140,18 @@ void StageState::Update(float dt)
 	// update camera
 	Camera::Update(dt);
 
+    std::string pressedButton;
+    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+    for (unsigned i = 0; i < buttons.size(); i++)
+    {
+        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
+        if (button->isClicked)
+        {
+            pressedButton = button->name;
+            button->isClicked = false;
+        }
+    }
+
 	if (GameData::nextClient)
 	{
 		GameObject *cliente2GO = new GameObject();
@@ -153,10 +168,16 @@ void StageState::Update(float dt)
 		quitRequested = true;
 	}
 
-	if (input.KeyPress(ESCAPE_KEY))
+	if(GameData::menuRequested)
 	{
 		this->Pause();
 		popRequested = true;
+	}
+
+	if (input.KeyPress(ESCAPE_KEY))
+	{
+        State *stage = new PauseState();
+        Game::GetInstance().Push(stage);
 	}
 
 	if (input.MousePress(LEFT_MOUSE_BUTTON))
@@ -166,6 +187,12 @@ void StageState::Update(float dt)
 #endif
 	}
 
+	if(pressedButton == "pause")
+	{
+		//std::cout << "Pause apertado" << std::endl;
+        State *stage = new PauseState();
+        Game::GetInstance().Push(stage);
+	}
 	//Mecanismo para terminar o dia
 	Vec2 speed = Vec2(0,600);
 
