@@ -270,20 +270,20 @@ void ThirdStageState::Update(float dt)
 		std::sort(jogosComprados.begin(), jogosComprados.end());
 		std::set_difference(todosJogos.begin(), todosJogos.end(), jogosComprados.begin(), jogosComprados.end(), std::back_inserter(jogosParaVenda));
 
-		std::cout << "Jogos para a loja: ";
-		for (std::string i : jogosParaVenda)
-		{
-			std::cout << i << " ";
-		}
+		//std::cout << "Jogos para a loja: ";
+		//for (std::string i : jogosParaVenda)
+		//{
+		//	std::cout << i << " ";
+		//}
 		if (jogosParaVenda.size() > 0)
 		{
 			jogoInt1 = rand() % jogosParaVenda.size();
 			jogoStr1 = jogosParaVenda[jogoInt1];
 			jogosParaVenda.erase(jogosParaVenda.begin() + jogoInt1);
-			std::cout << "Jogo 1: " << jogoStr1 << std::endl;
+			//std::cout << "Jogo 1: " << jogoStr1 << std::endl;
 			// GameAsset 1
 			GameObject *gameAsset1GO = new GameObject();
-			assetGame1 = new AssetGame(*gameAsset1GO, jogoStr1, "Violento", "Radical", "Esportivo", 30);
+			assetGame1 = new AssetGame(*gameAsset1GO, jogoStr1, 30);
 			gameAsset1GO->AddComponent(assetGame1);
 			AddObject(gameAsset1GO);
 
@@ -339,10 +339,10 @@ void ThirdStageState::Update(float dt)
 			jogoInt2 = rand() % jogosParaVenda.size();
 			jogoStr2 = jogosParaVenda[jogoInt2];
 			jogosParaVenda.erase(jogosParaVenda.begin() + jogoInt2);
-			std::cout << "Jogo 2: " << jogoStr2 << std::endl;
+			//std::cout << "Jogo 2: " << jogoStr2 << std::endl;
 			// GameAsset 2
 			GameObject *gameAsset2GO = new GameObject();
-			AssetGame *assetGame2 = new AssetGame(*gameAsset2GO, jogoStr2, "Fofo", "Casual", "Radical", 30);
+			AssetGame *assetGame2 = new AssetGame(*gameAsset2GO, jogoStr2, 30);
 			gameAsset2GO->AddComponent(assetGame2);
 			AddObject(gameAsset2GO);
 

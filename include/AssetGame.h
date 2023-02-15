@@ -18,7 +18,7 @@ class AssetGame : public Component
 {
 private:
 public:
-    AssetGame(GameObject &associated, std::string game, std::string setCategory1,  std::string setCategory2, std::string setCategory3, int priceSet);
+    AssetGame(GameObject &associated, std::string game, int priceSet);
 
 
     std::string type = "AssetGame";

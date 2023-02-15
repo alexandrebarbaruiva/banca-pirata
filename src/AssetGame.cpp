@@ -11,15 +11,78 @@
 #include "AssetGame.h"
 #include "Text.h"
 
-AssetGame::AssetGame(GameObject &associated, std::string game, std::string setCategory1,  std::string setCategory2, std::string setCategory3, int priceSet) : Component(associated) 
+AssetGame::AssetGame(GameObject &associated, std::string game, int priceSet) : Component(associated) 
 {
     price = priceSet;
     spriteName = COVERS_PATH + "Capa-" + game + ".png";
-    category1 = setCategory1;
-    category2 = setCategory2;
-    category3 = setCategory3;
     name = game;
 
+    if(game == "sonic")
+    {
+        category1 = "Radical";
+        category2 = "Casual";
+        category3 = "Esportivo";
+    }
+    else if(game == "sims")
+    {
+        category1 = "Casual";
+        category2 = "Inteligente";
+        category3 = "Narrativo";
+    }
+    else if(game == "gta")
+    {
+        category1 = "Violento";
+        category2 = "Deslocado";
+        category3 = "Radical";
+    }
+    else if(game == "dance")
+    {
+        category1 = "Esportivo";
+        category2 = "Musical";
+        category3 = "Deslocado";
+    }
+    else if(game == "mkombat")
+    {
+        category1 = "Radical";
+        category2 = "Violento";
+        category3 = "Assustador";
+    }
+    else if(game == "kirby")
+    {
+        category1 = "Fofo";
+        category2 = "Descolado";
+        category3 = "Casual";
+    }
+    else if(game == "pwaa")
+    {
+        category1 = "Narrativo";
+        category2 = "Descolado";
+        category3 = "Inteligente";
+    }
+    else if(game == "fifa")
+    {
+        category1 = "Descolado";
+        category2 = "Radical";
+        category3 = "Esportivo";
+    }
+    else if(game == "mgear")
+    {
+        category1 = "Descolado";
+        category2 = "Violento";
+        category3 = "Narrativo";
+    }
+    else if(game == "pokemon")
+    {
+        category1 = "Fofo";
+        category2 = "Esportivo";
+        category3 = "Casual";
+    }
+    else
+    {
+        category1 = "Indisponivel";
+        category2 = "Indisponivel";
+        category3 = "Indisponivel";
+    }
 }
 
 void AssetGame::Update(float dt)
