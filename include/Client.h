@@ -12,6 +12,7 @@
 #define CLIENT_HEADER
 #include "Component.h"
 #include "Sprite.h"
+#include "Sound.h"
 #include "Collider.h"
 #include "Vec2.h"
 
@@ -23,6 +24,9 @@ public:
 
     std::string type = "Client";
     std::string name;
+
+    Sound *stepSound;
+    bool stepPlaying = false;
 
     bool reachedEndpoint = false;
     float startPoint = 0;

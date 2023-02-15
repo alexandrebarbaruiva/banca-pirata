@@ -25,8 +25,7 @@
 #include "Button.h"
 #include "PauseState.h"
 
-
-StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
+StageState::StageState(bool loadGame) : State(), backgroundMusic(AUDIOS_PATH + "stage.ogg")
 {
 	// Remove any previous save data from state
 	GameData::Reset();
@@ -62,7 +61,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	AddObject(timeHudText);
 
 	GameObject *moneyHudText = new GameObject();
-	//moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	// moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	moneyHudText->AddComponent(new Wallet(*moneyHudText, GameData::currentMoney));
 	moneyHudText->box.SetOrigin(500, 35);
 	AddObject(moneyHudText);
@@ -75,8 +74,8 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
-	//hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
-	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1, HUD_PATH + "Pause.png"));
+	// hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
+	hudPauseGO->AddComponent(new Button(*hudPauseGO, "pause", 1, 1, HUD_PATH + "Pause.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
@@ -98,7 +97,6 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 	lojeiroGO->box.SetBottom(1290, 810);
 	AddObject(lojeiroGO);
 
-
 	gradeGO = nullptr;
 	gradeFechada = false;
 	std::cout << "Games Loaded: ";
@@ -111,6 +109,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 StageState::~StageState()
 {
 	objectArray.clear();
+	backgroundMusic.Stop(0);
 }
 
 void StageState::Start()
@@ -127,12 +126,12 @@ void StageState::LoadAssets()
 
 void StageState::Pause()
 {
-	backgroundMusic.Stop(0);
+	// backgroundMusic.Stop(0);
 }
 
 void StageState::Resume()
 {
-	backgroundMusic.Play();
+	// backgroundMusic.Play();
 }
 
 void StageState::Update(float dt)
@@ -140,17 +139,17 @@ void StageState::Update(float dt)
 	// update camera
 	Camera::Update(dt);
 
-    std::string pressedButton;
-    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
-    for (unsigned i = 0; i < buttons.size(); i++)
-    {
-        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
-        if (button->isClicked)
-        {
-            pressedButton = button->name;
-            button->isClicked = false;
-        }
-    }
+	std::string pressedButton;
+	std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+	for (unsigned i = 0; i < buttons.size(); i++)
+	{
+		Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
+		if (button->isClicked)
+		{
+			pressedButton = button->name;
+			button->isClicked = false;
+		}
+	}
 
 	if (GameData::nextClient)
 	{
@@ -169,7 +168,7 @@ void StageState::Update(float dt)
 		quitRequested = true;
 	}
 
-	if(GameData::menuRequested)
+	if (GameData::menuRequested)
 	{
 		this->Pause();
 		popRequested = true;
@@ -177,8 +176,8 @@ void StageState::Update(float dt)
 
 	if (input.KeyPress(ESCAPE_KEY))
 	{
-        State *stage = new PauseState();
-        Game::GetInstance().Push(stage);
+		State *stage = new PauseState();
+		Game::GetInstance().Push(stage);
 	}
 
 	if (input.MousePress(LEFT_MOUSE_BUTTON))
@@ -188,28 +187,28 @@ void StageState::Update(float dt)
 #endif
 	}
 
-	if(pressedButton == "pause")
+	if (pressedButton == "pause")
 	{
-		//std::cout << "Pause apertado" << std::endl;
-        State *stage = new PauseState();
-        Game::GetInstance().Push(stage);
+		// std::cout << "Pause apertado" << std::endl;
+		State *stage = new PauseState();
+		Game::GetInstance().Push(stage);
 	}
-	//Mecanismo para terminar o dia
-	Vec2 speed = Vec2(0,600);
+	// Mecanismo para terminar o dia
+	Vec2 speed = Vec2(0, 600);
 
-	//if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada)
-	if(GameData::endDay && !gradeFechada)
+	// if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada)
+	if (GameData::endDay && !gradeFechada)
 	{
 		// Fechando elementos que sobrepoe grade
-		//std::vector<std::weak_ptr<GameObject>> sirenes = this->QueryObjectsByComponent("SirenBox");
-		//for (unsigned i = 0; i < sirenes.size(); i++)
+		// std::vector<std::weak_ptr<GameObject>> sirenes = this->QueryObjectsByComponent("SirenBox");
+		// for (unsigned i = 0; i < sirenes.size(); i++)
 		//{
 		//	SirenBox *sirene = ((SirenBox *)(sirenes[i].lock()->GetComponent("SirenBox")));
 		//	//sirene->~SirenBox();
 		//	//TODO esconder sirene
 		//}
-		//std::vector<std::weak_ptr<GameObject>> clientes = this->QueryObjectsByComponent("Client");
-		//for (unsigned i = 0; i < clientes.size(); i++)
+		// std::vector<std::weak_ptr<GameObject>> clientes = this->QueryObjectsByComponent("Client");
+		// for (unsigned i = 0; i < clientes.size(); i++)
 		//{
 		//	Client *client = ((Client *)(clientes[i].lock()->GetComponent("Client")));
 		//	//client->~Client();
@@ -233,17 +232,17 @@ void StageState::Update(float dt)
 		{
 			gradeFechada = true;
 			this->Pause();
-        	State *stage3 = new ThirdStageState();
-        	Game::GetInstance().Push(stage3);
+			State *stage3 = new ThirdStageState();
+			Game::GetInstance().Push(stage3);
 		}
 	}
-	if(gradeFechada) 
+	if (gradeFechada)
 	{
 
-		if(gradeGO->box.y > -1080) 
+		if (gradeGO->box.y > -1080)
 		{
 			gradeGO->box = gradeGO->box - (speed * dt);
-			//std::cout << "pos grade: " << gradeGO->box.Center().y << std::endl;
+			// std::cout << "pos grade: " << gradeGO->box.Center().y << std::endl;
 		}
 		else
 		{
@@ -271,7 +270,7 @@ void StageState::Update(float dt)
 	{
 		Wallet *wallet = ((Wallet *)(wallets[i].lock()->GetComponent("Wallet")));
 		wallet->Update(dt);
-		//texto->SetText("R$ " + std::to_string(GameData::currentMoney));
+		// texto->SetText("R$ " + std::to_string(GameData::currentMoney));
 	}
 	// Update every object
 	UpdateArray(dt);

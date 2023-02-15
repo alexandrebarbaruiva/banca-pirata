@@ -29,6 +29,7 @@
 #include "ChangeScreen.h"
 #include "ComputerBox.h"
 #include "PauseState.h"
+#include "DialogBox.h"
 
 SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -55,16 +56,8 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 	// Caixa diálogo
 	GameObject *dialogBoxGO = new GameObject();
-	dialogBoxGO->AddComponent(new Sprite(*dialogBoxGO, SCREEN2_PATH + "tela2-caixa de dialogo.png"));
-	dialogBoxGO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
+	dialogBoxGO->AddComponent(new DialogBox(*dialogBoxGO));
 	AddObject(dialogBoxGO);
-
-	GameObject *chatText = new GameObject();
-	Text *text = new Text(*chatText, "assets/font/up.ttf", 50, Text::BLENDED, "TESTE", {255, 255, 255, SDL_ALPHA_OPAQUE}, GAME_SCREEN_WIDTH - GAME_SCREEN_WIDTH / 8);
-	text->SetText("Opa meu bacano, me ve um jogo de %s %s e %s Ah, voce tem troco pra nota de 100?", "suspense, luta aventura?");
-	chatText->AddComponent(text);
-	chatText->box.SetCenter(GAME_SCREEN_WIDTH / 2, (GAME_SCREEN_HEIGHT - GAME_SCREEN_HEIGHT / 6));
-	AddObject(chatText);
 
 	// HUD Dia + Dinheiro
 	GameObject *hudGO = new GameObject();
@@ -126,7 +119,7 @@ void SecondStageState::Start()
 {
 	LoadAssets();
 	StartArray();
-	backgroundMusic.Play();
+	// backgroundMusic.Play();
 	started = true;
 }
 
@@ -136,12 +129,12 @@ void SecondStageState::LoadAssets()
 
 void SecondStageState::Pause()
 {
-	backgroundMusic.Stop();
+	// backgroundMusic.Stop();
 }
 
 void SecondStageState::Resume()
 {
-	backgroundMusic.Play();
+	// backgroundMusic.Play();
 }
 
 void SecondStageState::Update(float dt)

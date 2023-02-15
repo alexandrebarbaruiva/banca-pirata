@@ -13,6 +13,7 @@
 #include "Component.h"
 #include "ComputerBox.h"
 #include "Sprite.h"
+#include "Sound.h"
 #include "Collider.h"
 #include "Vec2.h"
 #include <algorithm>
