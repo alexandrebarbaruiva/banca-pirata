@@ -16,6 +16,8 @@
 #include "GameItem.h"
 #include "Music.h"
 #include "Clock.h"
+#include "AssetGame.h"
+#include "Carrinho.h"
 
 class ThirdStageState : public State
 {
@@ -23,6 +25,10 @@ private:
     Music backgroundMusic;
     TileSet *tileSet;
     Clock *stageClock;
+    AssetGame *assetGame1;
+    AssetGame *assetGame2;
+    Carrinho *carrinho1;
+    Carrinho *carrinho2;
 
 public:
     ThirdStageState();

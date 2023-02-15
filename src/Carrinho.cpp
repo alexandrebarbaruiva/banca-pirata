@@ -13,7 +13,7 @@
 
 Carrinho::Carrinho(GameObject &associated, AssetGame *gameBuying , float scaleX, float scaleY) : Component(associated)
 {
-    spriteItem = new Sprite(associated, "assets/img/placeholders/UI/Loja-compra.png");
+    spriteItem = new Sprite(associated, SCREEN3_PATH + "Loja-compra.png");
     //spriteItemHoover = new Sprite(associated, "assets/img/placeholders/UI/Loja-compra-click.png");
     spriteScale = Vec2(scaleX,scaleY);
     spriteItem->SetScale(spriteScale);
@@ -50,7 +50,7 @@ void Carrinho::Update(float dt)
 
 void Carrinho::Choosed()
 {
-    spriteItemHoover = new Sprite(associated, "assets/img/placeholders/UI/Loja-compra-click.png");
+    spriteItemHoover = new Sprite(associated, SCREEN3_PATH + "Loja-compra-click.png");
     spriteItemHoover->SetScale(spriteScale);
     associated.AddComponent(spriteItemHoover);
     gameToBuy->gameChoosed = true;

@@ -30,6 +30,7 @@ bool GameData::nextClient;
 std::vector<std::string> GameData::clientNames{"emo1", "emo2", "emo3", "exe1", "exe2", "exe3", "pol1", "pol2", "pol3", "pol4"};
 std::string GameData::currentClient;
 int GameData::currentClientPos;
+std::vector<std::string> GameData::allGames = {"sonic", "fifa", "kirby", "mkombat", "pwaa", "dance", "gta", "mgear", "pokemon", "sims"};
 
 /* game constant paths */
 std::string BASE_ASSET_PATH = "assets/img/";
@@ -114,6 +115,7 @@ void GameData::Reset()
     GameData::currentRep = 50;
     GameData::currentSus = 0;
     GameData::ownedGames.clear();
+    GameData::ownedGames = {"fifa", "kirby", "mgear"};
 
     GameData::clientCanLeave = false;
     GameData::nextClient = true;

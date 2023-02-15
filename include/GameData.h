@@ -43,6 +43,7 @@ public:
     static std::vector<std::string> clientNames;
     static std::string currentClient;
     static int currentClientPos;
+    static std::vector<std::string> allGames;
 
     /// @brief Utility to write save data to save file
     /// @param saveNumber save counter
