@@ -144,6 +144,11 @@ void TitleState::Update(float dt)
         State *stage = new StageState(true);
         Game::GetInstance().Push(stage);
     }
+
+    if (GameData::menuRequested)
+    {
+        GameData::menuRequested = false;
+    }
 }
 
 void TitleState::Render()

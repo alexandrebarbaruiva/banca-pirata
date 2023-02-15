@@ -33,6 +33,7 @@ public:
     static int currentSus;
     static bool endDay;
     static std::vector<std::string> ownedGames;
+    static bool menuRequested;
 
     /* game functions */
     static bool clientCanLeave;
