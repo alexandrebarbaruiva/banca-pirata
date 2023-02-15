@@ -266,7 +266,8 @@ void ThirdStageState::Update(float dt)
 		std::vector<std::string> jogosParaVenda;
 		std::vector<std::string> jogosComprados = GameData::ownedGames;
 		std::vector<std::string> todosJogos = GameData::allGames;
-		int jogoInt1, jogoInt2;
+		int jogoInt1;
+		int jogoInt2;
 		std::string jogoStr1, jogoStr2;
 		std::sort(todosJogos.begin(), todosJogos.end());
 		std::sort(jogosComprados.begin(), jogosComprados.end());
