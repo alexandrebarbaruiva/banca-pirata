@@ -20,21 +20,6 @@ private:
 public:
     AssetGame(GameObject &associated, std::string game, std::string setCategory1,  std::string setCategory2, std::string setCategory3, int priceSet);
 
-    enum Game {
-        dance=1,
-        fifa=2,
-        gta=3,
-        kirby=4,
-        MGear=5,
-        MKombat=6,
-        pokemon=7,
-        PWAA=8,
-        sims=9,
-        sonic=0
-    };
-
-    Game gameName;
-
 
     std::string type = "AssetGame";
     std::string name;

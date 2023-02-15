@@ -14,7 +14,7 @@
 AssetGame::AssetGame(GameObject &associated, std::string game, std::string setCategory1,  std::string setCategory2, std::string setCategory3, int priceSet) : Component(associated) 
 {
     price = priceSet;
-    spriteName = "assets/img/Jogos/Capas combinadas/Capa " + game + ".png";
+    spriteName = COVERS_PATH + "Capa-" + game + ".png";
     category1 = setCategory1;
     category2 = setCategory2;
     category3 = setCategory3;
