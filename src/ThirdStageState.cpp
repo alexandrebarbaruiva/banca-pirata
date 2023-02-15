@@ -70,12 +70,6 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	AddObject(moneyHudText);
 
 	// HUD Reputação
-	//GameObject *hudReputationGO2 = new GameObject();
-	//hudReputationGO2->AddComponent(new GameItem(*hudReputationGO2, HUD_PATH + "Rep.png", 1, 1));
-	//hudReputationGO2->box.SetOrigin(960, 0);
-	//AddObject(hudReputationGO2);
-
-	// HUD Seta da Reputação
 	GameObject *hudReputationArrowGO = new GameObject();
 	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, GameData::currentRep, 1, 1));
 	hudReputationArrowGO->box.SetOrigin(960, 0);
@@ -175,47 +169,6 @@ ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chil
 	//AddObject(gameAsset2GO);
 	assetGame2 = nullptr;
 
-	//// Capa Game 2
-	//GameObject *capa2GO = new GameObject();
-	//capa2GO->AddComponent(new AssetItem(*capa2GO, assetGame2, assetGame2->spriteName, 0.8, 0.8, false, 1, 1));
-	//capa2GO->box.SetOrigin(1400, 220);
-	//AddObject(capa2GO);
-
-	//// Marcador de Preço Game 2
-	//GameObject *marcaPrecoGame2GO = new GameObject();
-	//marcaPrecoGame2GO->AddComponent(new AssetItem(*marcaPrecoGame2GO, assetGame2, SCREEN3_PATH + "Loja-fundo preco.png", 1, 1));
-	//marcaPrecoGame2GO->box.SetOrigin(1600, 200);
-	//AddObject(marcaPrecoGame2GO);
-
-	//// Preço Game 2
-	//GameObject *precoGame2GO = new GameObject();
-	//precoGame2GO->AddComponent(new Text(*precoGame2GO, "assets/font/five.ttf", 40, Text::SOLID, ("$" + std::to_string(assetGame2->price)), {0, 0, 0, SDL_ALPHA_OPAQUE}));
-	//precoGame2GO->box.SetOrigin(1615, 220);
-	//AddObject(precoGame2GO);
-
-	//// Categoria 1 Game 2
-	//GameObject *categoria1Game2GO = new GameObject();
-	//categoria1Game2GO->AddComponent(new Text(*categoria1Game2GO, "assets/font/five.ttf", 30, Text::SOLID, assetGame2->category1, {255, 0, 191, SDL_ALPHA_OPAQUE}));
-	//categoria1Game2GO->box.SetOrigin(1400, 570);
-	//AddObject(categoria1Game2GO);
-
-	//// Categoria 2 Game 2
-	//GameObject *categoria2Game2GO = new GameObject();
-	//categoria2Game2GO->AddComponent(new Text(*categoria2Game2GO, "assets/font/five.ttf", 30, Text::SOLID, assetGame2->category2, {191, 0, 255, SDL_ALPHA_OPAQUE}));
-	//categoria2Game2GO->box.SetOrigin(1400, 620);
-	//AddObject(categoria2Game2GO);
-
-	//// Categoria 3 Game 2
-	//GameObject *categoria3Game2GO = new GameObject();
-	//categoria3Game2GO->AddComponent(new Text(*categoria3Game2GO, "assets/font/five.ttf", 30, Text::SOLID, assetGame2->category3, {255, 128, 0, SDL_ALPHA_OPAQUE}));
-	//categoria3Game2GO->box.SetOrigin(1400, 670);
-	//AddObject(categoria3Game2GO);
-
-	//// Carrinho Game 2
-	//GameObject *carrinho2GO = new GameObject();
-	//carrinho2GO->AddComponent(new Carrinho(*carrinho2GO, assetGame2));
-	//carrinho2GO->box.SetOrigin(1610, 600);
-	//AddObject(carrinho2GO);
 	carrinho2 = nullptr;
 
 	// End Of Day Post-it

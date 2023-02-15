@@ -47,6 +47,7 @@ void ReputationArrow::Update(float dt)
 {
     if (this->currentPoint >= this->destinationPoint)
     {
+        // std::cout << "Diferença localização: " << (this->currentPoint - this->destinationPoint) << "\n";
         // TODO: change here when reputation starts to change
         arrowGO->box.x = 960 + this->destinationPoint;
         this->speed = this->speed * 0;

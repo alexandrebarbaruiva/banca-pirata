@@ -43,4 +43,4 @@ public:
     void Resume();
 };
 
-#endif //THIRDSTAGESTATE_HEADER
+#endif

@@ -28,7 +28,7 @@ Sound::~Sound()
 void Sound::Play(int times)
 {
     channel = Mix_PlayChannel(-1, chunk.get(), times - 1);
-    Mix_VolumeChunk(chunk.get(), 30);
+    Mix_VolumeChunk(chunk.get(), 80);
 }
 
 void Sound::Stop()

@@ -26,7 +26,7 @@
 #include "PauseState.h"
 #include "EndState.h"
 
-StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
+StageState::StageState(bool loadGame) : State(), backgroundMusic(AUDIOS_PATH + "stage.ogg")
 {
 	// Remove any previous save data from state
 	GameData::Reset();
@@ -110,6 +110,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/c
 StageState::~StageState()
 {
 	objectArray.clear();
+	backgroundMusic.Stop(0);
 }
 
 void StageState::Start()
@@ -126,12 +127,12 @@ void StageState::LoadAssets()
 
 void StageState::Pause()
 {
-	backgroundMusic.Stop(0);
+	// backgroundMusic.Stop(0);
 }
 
 void StageState::Resume()
 {
-	backgroundMusic.Play();
+	// backgroundMusic.Play();
 }
 
 void StageState::Update(float dt)

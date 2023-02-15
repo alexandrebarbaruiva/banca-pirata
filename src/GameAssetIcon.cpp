@@ -23,7 +23,7 @@ GameAssetIcon::GameAssetIcon(GameObject &associated, std::string sprite, bool is
 void GameAssetIcon::Update(float dt)
 {
     InputManager input = InputManager::GetInstance();
-    if (input.MousePress(LEFT_MOUSE_BUTTON) and associated.box.IsInside(input.GetMousePosition()))
+    if (input.MousePress(LEFT_MOUSE_BUTTON) and associated.box.IsInside(input.GetMousePosition()) and this->isClickable)
     {
         this->isClicked = true;
     }

@@ -20,7 +20,7 @@ class Carrinho : public Component
 {
 private:
 public:
-    Carrinho(GameObject &associated, AssetGame *gameBuying ,float scaleX = 1, float scaleY = 1);
+    Carrinho(GameObject &associated, AssetGame *gameBuying, float scaleX = 1, float scaleY = 1);
     ~Carrinho();
 
     std::string type = "Carrinho";

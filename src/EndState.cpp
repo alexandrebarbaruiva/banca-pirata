@@ -42,7 +42,7 @@ EndState::EndState()
     AddObject(botaoContinuar);
 
     GameObject *textoContinuar = new GameObject();
-    textoContinuar->AddComponent(new Text(*textoContinuar,  FONT_PATH + "/up.ttf", 70, Text::SOLID, "MENU", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    textoContinuar->AddComponent(new Text(*textoContinuar,  FONTS_PATH + "up.ttf", 70, Text::SOLID, "MENU", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     textoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,940);
     AddObject(textoContinuar);
 

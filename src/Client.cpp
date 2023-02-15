@@ -24,9 +24,15 @@ Client::Client(GameObject &associated, std::string sprite, float scaleX, float s
     spriteItem->SetScale(scaleX, scaleY);
     associated.AddComponent(spriteItem);
     associated.AddComponent(new Collider(associated));
+    stepSound = new Sound(associated, AUDIOS_PATH + "steps.ogg");
+    stepSound->Play(-1);
 #ifdef DEBUG
     std::cout << "Client destination point on " << this->endPoint << "\n";
 #endif
+}
+Client::~Client()
+{
+    stepSound->Stop();
 }
 
 void Client::Update(float dt)
@@ -37,17 +43,25 @@ void Client::Update(float dt)
         Client::PopChat();
         this->reachedEndpoint = true;
         std::cout << "Reached endpoint.\n";
+        stepSound->Stop();
     }
     else if (GameData::clientCanLeave)
     {
-        this->speed = Vec2(600, 0);
-        if (this->currentPoint > GAME_SCREEN_WIDTH)
+        if (not stepPlaying)
         {
-            associated.RequestDelete();
-            GameData::changeCurrentClient();
-            GameData::clientCanLeave = false;
-            GameData::nextClient = true;
+            stepPlaying = true;
+            stepSound->Play(-1);
         }
+        this->speed = Vec2(600, 0);
+    }
+    if (this->currentPoint > GAME_SCREEN_WIDTH)
+    {
+        stepSound->Stop();
+
+        associated.RequestDelete();
+        GameData::changeCurrentClient();
+        GameData::clientCanLeave = false;
+        GameData::nextClient = true;
     }
     // To avoid big jumps when beginning session
     if (dt > 0.1)

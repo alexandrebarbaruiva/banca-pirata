@@ -17,6 +17,7 @@
 #include <ctime>
 #include <unordered_map>
 #include <vector>
+#include <map>
 
 class GameData
 {
@@ -40,11 +41,18 @@ public:
     static bool clientCanLeave;
     static bool nextClient;
 
-    static std::string availableGames[10];
-    static std::vector<std::string> clientNames;
     static std::string currentClient;
     static int currentClientPos;
+    static std::vector<std::string> currentClientGameTypes;
+
+    /* constants */
+    // All client variations
+    static std::vector<std::string> clientNames;
+    // All available games
+    static std::string availableGames[10];
     static std::vector<std::string> allGames;
+    static std::vector<std::string> gameTypes;
+    static std::map<std::string, std::vector<std::string>> gameAssetTypes;
 
     /// @brief Utility to write save data to save file
     /// @param saveNumber save counter

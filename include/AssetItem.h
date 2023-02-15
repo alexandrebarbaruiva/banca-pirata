@@ -20,7 +20,7 @@ class AssetItem : public Component
 {
 private:
 public:
-    AssetItem(GameObject &associated, AssetGame *gameLinked ,std::string sprite, float scaleX = 1, float scaleY = 1, bool moveable = false, float frameTime = 1.0, int frameCount = 1);
+    AssetItem(GameObject &associated, AssetGame *gameLinked, std::string sprite, float scaleX = 1, float scaleY = 1, bool moveable = false, float frameTime = 1.0, int frameCount = 1);
 
     std::string type = "AssetItem";
     std::string name;

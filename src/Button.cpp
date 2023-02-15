@@ -42,9 +42,11 @@ void Button::Update(float dt)
         {
             this->isClicked = true;
             this->timesClicked++;
-#ifdef DEBUG
-            Sound *sound = new Sound(associated, "assets/audio/quack.mp3");
+            Sound *sound = new Sound(associated, AUDIOS_PATH + "buttonClick.ogg");
             sound->Play();
+#ifdef DEBUG
+            Sound *duckSound = new Sound(associated, "assets/audio/quack.mp3");
+            duckSound->Play();
             std::cout << GREEN;
             std::cout << this->name;
             std::cout << RESET;

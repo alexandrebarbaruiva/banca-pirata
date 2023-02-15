@@ -39,12 +39,12 @@ EndDayState::EndDayState() : State(), backgroundMusic("assets/audio/abertura.ogg
     AddObject(fundoEndDay);
 
 	GameObject *letreiroBalanco = new GameObject();
-	letreiroBalanco->AddComponent(new Text(*letreiroBalanco,  FONT_PATH + "/up.ttf", 70, Text::SOLID, "BALANÇO DO DIA", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	letreiroBalanco->AddComponent(new Text(*letreiroBalanco,  FONTS_PATH + "up.ttf", 70, Text::SOLID, "BALANÇO DO DIA", {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	letreiroBalanco->box.SetCenter(GAME_SCREEN_WIDTH/2, 245);
 	AddObject(letreiroBalanco);
 
 	GameObject *letreiroTotal = new GameObject();
-	letreiroTotal->AddComponent(new Text(*letreiroTotal, FONT_PATH + "/up.ttf", 70, Text::SOLID, "TOTAL", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	letreiroTotal->AddComponent(new Text(*letreiroTotal, FONTS_PATH + "up.ttf", 70, Text::SOLID, "TOTAL", {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	letreiroTotal->box.SetCenter(GAME_SCREEN_WIDTH/2, 515);
 	AddObject(letreiroTotal);
 
@@ -59,7 +59,7 @@ EndDayState::EndDayState() : State(), backgroundMusic("assets/audio/abertura.ogg
     AddObject(moeda2);
 
 	GameObject *letreiroREP = new GameObject();
-	letreiroREP->AddComponent(new Text(*letreiroREP, FONT_PATH + "/up.ttf", 90, Text::SOLID, "REP:", {255,255,255, SDL_ALPHA_OPAQUE}));
+	letreiroREP->AddComponent(new Text(*letreiroREP, FONTS_PATH + "up.ttf", 90, Text::SOLID, "REP:", {255,255,255, SDL_ALPHA_OPAQUE}));
 	letreiroREP->box.SetCenter(800, 775);
 	AddObject(letreiroREP);
 
@@ -69,7 +69,7 @@ EndDayState::EndDayState() : State(), backgroundMusic("assets/audio/abertura.ogg
     AddObject(botaoContinuar);
 
     GameObject *textoContinuar = new GameObject();
-    textoContinuar->AddComponent(new Text(*textoContinuar,  FONT_PATH + "/up.ttf", 70, Text::SOLID, "PRÓXIMO DIA", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    textoContinuar->AddComponent(new Text(*textoContinuar,  FONTS_PATH + "up.ttf", 70, Text::SOLID, "PRÓXIMO DIA", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     textoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,940);
     AddObject(textoContinuar);
 }
@@ -121,22 +121,22 @@ void EndDayState::Update(float dt)
 	AddObject(hudGOSirene);
 
 	GameObject *dinheiroVerde = new GameObject();
-	dinheiroVerde->AddComponent(new Text(*dinheiroVerde, FONT_PATH + "/up.ttf", 100, Text::SOLID,"+ " + std::to_string(280), {0,255,0, SDL_ALPHA_OPAQUE}));
+	dinheiroVerde->AddComponent(new Text(*dinheiroVerde, FONTS_PATH + "up.ttf", 100, Text::SOLID,"+ " + std::to_string(280), {0,255,0, SDL_ALPHA_OPAQUE}));
 	dinheiroVerde->box.SetCenter(GAME_SCREEN_WIDTH/2, 345);
 	AddObject(dinheiroVerde);
 
 	GameObject *dinheiroVermelho = new GameObject();
-	dinheiroVermelho->AddComponent(new Text(*dinheiroVermelho, FONT_PATH + "/up.ttf", 100, Text::SOLID,"- " + std::to_string(30), {255,0,0, SDL_ALPHA_OPAQUE}));
+	dinheiroVermelho->AddComponent(new Text(*dinheiroVermelho, FONTS_PATH + "up.ttf", 100, Text::SOLID,"- " + std::to_string(30), {255,0,0, SDL_ALPHA_OPAQUE}));
 	dinheiroVermelho->box.SetCenter(GAME_SCREEN_WIDTH/2, 435);
 	AddObject(dinheiroVermelho);
 
 	GameObject *dinheiroAmarelo = new GameObject();
-	dinheiroAmarelo->AddComponent(new Text(*dinheiroAmarelo, FONT_PATH + "/up.ttf", 140, Text::SOLID, std::to_string(250), {255,255,0, SDL_ALPHA_OPAQUE}));
+	dinheiroAmarelo->AddComponent(new Text(*dinheiroAmarelo, FONTS_PATH + "up.ttf", 140, Text::SOLID, std::to_string(250), {255,255,0, SDL_ALPHA_OPAQUE}));
 	dinheiroAmarelo->box.SetCenter(GAME_SCREEN_WIDTH/2, 590);
 	AddObject(dinheiroAmarelo);
 
 	GameObject *RepVerde = new GameObject();
-	RepVerde->AddComponent(new Text(*RepVerde, FONT_PATH + "/up.ttf", 90, Text::SOLID, "+" + std::to_string(12), {0,255,0, SDL_ALPHA_OPAQUE}));
+	RepVerde->AddComponent(new Text(*RepVerde, FONTS_PATH + "up.ttf", 90, Text::SOLID, "+" + std::to_string(12), {0,255,0, SDL_ALPHA_OPAQUE}));
 	RepVerde->box.SetCenter(1000, 775);
 	AddObject(RepVerde);
 
