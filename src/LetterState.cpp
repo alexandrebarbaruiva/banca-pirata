@@ -25,7 +25,7 @@ LetterState::LetterState() : State(), backgroundMusic("assets/audio/abertura.ogg
 
 	GameObject *cartaGO = new GameObject();
 	//cartaGO->AddComponent(new Sprite(*cartaGO, "assets/img/placeholders/Carta.png", 1, 1.0));
-	cartaGO->AddComponent(new Sprite(*cartaGO , "assets/img/placeholders/CartaAnim-Sheet_3.png", 13, 0.2, 2.8));
+	cartaGO->AddComponent(new Sprite(*cartaGO ,  BASE_ASSET_PATH + "CartaAnim-Sheet_3.png", 13, 0.2, 2.8));
 	cartaGO->box.SetOrigin(300, 0);
 	AddObject(cartaGO);
 
@@ -97,7 +97,7 @@ void LetterState::Update(float dt)
         std::string textocartaFinal2 = "Se nao conseguir, feche a banca e nao volte mais.";
 
         GameObject *textoCartaGO1 = new GameObject();
-        textoCartaGO1->AddComponent(new Text(*textoCartaGO1, "assets/font/Karma Suture.otf", 40, Text::BLENDED, "Fala, garoto!", {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO1->AddComponent(new Text(*textoCartaGO1, FONT_PATH + "/Karma Suture.otf", 40, Text::BLENDED, "Fala, garoto!", {0, 0, 0, SDL_ALPHA_OPAQUE}));
         textoCartaGO1->box.SetOrigin(610,130);
         AddObject(textoCartaGO1);
         //GameObject *textoCartaGO2 = new GameObject();
@@ -106,74 +106,74 @@ void LetterState::Update(float dt)
         //AddObject(textoCartaGO2);
 
         GameObject *linha1CartaGO = new GameObject();
-        linha1CartaGO->AddComponent(new Text(*linha1CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha1, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha1CartaGO->AddComponent(new Text(*linha1CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha1, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha1CartaGO->box.SetOrigin(610,210);
         AddObject(linha1CartaGO);
 
         GameObject *linha2CartaGO = new GameObject();
-        linha2CartaGO->AddComponent(new Text(*linha2CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha2, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha2CartaGO->AddComponent(new Text(*linha2CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha2, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha2CartaGO->box.SetOrigin(610,270);
         AddObject(linha2CartaGO);
 
         GameObject *linha3CartaGO = new GameObject();
-        linha3CartaGO->AddComponent(new Text(*linha3CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha3, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha3CartaGO->AddComponent(new Text(*linha3CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha3, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha3CartaGO->box.SetOrigin(610,330);
         AddObject(linha3CartaGO);
 
         GameObject *linha4CartaGO = new GameObject();
-        linha4CartaGO->AddComponent(new Text(*linha4CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha4, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha4CartaGO->AddComponent(new Text(*linha4CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha4, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha4CartaGO->box.SetOrigin(610,390);
         AddObject(linha4CartaGO);
 
         GameObject *linha5CartaGO = new GameObject();
-        linha5CartaGO->AddComponent(new Text(*linha5CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha5, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha5CartaGO->AddComponent(new Text(*linha5CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha5, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha5CartaGO->box.SetOrigin(610,450);
         AddObject(linha5CartaGO);
 
         GameObject *linha6CartaGO = new GameObject();
-        linha6CartaGO->AddComponent(new Text(*linha6CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha6, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha6CartaGO->AddComponent(new Text(*linha6CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha6, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha6CartaGO->box.SetOrigin(610,510);
         AddObject(linha6CartaGO);
 
         GameObject *linha7CartaGO = new GameObject();
-        linha7CartaGO->AddComponent(new Text(*linha7CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha7, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha7CartaGO->AddComponent(new Text(*linha7CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha7, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha7CartaGO->box.SetOrigin(610,570);
         AddObject(linha7CartaGO);
 
         GameObject *linha8CartaGO = new GameObject();
-        linha8CartaGO->AddComponent(new Text(*linha8CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha8, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha8CartaGO->AddComponent(new Text(*linha8CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha8, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha8CartaGO->box.SetOrigin(610,630);
         AddObject(linha8CartaGO);
 
         GameObject *linha9CartaGO = new GameObject();
-        linha9CartaGO->AddComponent(new Text(*linha9CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha9, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha9CartaGO->AddComponent(new Text(*linha9CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha9, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha9CartaGO->box.SetOrigin(610,690);
         AddObject(linha9CartaGO);
 
         GameObject *linha10CartaGO = new GameObject();
-        linha10CartaGO->AddComponent(new Text(*linha10CartaGO, "assets/font/Karma Suture.otf", 20, Text::BLENDED, linha10, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        linha10CartaGO->AddComponent(new Text(*linha10CartaGO, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, linha10, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         linha10CartaGO->box.SetOrigin(610,750);
         AddObject(linha10CartaGO);
 
         std::string textocarta3 = "Um Abraco"; 
         GameObject *textoCartaGO3 = new GameObject();
-        textoCartaGO3->AddComponent(new Text(*textoCartaGO3, "assets/font/Karma Suture.otf", 30, Text::BLENDED, textocarta3, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO3->AddComponent(new Text(*textoCartaGO3, FONT_PATH + "/Karma Suture.otf", 30, Text::BLENDED, textocarta3, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         textoCartaGO3->box.SetOrigin(610,800);
         AddObject(textoCartaGO3);
 
         std::string textocarta4 = "Seu Tio"; 
         GameObject *textoCartaGO4 = new GameObject();
-        textoCartaGO4->AddComponent(new Text(*textoCartaGO4, "assets/font/Karma Suture.otf", 30, Text::BLENDED, textocarta4, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO4->AddComponent(new Text(*textoCartaGO4, FONT_PATH + "/Karma Suture.otf", 30, Text::BLENDED, textocarta4, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         textoCartaGO4->box.SetOrigin(610,860);
         AddObject(textoCartaGO4);
 
         GameObject *textoCartaGO5 = new GameObject();
-        textoCartaGO5->AddComponent(new Text(*textoCartaGO5, "assets/font/Karma Suture.otf", 20, Text::BLENDED, textocartaFinal1, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO5->AddComponent(new Text(*textoCartaGO5, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, textocartaFinal1, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         textoCartaGO5->box.SetOrigin(610,930);
         AddObject(textoCartaGO5);
 
         GameObject *textoCartaGO6 = new GameObject();
-        textoCartaGO6->AddComponent(new Text(*textoCartaGO6, "assets/font/Karma Suture.otf", 20, Text::BLENDED, textocartaFinal2, {0, 0, 0, SDL_ALPHA_OPAQUE}));
+        textoCartaGO6->AddComponent(new Text(*textoCartaGO6, FONT_PATH + "/Karma Suture.otf", 20, Text::BLENDED, textocartaFinal2, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         textoCartaGO6->box.SetOrigin(610,990);
         AddObject(textoCartaGO6);
 

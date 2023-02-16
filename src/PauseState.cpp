@@ -19,19 +19,19 @@ PauseState::PauseState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 {
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0));
 	bg->AddComponent(new CameraFollower(*bg));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
 
 	// HUD Dia + Hora + Dinheiro
 	GameObject *hudGO = new GameObject();
-	hudGO->AddComponent(new GameItem(*hudGO, "assets/img/placeholders/Tela 1-dia_dinheiro.png", 1, 1));
+	hudGO->AddComponent(new GameItem(*hudGO,  HUD_PATH + "dia_dinheiro.png", 1, 1));
 	hudGO->box.SetOrigin(0, 0);
 	AddObject(hudGO);
 
 	GameObject *dayHudText = new GameObject();
-	dayHudText->AddComponent(new Text(*dayHudText, "assets/font/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	dayHudText->AddComponent(new Text(*dayHudText, FONT_PATH + "/five.ttf", 40, Text::SOLID, ("Day " + std::to_string(GameData::currentDay)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	dayHudText->box.SetOrigin(115, 35);
 	AddObject(dayHudText);
 
@@ -44,7 +44,7 @@ PauseState::PauseState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 	AddObject(timeHudText);
 
 	GameObject *moneyHudText = new GameObject();
-	moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	moneyHudText->AddComponent(new Text(*moneyHudText,  FONT_PATH + "/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	moneyHudText->box.SetOrigin(500, 35);
 	AddObject(moneyHudText);
 
@@ -75,44 +75,44 @@ PauseState::PauseState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 	AddObject(hudGOSirene);
 
 	GameObject *letreiroPause = new GameObject();
-	letreiroPause->AddComponent(new Text(*letreiroPause, "assets/font/five.ttf", 120, Text::SOLID, "Pausado", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+	letreiroPause->AddComponent(new Text(*letreiroPause, FONT_PATH + "/up.ttf", 120, Text::SOLID, "Pausado", {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	letreiroPause->box.SetCenter(GAME_SCREEN_WIDTH/2, 350);
 	AddObject(letreiroPause);
 
-    GameObject *fundoPause = new GameObject();
-    fundoPause->AddComponent(new Sprite(*fundoPause, "assets/img/placeholders/config fundo.png", 1));
-    fundoPause->box.SetCenter(GAME_SCREEN_WIDTH/2,650);
-    //fundoPause->box.SetOrigin(GAME_SCREEN_WIDTH/2,GAME_SCREEN_HEIGHT/2);
-    AddObject(fundoPause);
+    //GameObject *fundoPause = new GameObject();
+    //fundoPause->AddComponent(new Sprite(*fundoPause, "assets/img/placeholders/config fundo.png", 1));
+    //fundoPause->box.SetCenter(GAME_SCREEN_WIDTH/2,650);
+    ////fundoPause->box.SetOrigin(GAME_SCREEN_WIDTH/2,GAME_SCREEN_HEIGHT/2);
+    //AddObject(fundoPause);
 
     GameObject *botaoContinuar = new GameObject();
-    botaoContinuar->AddComponent(new Button(*botaoContinuar, "continue", 0.8 ,1 , "assets/img/placeholders/botao menu longo.png"));
+    botaoContinuar->AddComponent(new Button(*botaoContinuar, "continue", 0.8 ,1 , TITLE_PATH + "botao menu longo.png"));
     botaoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,500);
     AddObject(botaoContinuar);
 
     GameObject *textoContinuar = new GameObject();
-    textoContinuar->AddComponent(new Text(*textoContinuar, "assets/font/five.ttf", 50, Text::SOLID, "Continuar", {255, 255, 255, SDL_ALPHA_OPAQUE}));
-    textoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,520);
+    textoContinuar->AddComponent(new Text(*textoContinuar, FONT_PATH + "/up.ttf", 70, Text::SOLID, "Continuar", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    textoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,500);
     AddObject(textoContinuar);
 
     GameObject *botaoMenu = new GameObject();
-    botaoMenu->AddComponent(new Button(*botaoMenu, "menu", 0.8 ,1 , "assets/img/placeholders/botao menu longo.png"));
+    botaoMenu->AddComponent(new Button(*botaoMenu, "menu", 0.8 ,1 , TITLE_PATH + "botao menu longo.png"));
     botaoMenu->box.SetCenter(GAME_SCREEN_WIDTH/2,650);
     AddObject(botaoMenu);
 
     GameObject *textoMenu = new GameObject();
-    textoMenu->AddComponent(new Text(*textoMenu, "assets/font/five.ttf", 50, Text::SOLID, "Menu", {255, 255, 255, SDL_ALPHA_OPAQUE}));
-    textoMenu->box.SetCenter(GAME_SCREEN_WIDTH/2,670);
+    textoMenu->AddComponent(new Text(*textoMenu, FONT_PATH + "/up.ttf", 70, Text::SOLID, "Menu", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    textoMenu->box.SetCenter(GAME_SCREEN_WIDTH/2,650);
     AddObject(textoMenu);
 
     GameObject *botaoSair = new GameObject();
-    botaoSair->AddComponent(new Button(*botaoSair, "sair", 0.8 ,1 , "assets/img/placeholders/botao menu longo.png"));
+    botaoSair->AddComponent(new Button(*botaoSair, "sair", 0.8 ,1 ,TITLE_PATH + "botao menu longo.png"));
     botaoSair->box.SetCenter(GAME_SCREEN_WIDTH/2,800);
     AddObject(botaoSair);
 
     GameObject *textoSair = new GameObject();
-    textoSair->AddComponent(new Text(*textoSair, "assets/font/five.ttf", 50, Text::SOLID, "Sair", {255, 255, 255, SDL_ALPHA_OPAQUE}));
-    textoSair->box.SetCenter(GAME_SCREEN_WIDTH/2,820);
+    textoSair->AddComponent(new Text(*textoSair, FONT_PATH + "/up.ttf", 70, Text::SOLID, "Sair", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    textoSair->box.SetCenter(GAME_SCREEN_WIDTH/2,800);
     AddObject(textoSair);
 }
 
