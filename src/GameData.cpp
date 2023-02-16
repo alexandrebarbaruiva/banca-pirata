@@ -27,6 +27,7 @@ bool GameData::recordingGame = false;
 std::vector<std::string> GameData::ownedGames;
 bool GameData::menuRequested;
 bool GameData::playerArrested;
+bool GameData::moneySpent = false;
 
 /* game functions */
 bool GameData::clientCanLeave;
@@ -162,6 +163,7 @@ void GameData::Reset()
     GameData::ownedGames.clear();
     GameData::ownedGames = {"fifa", "kirby", "mgear"};
     GameData::playerArrested = false;
+    GameData::moneySpent = false;
 
     GameData::clientCanLeave = false;
     GameData::nextClient = true;

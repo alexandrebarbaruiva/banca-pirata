@@ -121,22 +121,32 @@ void EndDayState::Update(float dt)
 	AddObject(hudGOSirene);
 
 	GameObject *dinheiroVerde = new GameObject();
-	dinheiroVerde->AddComponent(new Text(*dinheiroVerde, FONTS_PATH + "up.ttf", 100, Text::SOLID,"+ " + std::to_string(280), {0,255,0, SDL_ALPHA_OPAQUE}));
+	dinheiroVerde->AddComponent(new Text(*dinheiroVerde, FONTS_PATH + "up.ttf", 100, Text::SOLID,"+ " + std::to_string(GameData::moneyInDay), {0,255,0, SDL_ALPHA_OPAQUE}));
 	dinheiroVerde->box.SetCenter(GAME_SCREEN_WIDTH/2, 345);
 	AddObject(dinheiroVerde);
 
-	GameObject *dinheiroVermelho = new GameObject();
-	dinheiroVermelho->AddComponent(new Text(*dinheiroVermelho, FONTS_PATH + "up.ttf", 100, Text::SOLID,"- " + std::to_string(30), {255,0,0, SDL_ALPHA_OPAQUE}));
-	dinheiroVermelho->box.SetCenter(GAME_SCREEN_WIDTH/2, 435);
-	AddObject(dinheiroVermelho);
+    if (GameData::moneySpent)
+    {
+        GameObject *dinheiroVermelho = new GameObject();
+        dinheiroVermelho->AddComponent(new Text(*dinheiroVermelho, FONTS_PATH + "up.ttf", 100, Text::SOLID, "- " + std::to_string(30), {255, 0, 0, SDL_ALPHA_OPAQUE}));
+        dinheiroVermelho->box.SetCenter(GAME_SCREEN_WIDTH / 2, 435);
+        AddObject(dinheiroVermelho);
+    }
 
-	GameObject *dinheiroAmarelo = new GameObject();
-	dinheiroAmarelo->AddComponent(new Text(*dinheiroAmarelo, FONTS_PATH + "up.ttf", 140, Text::SOLID, std::to_string(250), {255,255,0, SDL_ALPHA_OPAQUE}));
+    GameObject *dinheiroAmarelo = new GameObject();
+	dinheiroAmarelo->AddComponent(new Text(*dinheiroAmarelo, FONTS_PATH + "up.ttf", 140, Text::SOLID, std::to_string(GameData::currentMoney), {255,255,0, SDL_ALPHA_OPAQUE}));
 	dinheiroAmarelo->box.SetCenter(GAME_SCREEN_WIDTH/2, 590);
 	AddObject(dinheiroAmarelo);
 
 	GameObject *RepVerde = new GameObject();
-	RepVerde->AddComponent(new Text(*RepVerde, FONTS_PATH + "up.ttf", 90, Text::SOLID, "+" + std::to_string(12), {0,255,0, SDL_ALPHA_OPAQUE}));
+    if(GameData::repInDay > 0)
+    {
+	    RepVerde->AddComponent(new Text(*RepVerde, FONTS_PATH + "up.ttf", 90, Text::SOLID, "+" + std::to_string(GameData::repInDay), {0,255,0, SDL_ALPHA_OPAQUE}));
+    }
+    else
+    {
+	    RepVerde->AddComponent(new Text(*RepVerde, FONTS_PATH + "up.ttf", 90, Text::SOLID, std::to_string(GameData::repInDay), {255,0,0, SDL_ALPHA_OPAQUE}));
+    }
 	RepVerde->box.SetCenter(1000, 775);
 	AddObject(RepVerde);
 
@@ -171,6 +181,7 @@ void EndDayState::Update(float dt)
         	    State *stage = new EndState();
         	    Game::GetInstance().Push(stage);
             }
+            GameData::moneySpent = false;
         	this->Pause();
 			popRequested = true;
     }

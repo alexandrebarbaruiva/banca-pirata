@@ -22,15 +22,22 @@ EndState::EndState()
 {
      GameObject *bg = new GameObject();
      Sprite *result;
-     if (GameData::currentMoney >= 500)
+     if (GameData::playerArrested)
      {
-         result = new Sprite(*bg, BASE_ASSET_PATH + "Vitoria.png");
-         //backgroundMusic = Music("assets/audio/endStateWin.ogg");
+         result = new Sprite(*bg, BASE_ASSET_PATH + "derrota policial.png");
      }
      else
      {
-         result = new Sprite(*bg, BASE_ASSET_PATH + "derrota agiota.png");
-         //backgroundMusic = Music("assets/audio/endStateLose.ogg");
+         if (GameData::currentMoney >= 500)
+         {
+             result = new Sprite(*bg, BASE_ASSET_PATH + "Vitoria.png");
+             // backgroundMusic = Music("assets/audio/endStateWin.ogg");
+         }
+         else
+         {
+             result = new Sprite(*bg, BASE_ASSET_PATH + "derrota agiota.png");
+             // backgroundMusic = Music("assets/audio/endStateLose.ogg");
+         }
      }
      bg->AddComponent(result);
      bg->box.SetOrigin({0, 0});
@@ -38,12 +45,12 @@ EndState::EndState()
 
     GameObject *botaoContinuar = new GameObject();
     botaoContinuar->AddComponent(new Button(*botaoContinuar, "menu", 1.0 ,1 ,TITLE_PATH  + "botao menu longo.png"));
-    botaoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,940);
+    botaoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,1000);
     AddObject(botaoContinuar);
 
     GameObject *textoContinuar = new GameObject();
     textoContinuar->AddComponent(new Text(*textoContinuar,  FONTS_PATH + "up.ttf", 70, Text::SOLID, "MENU", {255, 255, 255, SDL_ALPHA_OPAQUE}));
-    textoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,940);
+    textoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,1000);
     AddObject(textoContinuar);
 }
 
