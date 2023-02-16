@@ -32,6 +32,8 @@ public:
     static int currentMoney;
     static int currentRep;
     static int currentSus;
+    static int moneyInDay;
+    static int repInDay;
     static bool endDay;
     static bool recordingGame;
 

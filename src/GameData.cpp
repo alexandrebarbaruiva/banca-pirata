@@ -20,6 +20,8 @@ int GameData::currentDay;
 int GameData::currentMoney;
 int GameData::currentRep;
 int GameData::currentSus;
+int GameData::moneyInDay = 0;
+int GameData::repInDay = 0;
 bool GameData::endDay;
 bool GameData::recordingGame = false;
 std::vector<std::string> GameData::ownedGames;

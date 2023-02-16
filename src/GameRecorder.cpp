@@ -45,7 +45,6 @@ void GameRecorder::Update(float dt)
         }
         std::vector<std::string> clientGameTypes = GameData::currentClientGameTypes;
 
-        // TODO: verificar se cliente é polícia e jogo é original
         if (GameData::currentClient.substr(0, 3) == "pol" and ((selectedGame[0] != selectedGame[1]) or
                                                                (selectedGame[0] != selectedGame[2]) or
                                                                (selectedGame[1] != selectedGame[2])))
@@ -54,7 +53,6 @@ void GameRecorder::Update(float dt)
             GameData::currentSus += 20;
         }
 
-        // TODO: verificar se valor dos assets está correto
         int moneyToAdd = 0;
         int repToAdd = 0;
         for (int i = 0; i < 3; i++)
@@ -72,14 +70,18 @@ void GameRecorder::Update(float dt)
             }
         }
         repToAdd -= clientGameTypes.size();
+
+        GameData::moneyInDay = moneyToAdd;
+        GameData::repInDay = repToAdd;
+
+#ifdef DEBUG
         std::cout << "DINHEIRO: " << moneyToAdd << "\n";
         std::cout << "REPUTAÇÂO: " << repToAdd << "\n";
         std::cout << "ERROS: " << clientGameTypes.size() << "\n";
+#endif
 
-        std::cout << selectedGame[0] << " " << selectedGame[1] << " " << selectedGame[2] << "\n";
         GameData::currentMoney += (moneyToAdd * GameData::currentRep / 100);
 
-        // TODO: verificar se aumenta 10 de rep mesmo
         GameData::currentRep += repToAdd;
         if (GameData::currentRep > 100)
         {

@@ -25,7 +25,7 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
     this->AddObject(bg);
 
     GameObject *titleTex = new GameObject();
-    titleTex->AddComponent(new Text(*titleTex,  FONT_PATH + "/up.ttf", 200, Text::BLENDED, "Banca Pirata", {255, 0, 0, SDL_ALPHA_OPAQUE}));
+    titleTex->AddComponent(new Text(*titleTex,  FONTS_PATH + "up.ttf", 200, Text::BLENDED, "Banca Pirata", {255, 0, 0, SDL_ALPHA_OPAQUE}));
     titleTex->box.SetCenter(GAME_SCREEN_WIDTH / 2, 200);
     this->AddObject(titleTex);
 
@@ -38,7 +38,7 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
     this->AddObject(startButton);
 
     GameObject *startText = new GameObject();
-    startText->AddComponent(new Text(*startText, FONT_PATH + "/up.ttf", 70, Text::BLENDED, "Start", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    startText->AddComponent(new Text(*startText, FONTS_PATH + "up.ttf", 70, Text::BLENDED, "Start", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     startText->box.SetCenter(buttonPosition);
     this->AddObject(startText);
 
@@ -51,7 +51,7 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
     this->AddObject(continueButton);
 
     GameObject *continueText = new GameObject();
-    continueText->AddComponent(new Text(*continueText,  FONT_PATH + "/up.ttf", 70, Text::BLENDED, "Continue", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    continueText->AddComponent(new Text(*continueText,  FONTS_PATH + "up.ttf", 70, Text::BLENDED, "Continue", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     continueText->box.SetCenter(buttonPosition);
     this->AddObject(continueText);
 
@@ -64,7 +64,7 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
     this->AddObject(settingsButton);
 
     GameObject *settingsText = new GameObject();
-    settingsText->AddComponent(new Text(*settingsText,  FONT_PATH + "/up.ttf", 70, Text::BLENDED, "Settings", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    settingsText->AddComponent(new Text(*settingsText,  FONTS_PATH + "up.ttf", 70, Text::BLENDED, "Settings", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     settingsText->box.SetCenter(buttonPosition);
     this->AddObject(settingsText);
 
@@ -77,7 +77,7 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
     this->AddObject(exitButton);
 
     GameObject *exitText = new GameObject();
-    exitText->AddComponent(new Text(*exitText,  FONT_PATH + "/up.ttf", 70, Text::BLENDED, "Exit", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    exitText->AddComponent(new Text(*exitText,  FONTS_PATH + "up.ttf", 70, Text::BLENDED, "Exit", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     exitText->box.SetCenter(buttonPosition);
     this->AddObject(exitText);
 }
