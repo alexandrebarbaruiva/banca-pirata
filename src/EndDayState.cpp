@@ -14,12 +14,13 @@
 #include "Calendar.h"
 #include "ReputationArrow.h"
 #include "SirenBox.h"
+#include "EndState.h"
 
 EndDayState::EndDayState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 {
 	// Background
 	GameObject *bg = new GameObject();
-	bg->AddComponent(new Sprite(*bg, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+	bg->AddComponent(new Sprite(*bg, BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0));
 	bg->AddComponent(new CameraFollower(*bg));
 	bg->box.SetOrigin(0, 0);
 	AddObject(bg);
@@ -149,29 +150,35 @@ void EndDayState::Update(float dt)
         }
     }
 
-    if (input.QuitRequested())
-    {
-        quitRequested = true;
-    }
+    //if (input.QuitRequested())
+    //{
+    //    quitRequested = true;
+    //}
 
-    if(input.KeyPress(ESCAPE_KEY) or pressedButton == "continue")
-    {
-        this->Pause();
-        popRequested = true;
-    }
+    //if(input.KeyPress(ESCAPE_KEY) or pressedButton == "continue")
+    //{
+    //    this->Pause();
+    //    popRequested = true;
+    //}
 
-    if(pressedButton == "menu")
+    if(pressedButton == "finalizar")
     {
-        std::cout << "Menu" << std::endl;
-        GameData::menuRequested = true;
-        this->Pause();
-        popRequested = true;
+            std::cout << "dia: " << GameData::currentDay << std::endl;
+            if(GameData::currentDay > 7)
+            {
+                std::cout << "Acabou o jogo" << std::endl;
+			    popRequested = true;
+        	    State *stage = new EndState();
+        	    Game::GetInstance().Push(stage);
+            }
+        	this->Pause();
+			popRequested = true;
     }
-    if(pressedButton == "sair")
-    {
-        //std::cout << "Sair" << std::endl;
-        quitRequested = true;
-    }
+    //if(pressedButton == "sair")
+    //{
+    //    //std::cout << "Sair" << std::endl;
+    //    quitRequested = true;
+    //}
 
     UpdateArray(dt);
 }

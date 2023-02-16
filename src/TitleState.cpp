@@ -148,8 +148,7 @@ void TitleState::Update(float dt)
 
     if (pressedButton == "settingsButton")
     {
-        State *stage = new EndDayState();
-        Game::GetInstance().Push(stage);
+
     }
 
     if (GameData::menuRequested)
