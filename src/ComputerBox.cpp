@@ -12,6 +12,7 @@
 #include "GameAssetIcon.h"
 #include "GameData.h"
 #include "GameRecorderButton.h"
+#include "Text.h"
 #include <algorithm>
 #include <string>
 
@@ -43,8 +44,15 @@ void ComputerBox::Start()
 
 void ComputerBox::Update(float dt)
 {
+    if (GameData::endDay)
+    {
+        return;
+    }
+
     State *state = &Game::GetInstance().GetCurrentState();
     std::string tabAsset = SCREEN2_PATH + "Tela2- Janela aba";
+
+    // GameTab is clicked
     for (auto tabIcon : tabIconArray)
     {
         if (tabIcon.lock()->GetComponent("GameAssetIcon") != nullptr)
@@ -75,6 +83,7 @@ void ComputerBox::Update(float dt)
         ComputerBox::UpdateTabIcon();
     }
 
+    // GameIcon is clicked
     for (auto gameIcon : gameIconArray)
     {
         if (gameIcon.lock()->GetComponent("GameAssetIcon") != nullptr)
@@ -97,6 +106,7 @@ void ComputerBox::Update(float dt)
                 ComputerBox::UpdateGameSelector();
                 ComputerBox::UpdateTabIcon();
                 ComputerBox::UpdateGameCover();
+                ComputerBox::UpdateGameText();
             }
         }
     }
@@ -185,9 +195,19 @@ void ComputerBox::UpdateGameIcon()
     {
         for (int column = 0; column < 5; column++)
         {
-            gameAsset = (ICONS_PATH + "Icone-" + GameData::availableGames[column + (row * 5)] + ".png");
+            gameAsset = ICONS_PATH + "Icone-bloqueado.png";
+            bool isClickable = false;
+
+            for (int i = 0; i < (int)GameData::ownedGames.size(); i++)
+            {
+                if (GameData::availableGames[column + (row * 5)] == GameData::ownedGames.at(i))
+                {
+                    gameAsset = (ICONS_PATH + "Icone-" + GameData::availableGames[column + (row * 5)] + ".png");
+                    isClickable = true;
+                }
+            }
             gameIconGO = new GameObject();
-            gameIconGO->AddComponent(new GameAssetIcon(*gameIconGO, gameAsset));
+            gameIconGO->AddComponent(new GameAssetIcon(*gameIconGO, gameAsset, isClickable));
             gameIconGO->box.SetOrigin(1170 + (125 * column), 270 + (150 * row));
             gameIconArray.push_back(state->AddObject(gameIconGO));
         }
@@ -219,8 +239,36 @@ void ComputerBox::UpdateGameCover()
                          ".png");
             gameCoverGO = new GameObject();
             gameCoverGO->AddComponent(new Sprite(*gameCoverGO, gameAsset));
-            gameCoverGO->box.SetOrigin(780, 200);
+            gameCoverGO->box.SetOrigin(780, 180);
             gameCoverArray.push_back(state->AddObject(gameCoverGO));
+        }
+    }
+}
+
+void ComputerBox::UpdateGameText()
+{
+    GameObject *dialogTextGO;
+    std::string gameText = "";
+    State *state = &Game::GetInstance().GetCurrentState();
+
+    for (auto dialogText : gameTextArray)
+    {
+        if (dialogText.lock() != nullptr)
+        {
+            dialogText.lock()->RequestDelete();
+        }
+    }
+    gameTextArray.clear();
+
+    for (int row = 0; row < 3; row++)
+    {
+        if (selectedGame[row] != -1)
+        {
+            gameText = GameData::gameAssetTypes[GameData::availableGames[selectedGame[row]]][row];
+            dialogTextGO = new GameObject();
+            dialogTextGO->AddComponent(new Text(*dialogTextGO, "assets/font/up.ttf", 30, Text::BLENDED, gameText, {255, 255, 255, SDL_ALPHA_OPAQUE}, 200));
+            dialogTextGO->box.SetOrigin(780, 620 + (40 * row));
+            gameTextArray.push_back(state->AddObject(dialogTextGO));
         }
     }
 }

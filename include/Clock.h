@@ -24,13 +24,13 @@ private:
     int minutes;
     std::string clockTime;
     Text *textClock;
-    bool paused;
 
 public:
     Clock(GameObject &associated, int initialHour = 8, int initialMinute = 0);
     ~Clock();
 
     std::string type = "Clock";
+    bool paused;
 
     void Update(float dt);
     void Render();

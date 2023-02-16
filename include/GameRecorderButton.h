@@ -15,6 +15,7 @@
 #include "Collider.h"
 #include "Vec2.h"
 #include "GameRecorder.h"
+#include "GameData.h"
 
 class GameRecorderButton : public Component
 {

@@ -21,6 +21,7 @@ private:
     std::vector<std::weak_ptr<GameObject>> tabIconArray;
     std::vector<std::weak_ptr<GameObject>> gameIconArray;
     std::vector<std::weak_ptr<GameObject>> gameCoverArray;
+    std::vector<std::weak_ptr<GameObject>> gameTextArray;
     GameObject *gameRecorderButton;
     GameObject *selectedGameIcon;
     std::string coverOptions[3] = {"fundo", "1", "2"};
@@ -40,6 +41,7 @@ public:
     void UpdateTabIcon();
     void UpdateGameIcon();
     void UpdateGameCover();
+    void UpdateGameText();
     void UpdateGameSelector();
     void Render();
     bool Is(std::string type);

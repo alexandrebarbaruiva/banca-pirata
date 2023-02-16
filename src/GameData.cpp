@@ -20,7 +20,10 @@ int GameData::currentDay;
 int GameData::currentMoney;
 int GameData::currentRep;
 int GameData::currentSus;
+int GameData::moneyInDay = 0;
+int GameData::repInDay = 0;
 bool GameData::endDay;
+bool GameData::recordingGame = false;
 std::vector<std::string> GameData::ownedGames;
 bool GameData::menuRequested;
 bool GameData::playerArrested;
@@ -28,10 +31,50 @@ bool GameData::playerArrested;
 /* game functions */
 bool GameData::clientCanLeave;
 bool GameData::nextClient;
-std::vector<std::string> GameData::clientNames{"emo1", "emo2", "emo3", "exe1", "exe2", "exe3", "pol1", "pol2", "pol3", "pol4"};
+
 std::string GameData::currentClient;
 int GameData::currentClientPos;
-std::vector<std::string> GameData::allGames = {"sonic", "fifa", "kirby", "mkombat", "pwaa", "dance", "gta", "mgear", "pokemon", "sims"};
+std::vector<std::string> GameData::currentClientGameTypes;
+
+std::vector<std::string> GameData::clientNames{"emo1", "emo2", "emo3", "exe1", "exe2", "exe3", "pol1", "pol2", "pol3", "pol4"};
+std::vector<std::string> GameData::allGames = {
+    "dance",
+    "fifa",
+    "gta",
+    "kirby",
+    "mgear",
+    "mkombat",
+    "pokemon",
+    "pwaa",
+    "sims",
+    "sonic",
+};
+
+std::vector<std::string> GameData::gameTypes = {
+    "assustador",
+    "casual",
+    "descolado",
+    "esportivo",
+    "fofo",
+    "inteligente",
+    "musical",
+    "narrativo",
+    "radical",
+    "violento",
+};
+
+std::map<std::string, std::vector<std::string>> GameData::gameAssetTypes = {
+    {"dance", {"descolado", "esportivo", "musical"}},
+    {"fifa", {"esportivo", "descolado", "radical"}},
+    {"gta", {"radical", "violento", "descolado"}},
+    {"kirby", {"casual", "fofo", "descolado"}},
+    {"mgear", {"narrativo", "descolado", "violento"}},
+    {"mkombat", {"assustador", "radical", "violento"}},
+    {"pokemon", {"casual", "fofo", "esportivo"}},
+    {"pwaa", {"inteligente", "narrativo", "descolado"}},
+    {"sims", {"narrativo", "casual", "inteligente"}},
+    {"sonic", {"esportivo", "radical", "casual"}},
+};
 
 /* game constant paths */
 std::string BASE_ASSET_PATH = "assets/img/";
@@ -44,8 +87,9 @@ std::string GAMES_PATH = "assets/img/Jogos/";
 std::string COVERS_PATH = "assets/img/Jogos/Capas/";
 std::string ICONS_PATH = "assets/img/Jogos/Icones/";
 std::string NPCS_PATH = "assets/img/NPCs/";
-std::string AUDIO_PATH = "assets/audio";
-std::string FONT_PATH = "assets/font";
+std::string DIALOGS_PATH = "assets/dialogs/";
+std::string AUDIOS_PATH = "assets/audio/";
+std::string FONTS_PATH = "assets/font/";
 
 // TODO: change to allGames and start saving available games on save
 std::string GameData::availableGames[10] = {"sonic", "fifa", "kirby", "mkombat", "pwaa", "dance", "gta", "mgear", "pokemon", "sims"};
@@ -91,18 +135,18 @@ void GameData::Save(int minuteInGame, int hourInGame, int dayInGame, int moneyIn
     saveFile << "susInGame " << susInGame;
     saveFile << "\n";
 
-    //TODO ownedGames save
-    // Write ownedGames
+    // TODO ownedGames save
+    //  Write ownedGames
     saveFile << "ownedGamesInGame ";
-    //for (std::string i: ownedGamesInGame)
+    // for (std::string i: ownedGamesInGame)
     //{
-    //    saveFile << i << " ";
-    //}
-    for (unsigned i = 0; i < ownedGamesInGame.size(); i++) 
+    //     saveFile << i << " ";
+    // }
+    for (unsigned i = 0; i < ownedGamesInGame.size(); i++)
     {
         saveFile << ownedGamesInGame[i] << " ";
     }
-    //saveFile << "\n";
+    // saveFile << "\n";
 
     saveFile.close();
 }
@@ -158,11 +202,11 @@ void GameData::Load()
     {
         while (saveFile >> name >> value)
         {
-            //std::cout << "Variavel : " << name << std::endl;
+            // std::cout << "Variavel : " << name << std::endl;
             gameData[name] = value;
         }
         jogos << saveFile.rdbuf();
-        //std::cout << "Depois : " << jogos.str() << std::endl;
+        // std::cout << "Depois : " << jogos.str() << std::endl;
     }
 
     GameData::currentMinute = gameData["minuteInGame"];
@@ -171,24 +215,26 @@ void GameData::Load()
     GameData::currentMoney = gameData["moneyInGame"];
     GameData::currentRep = gameData["repInGame"];
     GameData::currentSus = gameData["susInGame"];
-    
-    //Load ownedGames
+
+    // Load ownedGames
     GameData::ownedGames.clear();
     std::string aux = "";
-	for(unsigned i=0;i<jogos.str().length();++i){
-		
-		if(jogos.str()[i]==' '){
-			GameData::ownedGames.push_back(aux);
-			aux = "";
-		}
-		else{
-			aux.push_back(jogos.str()[i]);
-		}
-		
-	}
-	GameData::ownedGames.push_back(aux);
+    for (unsigned i = 0; i < jogos.str().length(); ++i)
+    {
 
-    //TODO ownedGames Load
+        if (jogos.str()[i] == ' ')
+        {
+            GameData::ownedGames.push_back(aux);
+            aux = "";
+        }
+        else
+        {
+            aux.push_back(jogos.str()[i]);
+        }
+    }
+    GameData::ownedGames.push_back(aux);
+
+    // TODO ownedGames Load
 
 #ifdef DEBUG
     std::cout << "loaded Minute " << GameData::currentMinute << "\n";

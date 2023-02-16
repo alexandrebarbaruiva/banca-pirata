@@ -15,8 +15,9 @@ extern std::string GAMES_PATH;
 extern std::string COVERS_PATH;
 extern std::string ICONS_PATH;
 extern std::string NPCS_PATH;
-extern std::string AUDIO_PATH;
-extern std::string FONT_PATH;
+extern std::string DIALOGS_PATH;
+extern std::string AUDIOS_PATH;
+extern std::string FONTS_PATH;
 
 // DEBUG OUTPUT
 #define RESET "\033[0m";

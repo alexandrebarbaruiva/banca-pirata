@@ -20,10 +20,7 @@ ReputationArrow::ReputationArrow(GameObject &associated, int relativePos, bool s
     this->endPoint = 710;
     this->destinationPoint = (this->endPoint - this->startPoint) * relativePos / 100;
 
-    if (not startAtZero)
-    {
-        this->currentPoint += destinationPoint;
-    }
+    this->currentPoint += destinationPoint;
 
     associated.AddComponent(new GameItem(associated, HUD_PATH + "Rep.png"));
     associated.box.SetOrigin(960, 0);
@@ -45,8 +42,9 @@ void ReputationArrow::Start()
 
 void ReputationArrow::Update(float dt)
 {
-    if (this->currentPoint >= this->destinationPoint)
+    if (this->currentPoint != this->destinationPoint)
     {
+        // std::cout << "Diferença localização: " << (this->currentPoint - this->destinationPoint) << "\n";
         // TODO: change here when reputation starts to change
         arrowGO->box.x = 960 + this->destinationPoint;
         this->speed = this->speed * 0;

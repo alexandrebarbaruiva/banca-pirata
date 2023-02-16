@@ -12,6 +12,7 @@
 #define CLIENT_HEADER
 #include "Component.h"
 #include "Sprite.h"
+#include "Sound.h"
 #include "Collider.h"
 #include "Vec2.h"
 
@@ -20,9 +21,13 @@ class Client : public Component
 private:
 public:
     Client(GameObject &associated, std::string sprite, float scaleX = 1, float scaleY = 1, bool reachedEndpoint = false, float frameTime = 1.0, int frameCount = 1);
+    ~Client();
 
     std::string type = "Client";
     std::string name;
+
+    Sound *stepSound;
+    bool stepPlaying = false;
 
     bool reachedEndpoint = false;
     float startPoint = 0;

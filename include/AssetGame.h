@@ -11,6 +11,7 @@
 #ifndef ASSETGAME_HEADER
 #define ASSETGAME_HEADER
 #include "Component.h"
+#include "GameData.h"
 #include "Sprite.h"
 #include "Vec2.h"
 

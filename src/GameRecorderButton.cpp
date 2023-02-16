@@ -20,8 +20,9 @@ GameRecorderButton::GameRecorderButton(GameObject &associated, float scaleX, flo
 
 void GameRecorderButton::Update(float dt)
 {
+
     InputManager input = InputManager::GetInstance();
-    if (input.MousePress(LEFT_MOUSE_BUTTON) and associated.box.IsInside(input.GetMousePosition()) and clickable)
+    if (input.MousePress(LEFT_MOUSE_BUTTON) and associated.box.IsInside(input.GetMousePosition()) and clickable and not GameData::endDay)
     {
         // change clicked disc
         associated.RemoveComponent(associated.GetComponent("Sprite"));

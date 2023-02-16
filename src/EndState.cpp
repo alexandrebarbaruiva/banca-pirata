@@ -42,15 +42,9 @@ EndState::EndState()
     AddObject(botaoContinuar);
 
     GameObject *textoContinuar = new GameObject();
-    textoContinuar->AddComponent(new Text(*textoContinuar,  FONT_PATH + "/up.ttf", 70, Text::SOLID, "MENU", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    textoContinuar->AddComponent(new Text(*textoContinuar,  FONTS_PATH + "up.ttf", 70, Text::SOLID, "MENU", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     textoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,940);
     AddObject(textoContinuar);
-
-    // GameObject *text = new GameObject();
-    // text->box.SetOrigin({GAME_SCREEN_WIDTH / 2, 500});
-    // text->AddComponent(new Text(*text, "assets/font/pixelated.ttf", 50, Text::BLENDED, "ESC to quit  SPACE to play again", {255, 0, 0, SDL_ALPHA_OPAQUE}));
-    // AddObject(text);
-
 }
 
 void EndState::Update(float dt)

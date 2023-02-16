@@ -29,9 +29,9 @@ void Clock::Update(float dt)
 
         if (time >= 1)
         {
-            if (minutes < 59)
+            if (minutes < 50)
             {
-                minutes++;
+                minutes += 10;
             }
             else
             {
@@ -119,8 +119,10 @@ void Clock::WriteClock()
     this->clockTime = hourString + ":" + minuteString;
 }
 
-void Clock::AssertClock() {
-    if(this->hours != GameData::currentHour) {
+void Clock::AssertClock()
+{
+    if (this->hours != GameData::currentHour)
+    {
         this->hours = GameData::currentHour;
         this->minutes = GameData::currentMinute;
 
