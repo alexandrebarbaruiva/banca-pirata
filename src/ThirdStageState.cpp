@@ -28,6 +28,7 @@
 #include <iterator>
 #include <iostream>
 #include "PauseState.h"
+#include "EndDayState.h"
 
 ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
 {
@@ -496,6 +497,7 @@ void ThirdStageState::Update(float dt)
 	if (input.KeyPress(ESCAPE_KEY))
 	{
         State *stage = new PauseState();
+        //State *stage = new EndDayState();
         Game::GetInstance().Push(stage);
 	}
 
@@ -519,7 +521,8 @@ void ThirdStageState::Update(float dt)
 			GameData::Save(GameData::currentMinute, GameData::currentHour, GameData::currentDay, GameData::currentMoney, GameData::currentRep, GameData::currentSus, GameData::ownedGames);
         	this->Pause();
 			popRequested = true;
-        	//Game::GetInstance().Push(stage);
+        	State *stage = new EndDayState();
+        	Game::GetInstance().Push(stage);
 	}
 
 	srand(time(NULL));
