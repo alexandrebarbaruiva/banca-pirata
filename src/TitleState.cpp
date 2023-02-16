@@ -11,6 +11,7 @@
 #include "TitleState.h"
 #include "StageState.h"
 #include "GameData.h"
+#include "EndDayState.h"
 
 
 TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
@@ -143,6 +144,11 @@ void TitleState::Update(float dt)
     {
         State *stage = new StageState(true);
         Game::GetInstance().Push(stage);
+    }
+
+    if (pressedButton == "settingsButton")
+    {
+
     }
 
     if (GameData::menuRequested)

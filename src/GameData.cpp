@@ -23,6 +23,7 @@ int GameData::currentSus;
 bool GameData::endDay;
 std::vector<std::string> GameData::ownedGames;
 bool GameData::menuRequested;
+bool GameData::playerArrested;
 
 /* game functions */
 bool GameData::clientCanLeave;
@@ -116,6 +117,7 @@ void GameData::Reset()
     GameData::currentSus = 0;
     GameData::ownedGames.clear();
     GameData::ownedGames = {"fifa", "kirby", "mgear"};
+    GameData::playerArrested = false;
 
     GameData::clientCanLeave = false;
     GameData::nextClient = true;

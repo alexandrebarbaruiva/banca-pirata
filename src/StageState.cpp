@@ -24,6 +24,7 @@
 #include "GameData.h"
 #include "Button.h"
 #include "PauseState.h"
+#include "EndState.h"
 
 
 StageState::StageState(bool loadGame) : State(), backgroundMusic("assets/audio/chill.ogg")
@@ -137,145 +138,168 @@ void StageState::Resume()
 
 void StageState::Update(float dt)
 {
-	// update camera
-	Camera::Update(dt);
-
-    std::string pressedButton;
-    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
-    for (unsigned i = 0; i < buttons.size(); i++)
-    {
-        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
-        if (button->isClicked)
-        {
-            pressedButton = button->name;
-            button->isClicked = false;
-        }
-    }
-
-	if (GameData::nextClient)
+	if (GameData::currentSus < 100)
 	{
-		GameObject *cliente2GO = new GameObject();
-		cliente2GO->AddComponent(new Client(*cliente2GO, NPCS_PATH + GameData::currentClient + "t1.png"));
-		cliente2GO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
+		// update camera
+		Camera::Update(dt);
 
-		AddObject(cliente2GO);
-	}
+		std::string pressedButton;
+		std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+		for (unsigned i = 0; i < buttons.size(); i++)
+		{
+			Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
+			if (button->isClicked)
+			{
+				pressedButton = button->name;
+				button->isClicked = false;
+			}
+		}
 
-	InputManager input = InputManager::GetInstance();
-	// check if quit was requested
-	if (input.QuitRequested())
-	{
-		quitRequested = true;
-	}
+		if (GameData::nextClient)
+		{
+			GameObject *cliente2GO = new GameObject();
+			cliente2GO->AddComponent(new Client(*cliente2GO, NPCS_PATH + GameData::currentClient + "t1.png"));
+			cliente2GO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
 
-	if(GameData::menuRequested)
-	{
-		this->Pause();
-		popRequested = true;
-	}
+			AddObject(cliente2GO);
+		}
 
-	if (input.KeyPress(ESCAPE_KEY))
-	{
-        State *stage = new PauseState();
-        Game::GetInstance().Push(stage);
-	}
+		InputManager input = InputManager::GetInstance();
+		// check if quit was requested
+		if (input.QuitRequested())
+		{
+			quitRequested = true;
+		}
 
-	if (input.MousePress(LEFT_MOUSE_BUTTON))
-	{
+		if (GameData::menuRequested)
+		{
+			this->Pause();
+			popRequested = true;
+		}
+
+		if (input.KeyPress(ESCAPE_KEY))
+		{
+			State *stage = new PauseState();
+			Game::GetInstance().Push(stage);
+		}
+
+		if (input.MousePress(LEFT_MOUSE_BUTTON))
+		{
 #ifdef DEBUG
-		std::cout << "X:" << input.GetMouseX() << " Y:" << input.GetMouseY() << "\n";
+			std::cout << "X:" << input.GetMouseX() << " Y:" << input.GetMouseY() << "\n";
 #endif
-	}
+		}
 
-	if(pressedButton == "pause")
-	{
-		//std::cout << "Pause apertado" << std::endl;
-        State *stage = new PauseState();
-        Game::GetInstance().Push(stage);
-	}
-	//Mecanismo para terminar o dia
-	Vec2 speed = Vec2(0,600);
+		if (pressedButton == "pause")
+		{
+			// std::cout << "Pause apertado" << std::endl;
+			State *stage = new PauseState();
+			Game::GetInstance().Push(stage);
+		}
+		// Mecanismo para terminar o dia
+		Vec2 speed = Vec2(0, 600);
 
-	//if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada)
-	if(GameData::endDay && !gradeFechada)
+		// if(GameData::currentHour == 17 && GameData::currentMinute == 59 && !gradeFechada)
+		if (GameData::endDay && !gradeFechada)
+		{
+			// Fechando elementos que sobrepoe grade
+			// std::vector<std::weak_ptr<GameObject>> sirenes = this->QueryObjectsByComponent("SirenBox");
+			// for (unsigned i = 0; i < sirenes.size(); i++)
+			//{
+			//	SirenBox *sirene = ((SirenBox *)(sirenes[i].lock()->GetComponent("SirenBox")));
+			//	//sirene->~SirenBox();
+			//	//TODO esconder sirene
+			//}
+			// std::vector<std::weak_ptr<GameObject>> clientes = this->QueryObjectsByComponent("Client");
+			// for (unsigned i = 0; i < clientes.size(); i++)
+			//{
+			//	Client *client = ((Client *)(clientes[i].lock()->GetComponent("Client")));
+			//	//client->~Client();
+			//	//TODO esconder chat de cliente
+			//}
+			if (gradeGO == nullptr)
+			{
+				// Grade fechando a loja
+				gradeGO = new GameObject();
+				gradeGO->AddComponent(new Sprite(*gradeGO,  BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0));
+				gradeGO->box.SetOrigin(0, -1080);
+				AddObject(gradeGO);
+			}
+
+			stageClock->Pause();
+			if (gradeGO->box.y <= 0)
+			{
+				gradeGO->box = gradeGO->box + (speed * dt);
+			}
+			else
+			{
+				gradeFechada = true;
+				this->Pause();
+				State *stage3 = new ThirdStageState();
+				Game::GetInstance().Push(stage3);
+			}
+		}
+		if (gradeFechada)
+		{
+
+			if (gradeGO->box.y > -1080)
+			{
+				gradeGO->box = gradeGO->box - (speed * dt);
+				// std::cout << "pos grade: " << gradeGO->box.Center().y << std::endl;
+			}
+			else
+			{
+				stageClock->Restart();
+				stageClock->Resume();
+				gradeFechada = false;
+			}
+		}
+
+		// Update de GOs do HUD
+		std::vector<std::weak_ptr<GameObject>> calendarios = this->QueryObjectsByComponent("Calendar");
+		for (unsigned i = 0; i < calendarios.size(); i++)
+		{
+			Calendar *calendario = ((Calendar *)(calendarios[i].lock()->GetComponent("Calendar")));
+			calendario->Update(dt);
+		}
+		std::vector<std::weak_ptr<GameObject>> relogios = this->QueryObjectsByComponent("Clock");
+		for (unsigned i = 0; i < relogios.size(); i++)
+		{
+			Clock *relogio = ((Clock *)(relogios[i].lock()->GetComponent("Clock")));
+			relogio->AssertClock();
+		}
+		std::vector<std::weak_ptr<GameObject>> wallets = this->QueryObjectsByComponent("Wallet");
+		for (unsigned i = 0; i < wallets.size(); i++)
+		{
+			Wallet *wallet = ((Wallet *)(wallets[i].lock()->GetComponent("Wallet")));
+			wallet->Update(dt);
+			// texto->SetText("R$ " + std::to_string(GameData::currentMoney));
+		}
+		// Update every object
+		UpdateArray(dt);
+
+		srand(time(NULL));
+	}
+	else
 	{
-		// Fechando elementos que sobrepoe grade
-		//std::vector<std::weak_ptr<GameObject>> sirenes = this->QueryObjectsByComponent("SirenBox");
-		//for (unsigned i = 0; i < sirenes.size(); i++)
-		//{
-		//	SirenBox *sirene = ((SirenBox *)(sirenes[i].lock()->GetComponent("SirenBox")));
-		//	//sirene->~SirenBox();
-		//	//TODO esconder sirene
-		//}
-		//std::vector<std::weak_ptr<GameObject>> clientes = this->QueryObjectsByComponent("Client");
-		//for (unsigned i = 0; i < clientes.size(); i++)
-		//{
-		//	Client *client = ((Client *)(clientes[i].lock()->GetComponent("Client")));
-		//	//client->~Client();
-		//	//TODO esconder chat de cliente
-		//}
+		Vec2 speed = Vec2(0, 600);
 		if (gradeGO == nullptr)
 		{
 			// Grade fechando a loja
 			gradeGO = new GameObject();
-			gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+			gradeGO->AddComponent(new Sprite(*gradeGO, BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0));
 			gradeGO->box.SetOrigin(0, -1080);
 			AddObject(gradeGO);
 		}
-
-		stageClock->Pause();
 		if (gradeGO->box.y <= 0)
 		{
 			gradeGO->box = gradeGO->box + (speed * dt);
 		}
-		else
-		{
-			gradeFechada = true;
-			this->Pause();
-        	State *stage3 = new ThirdStageState();
-        	Game::GetInstance().Push(stage3);
-		}
+		std::cout << "Acabou o jogo" << std::endl;
+		popRequested = true;
+		State *stage = new EndState();
+		Game::GetInstance().Push(stage);
 	}
-	if(gradeFechada) 
-	{
-
-		if(gradeGO->box.y > -1080) 
-		{
-			gradeGO->box = gradeGO->box - (speed * dt);
-			//std::cout << "pos grade: " << gradeGO->box.Center().y << std::endl;
-		}
-		else
-		{
-			stageClock->Restart();
-			stageClock->Resume();
-			gradeFechada = false;
-		}
-	}
-
-	// Update de GOs do HUD
-	std::vector<std::weak_ptr<GameObject>> calendarios = this->QueryObjectsByComponent("Calendar");
-	for (unsigned i = 0; i < calendarios.size(); i++)
-	{
-		Calendar *calendario = ((Calendar *)(calendarios[i].lock()->GetComponent("Calendar")));
-		calendario->Update(dt);
-	}
-	std::vector<std::weak_ptr<GameObject>> relogios = this->QueryObjectsByComponent("Clock");
-	for (unsigned i = 0; i < relogios.size(); i++)
-	{
-		Clock *relogio = ((Clock *)(relogios[i].lock()->GetComponent("Clock")));
-		relogio->AssertClock();
-	}
-	std::vector<std::weak_ptr<GameObject>> wallets = this->QueryObjectsByComponent("Wallet");
-	for (unsigned i = 0; i < wallets.size(); i++)
-	{
-		Wallet *wallet = ((Wallet *)(wallets[i].lock()->GetComponent("Wallet")));
-		wallet->Update(dt);
-		//texto->SetText("R$ " + std::to_string(GameData::currentMoney));
-	}
-	// Update every object
-	UpdateArray(dt);
-
-	srand(time(NULL));
 }
 
 void StageState::Render()

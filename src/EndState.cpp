@@ -15,43 +15,76 @@
 #include "TitleState.h"
 #include "Text.h"
 #include "Game.h"
+#include "CameraFollower.h"
+#include "GameData.h"
 
 EndState::EndState()
 {
-    // GameObject *bg = new GameObject();
-    // Sprite *result;
-    // if (GameData::playerVictory)
-    // {
-    //     result = new Sprite(*bg, "assets/img/win.jpg");
-    //     backgroundMusic = Music("assets/audio/endStateWin.ogg");
-    // }
-    // else
-    // {
-    //     result = new Sprite(*bg, "assets/img/lose.jpg");
-    //     backgroundMusic = Music("assets/audio/endStateLose.ogg");
-    // }
-    // bg->AddComponent(result);
-    // bg->box.SetOrigin({0, 0});
-    // AddObject(bg);
+     GameObject *bg = new GameObject();
+     Sprite *result;
+     if (GameData::currentMoney >= 500)
+     {
+         result = new Sprite(*bg, BASE_ASSET_PATH + "Vitoria.png");
+         //backgroundMusic = Music("assets/audio/endStateWin.ogg");
+     }
+     else
+     {
+         result = new Sprite(*bg, BASE_ASSET_PATH + "derrota agiota.png");
+         //backgroundMusic = Music("assets/audio/endStateLose.ogg");
+     }
+     bg->AddComponent(result);
+     bg->box.SetOrigin({0, 0});
+     AddObject(bg);
+
+    GameObject *botaoContinuar = new GameObject();
+    botaoContinuar->AddComponent(new Button(*botaoContinuar, "menu", 1.0 ,1 ,TITLE_PATH  + "botao menu longo.png"));
+    botaoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,940);
+    AddObject(botaoContinuar);
+
+    GameObject *textoContinuar = new GameObject();
+    textoContinuar->AddComponent(new Text(*textoContinuar,  FONT_PATH + "/up.ttf", 70, Text::SOLID, "MENU", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    textoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,940);
+    AddObject(textoContinuar);
 
     // GameObject *text = new GameObject();
     // text->box.SetOrigin({GAME_SCREEN_WIDTH / 2, 500});
     // text->AddComponent(new Text(*text, "assets/font/pixelated.ttf", 50, Text::BLENDED, "ESC to quit  SPACE to play again", {255, 0, 0, SDL_ALPHA_OPAQUE}));
     // AddObject(text);
+
 }
 
 void EndState::Update(float dt)
 {
     UpdateArray(dt);
-    if (InputManager::GetInstance().KeyPress(ESCAPE_KEY) or InputManager::GetInstance().QuitRequested())
+
+    std::string pressedButton;
+    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+    for (unsigned i = 0; i < buttons.size(); i++)
     {
-        quitRequested = true;
+        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
+        if (button->isClicked)
+        {
+            pressedButton = button->name;
+            button->isClicked = false;
+        }
     }
 
-    if (InputManager::GetInstance().KeyPress(SPACE_KEY))
+    if(pressedButton == "menu")
     {
+        std::cout << "Menu" << std::endl;
+        GameData::menuRequested = true;
+        this->Pause();
         popRequested = true;
     }
+    //if (InputManager::GetInstance().KeyPress(ESCAPE_KEY) or InputManager::GetInstance().QuitRequested())
+    //{
+    //    quitRequested = true;
+    //}
+
+    //if (InputManager::GetInstance().KeyPress(SPACE_KEY))
+    //{
+    //    popRequested = true;
+    //}
 }
 
 EndState::~EndState()

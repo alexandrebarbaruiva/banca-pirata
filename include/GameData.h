@@ -34,6 +34,7 @@ public:
     static bool endDay;
     static std::vector<std::string> ownedGames;
     static bool menuRequested;
+    static bool playerArrested;
 
     /* game functions */
     static bool clientCanLeave;
