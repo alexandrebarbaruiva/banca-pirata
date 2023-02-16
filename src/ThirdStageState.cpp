@@ -388,7 +388,7 @@ void ThirdStageState::Update(float dt)
 		{
 			Carrinho *carrinho1 = ((Carrinho *)(carrinhos[i].lock()->GetComponent("Carrinho")));
 			Carrinho *carrinho2 = ((Carrinho *)(carrinhos[j].lock()->GetComponent("Carrinho")));
-			if (GameData::currentMoney > 30)
+			if (GameData::currentMoney >= 30)
 			{
 				if (carrinho1->clickable && carrinho1->isClicked)
 				{

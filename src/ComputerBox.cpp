@@ -44,6 +44,11 @@ void ComputerBox::Start()
 
 void ComputerBox::Update(float dt)
 {
+    if (GameData::endDay)
+    {
+        return;
+    }
+
     State *state = &Game::GetInstance().GetCurrentState();
     std::string tabAsset = SCREEN2_PATH + "Tela2- Janela aba";
 

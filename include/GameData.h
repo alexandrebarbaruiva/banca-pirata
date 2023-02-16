@@ -33,6 +33,8 @@ public:
     static int currentRep;
     static int currentSus;
     static bool endDay;
+    static bool recordingGame;
+
     static std::vector<std::string> ownedGames;
     static bool menuRequested;
     static bool playerArrested;

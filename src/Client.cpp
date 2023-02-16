@@ -54,6 +54,11 @@ void Client::Update(float dt)
         }
         this->speed = Vec2(600, 0);
     }
+    if (GameData::endDay)
+    {
+        stepSound->Stop();
+    }
+
     if (this->currentPoint > GAME_SCREEN_WIDTH)
     {
         stepSound->Stop();

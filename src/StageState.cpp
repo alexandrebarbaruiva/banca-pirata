@@ -273,7 +273,12 @@ void StageState::Update(float dt)
 		{
 			Wallet *wallet = ((Wallet *)(wallets[i].lock()->GetComponent("Wallet")));
 			wallet->Update(dt);
-			// texto->SetText("R$ " + std::to_string(GameData::currentMoney));
+		}
+		std::vector<std::weak_ptr<GameObject>> reputationArrows = this->QueryObjectsByComponent("ReputationArrow");
+		for (unsigned i = 0; i < reputationArrows.size(); i++)
+		{
+			ReputationArrow *reputationArrow = ((ReputationArrow *)(reputationArrows[i].lock()->GetComponent("ReputationArrow")));
+			reputationArrow->Update(dt);
 		}
 		// Update every object
 		UpdateArray(dt);

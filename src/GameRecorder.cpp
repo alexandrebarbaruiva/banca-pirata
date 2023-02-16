@@ -13,6 +13,7 @@
 
 GameRecorder::GameRecorder(GameObject &associated, std::string sprite, float scaleX, float scaleY, int frameCount, float frameTime, float secondsToSelfDestruct) : Component(associated)
 {
+    GameData::recordingGame = true;
     Sound *sound = new Sound(associated, (AUDIOS_PATH + "cdRecorder.ogg"));
     sound->Play();
 
@@ -26,6 +27,7 @@ GameRecorder::~GameRecorder()
 {
     State *state = &Game::GetInstance().GetCurrentState();
     state->RequestPop();
+    GameData::recordingGame = false;
 }
 
 void GameRecorder::Update(float dt)

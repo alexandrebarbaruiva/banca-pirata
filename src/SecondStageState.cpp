@@ -195,7 +195,7 @@ void SecondStageState::Update(float dt)
 	//Mecanismo para terminar o dia
 	Vec2 speed = Vec2(0,600);
 
-	if(GameData::endDay && !gradeFechada )
+	if(GameData::endDay and !gradeFechada and not GameData::recordingGame)
 	{
 		if (gradeGO == nullptr)
 		{
