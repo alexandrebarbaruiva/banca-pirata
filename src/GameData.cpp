@@ -23,10 +23,13 @@ int GameData::currentSus;
 int GameData::moneyInDay = 0;
 int GameData::repInDay = 0;
 bool GameData::endDay;
+bool GameData::continueMusic = false;
+bool GameData::changedMusic = false;
 bool GameData::recordingGame = false;
 std::vector<std::string> GameData::ownedGames;
 bool GameData::menuRequested;
 bool GameData::playerArrested;
+bool GameData::pausedGame = false;
 bool GameData::moneySpent = false;
 
 /* game functions */
@@ -164,6 +167,9 @@ void GameData::Reset()
     GameData::ownedGames = {"fifa", "kirby", "mgear"};
     GameData::playerArrested = false;
     GameData::moneySpent = false;
+
+    GameData::continueMusic = false;
+    GameData::changedMusic = false;
 
     GameData::clientCanLeave = false;
     GameData::nextClient = true;

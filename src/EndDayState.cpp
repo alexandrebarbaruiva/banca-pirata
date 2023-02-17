@@ -16,7 +16,7 @@
 #include "SirenBox.h"
 #include "EndState.h"
 
-EndDayState::EndDayState() : State(), backgroundMusic("assets/audio/abertura.ogg")
+EndDayState::EndDayState() : State(), backgroundMusic(AUDIOS_PATH + "chill.ogg")
 {
 	// Background
 	GameObject *bg = new GameObject();
@@ -72,6 +72,7 @@ EndDayState::EndDayState() : State(), backgroundMusic("assets/audio/abertura.ogg
     textoContinuar->AddComponent(new Text(*textoContinuar,  FONTS_PATH + "up.ttf", 70, Text::SOLID, "PRÓXIMO DIA", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     textoContinuar->box.SetCenter(GAME_SCREEN_WIDTH/2,940);
     AddObject(textoContinuar);
+    GameData::continueMusic = false;
 }
 
 EndDayState::~EndDayState()

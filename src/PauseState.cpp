@@ -17,6 +17,7 @@
 
 PauseState::PauseState() : State()
 {
+    GameData::pausedGame = true;
     // Background
     GameObject *bg = new GameObject();
     bg->AddComponent(new Sprite(*bg, BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0));
@@ -79,12 +80,6 @@ PauseState::PauseState() : State()
     letreiroPause->box.SetCenter(GAME_SCREEN_WIDTH / 2, 350);
     AddObject(letreiroPause);
 
-    // GameObject *fundoPause = new GameObject();
-    // fundoPause->AddComponent(new Sprite(*fundoPause, "assets/img/placeholders/config fundo.png", 1));
-    // fundoPause->box.SetCenter(GAME_SCREEN_WIDTH/2,650);
-    ////fundoPause->box.SetOrigin(GAME_SCREEN_WIDTH/2,GAME_SCREEN_HEIGHT/2);
-    // AddObject(fundoPause);
-
     GameObject *botaoContinuar = new GameObject();
     botaoContinuar->AddComponent(new Button(*botaoContinuar, "continue", 0.8, 1, TITLE_PATH + "botao menu longo.png"));
     botaoContinuar->box.SetCenter(GAME_SCREEN_WIDTH / 2, 500);
@@ -118,6 +113,7 @@ PauseState::PauseState() : State()
 
 PauseState::~PauseState()
 {
+    GameData::pausedGame = false;
     objectArray.clear();
 }
 
