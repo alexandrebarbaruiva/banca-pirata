@@ -57,7 +57,6 @@ PauseState::PauseState() : State()
 
     // HUD Pause
     GameObject *hudPauseGO = new GameObject();
-    // hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
     hudPauseGO->AddComponent(new Button(*hudPauseGO, "pause", 1, 1, HUD_PATH + "Pause-press.png"));
     hudPauseGO->box.SetOrigin(1800, 0);
     AddObject(hudPauseGO);

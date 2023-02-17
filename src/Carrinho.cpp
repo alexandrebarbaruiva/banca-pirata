@@ -14,7 +14,6 @@
 Carrinho::Carrinho(GameObject &associated, AssetGame *gameBuying , float scaleX, float scaleY) : Component(associated)
 {
     spriteItem = new Sprite(associated, SCREEN3_PATH + "Loja-compra.png");
-    //spriteItemHoover = new Sprite(associated, "assets/img/placeholders/UI/Loja-compra-click.png");
     spriteScale = Vec2(scaleX,scaleY);
     spriteItem->SetScale(spriteScale);
     //spriteItemHoover->SetScale(spriteScale);

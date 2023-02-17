@@ -22,9 +22,10 @@ void GameRecorderButton::Update(float dt)
 {
 
     InputManager input = InputManager::GetInstance();
-    if (input.MousePress(LEFT_MOUSE_BUTTON) and associated.box.IsInside(input.GetMousePosition()) and clickable and not GameData::endDay)
+    if (input.MousePress(LEFT_MOUSE_BUTTON) and associated.box.IsInside(input.GetMousePosition()) and clickable and (not clicked) and (not GameData::endDay))
     {
         // change clicked disc
+        this->clicked = true;
         associated.RemoveComponent(associated.GetComponent("Sprite"));
         associated.AddComponent(new Sprite(associated, SCREEN2_PATH + "tela2-Botao gravar hover.png", 1, 1));
 

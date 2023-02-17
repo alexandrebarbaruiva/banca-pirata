@@ -62,7 +62,6 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic(AUDIOS_PATH + "
 	AddObject(timeHudText);
 
 	GameObject *moneyHudText = new GameObject();
-	// moneyHudText->AddComponent(new Text(*moneyHudText, "assets/font/five.ttf", 40, Text::SOLID, ("R$ " + std::to_string(GameData::currentMoney)), {255, 255, 255, SDL_ALPHA_OPAQUE}));
 	moneyHudText->AddComponent(new Wallet(*moneyHudText, GameData::currentMoney));
 	moneyHudText->box.SetOrigin(500, 35);
 	AddObject(moneyHudText);
@@ -75,7 +74,6 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic(AUDIOS_PATH + "
 
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
-	// hudPauseGO->AddComponent(new GameItem(*hudPauseGO, "assets/img/placeholders/Tela 1-Pause.png", 1, 1));
 	hudPauseGO->AddComponent(new Button(*hudPauseGO, "pause", 1, 1, HUD_PATH + "Pause.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
