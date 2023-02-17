@@ -16,7 +16,7 @@ Client::Client(GameObject &associated, std::string sprite, float scaleX, float s
 {
     GameData::nextClient = false;
     Sprite *spriteItem = new Sprite(associated, sprite, frameCount, frameTime);
-    this->endPoint = 710;
+    this->endPoint = 1210;
     this->speed = Vec2(600, 0);
 #ifdef DEBUG
     this->speed = Vec2(600, 0);
@@ -54,7 +54,7 @@ void Client::Update(float dt)
         }
         this->speed = Vec2(600, 0);
     }
-    if (GameData::endDay)
+    if (GameData::endDay or GameData::pausedGame)
     {
         stepSound->Stop();
     }

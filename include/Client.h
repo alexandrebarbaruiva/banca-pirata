@@ -32,7 +32,7 @@ public:
     bool reachedEndpoint = false;
     float startPoint = 0;
     float currentPoint = 0;
-    float endPoint = 300;
+    float endPoint = 1210;
     Vec2 speed = Vec2(50, 0);
 
     void PopChat();

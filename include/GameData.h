@@ -10,6 +10,7 @@
  */
 #ifndef GAMEDATA_HEADER
 #define GAMEDATA_HEADER
+#include "GameObject.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -35,12 +36,15 @@ public:
     static int moneyInDay;
     static int repInDay;
     static bool endDay;
+    static bool continueMusic;
+    static bool changedMusic;
     static bool recordingGame;
     static bool moneySpent;
 
     static std::vector<std::string> ownedGames;
     static bool menuRequested;
     static bool playerArrested;
+    static bool pausedGame;
 
     /* game functions */
     static bool clientCanLeave;

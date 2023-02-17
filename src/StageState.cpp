@@ -127,17 +127,23 @@ void StageState::LoadAssets()
 
 void StageState::Pause()
 {
-	// backgroundMusic.Stop(0);
+	if (not GameData::continueMusic)
+	{
+		backgroundMusic.Stop(0);
+	}
 }
 
 void StageState::Resume()
 {
-	// backgroundMusic.Play();
 	if (GameData::menuRequested)
 	{
 		this->Pause();
 		popRequested = true;
 		return;
+	}
+	if (not GameData::continueMusic)
+	{
+		backgroundMusic.Play();
 	}
 }
 
@@ -145,6 +151,14 @@ void StageState::Update(float dt)
 {
 	if (GameData::currentSus < 100)
 	{
+		if (GameData::currentSus >= 40 and not GameData::changedMusic)
+		{
+			GameData::changedMusic = true;
+			backgroundMusic.Stop();
+			backgroundMusic = Music(AUDIOS_PATH + "stageSus.ogg");
+			backgroundMusic.Play();
+		}
+
 		// update camera
 		Camera::Update(dt);
 
@@ -160,12 +174,12 @@ void StageState::Update(float dt)
 			}
 		}
 
-		if (GameData::nextClient)
+		if (GameData::nextClient and not GameData::endDay)
 		{
 			GameData::nextClient = false;
 			GameObject *cliente2GO = new GameObject();
 			cliente2GO->AddComponent(new Client(*cliente2GO, NPCS_PATH + GameData::currentClient + "t1.png"));
-			cliente2GO->box.SetBottom(0, GAME_SCREEN_HEIGHT);
+			cliente2GO->box.SetBottom(-500, GAME_SCREEN_HEIGHT);
 
 			AddObject(cliente2GO);
 		}
@@ -206,6 +220,7 @@ void StageState::Update(float dt)
 		{
 			State *stage = new PauseState();
 			Game::GetInstance().Push(stage);
+			GameData::continueMusic = false;
 		}
 
 		if (input.MousePress(LEFT_MOUSE_BUTTON))
@@ -244,7 +259,15 @@ void StageState::Update(float dt)
 			//}
 			if (gradeGO == nullptr)
 			{
+				GameData::continueMusic = false;
 				// Grade fechando a loja
+				backgroundMusic.Stop(0);
+
+				GameObject *gradeSoundGO = new GameObject();
+				Sound *gradeSound = new Sound(*gradeSoundGO, AUDIOS_PATH + "doorGrid.ogg");
+				gradeSoundGO->AddComponent(gradeSound);
+				gradeSound->Play();
+
 				gradeGO = new GameObject();
 				gradeGO->AddComponent(new Sprite(*gradeGO, BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0));
 				gradeGO->box.SetOrigin(0, -1080);

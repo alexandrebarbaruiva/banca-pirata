@@ -10,6 +10,7 @@
  */
 #include "ChatBox.h"
 #include "SecondStageState.h"
+#include "StageState.h"
 #include "GameData.h"
 
 ChatBox::ChatBox(GameObject &associated, bool clickable, std::string sprite, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
@@ -28,6 +29,7 @@ void ChatBox::Update(float dt)
     InputManager input = InputManager::GetInstance();
     if (input.MousePress(LEFT_MOUSE_BUTTON) and associated.box.IsInside(input.GetMousePosition()))
     {
+        GameData::continueMusic = true;
         associated.RequestDelete();
         this->isClicked = true;
 

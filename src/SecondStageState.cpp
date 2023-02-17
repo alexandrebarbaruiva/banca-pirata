@@ -31,7 +31,7 @@
 #include "PauseState.h"
 #include "DialogBox.h"
 
-SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
+SecondStageState::SecondStageState() : State()
 {
 #ifdef DEBUG
 	std::cout << "Loaded Second Screen\n";
@@ -126,7 +126,7 @@ void SecondStageState::LoadAssets()
 
 void SecondStageState::Pause()
 {
-	// backgroundMusic.Stop();
+	// backgroundMusic.Stop(0);
 }
 
 void SecondStageState::Resume()
@@ -197,6 +197,11 @@ void SecondStageState::Update(float dt)
 	{
 		if (gradeGO == nullptr)
 		{
+			GameObject *gradeSoundGO = new GameObject();
+			Sound *gradeSound = new Sound(*gradeSoundGO, AUDIOS_PATH + "doorGrid.ogg");
+			gradeSoundGO->AddComponent(gradeSound);
+			gradeSound->Play();
+
 			// Grade fechando a loja
 			gradeGO = new GameObject();
 			gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
