@@ -19,7 +19,7 @@ class ReputationArrow : public Component
 {
 private:
 public:
-    ReputationArrow(GameObject &associated, int relativePos, bool startAtZero = true, float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
+    ReputationArrow(GameObject &associated, bool startAtZero = true, float scaleX = 1, float scaleY = 1, float frameTime = 1.0, int frameCount = 1);
 
     std::string type = "ReputationArrow";
     std::string name;
@@ -30,6 +30,7 @@ public:
     float currentPoint = 0;
     float destinationPoint = 0;
     float endPoint = 710;
+    int relativePos;
     Vec2 speed = Vec2(200, 0);
 
     bool clickable = false;

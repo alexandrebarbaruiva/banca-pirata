@@ -12,13 +12,14 @@
 #include "GameData.h"
 #include "GameItem.h"
 
-ReputationArrow::ReputationArrow(GameObject &associated, int relativePos, bool startAtZero, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
+ReputationArrow::ReputationArrow(GameObject &associated, bool startAtZero, float scaleX, float scaleY, float frameTime, int frameCount) : Component(associated)
 {
 #ifdef DEBUG
     this->speed = Vec2(1000, 0);
 #endif
+    this->relativePos = GameData::currentRep;
     this->endPoint = 710;
-    this->destinationPoint = (this->endPoint - this->startPoint) * relativePos / 100;
+    this->destinationPoint = (this->endPoint - this->startPoint) * GameData::currentRep / 100;
 
     this->currentPoint += destinationPoint;
 
@@ -26,7 +27,7 @@ ReputationArrow::ReputationArrow(GameObject &associated, int relativePos, bool s
     associated.box.SetOrigin(960, 0);
 #ifdef DEBUG
     std::cout << (this->endPoint - this->startPoint) << "\n";
-    std::cout << "Destination point " << relativePos << "% on " << this->destinationPoint << "\n";
+    std::cout << "Destination point " << GameData::currentRep << "% on " << this->destinationPoint << "\n";
 #endif
 }
 
@@ -42,22 +43,8 @@ void ReputationArrow::Start()
 
 void ReputationArrow::Update(float dt)
 {
-    if (this->currentPoint != this->destinationPoint)
-    {
-        // std::cout << "Diferença localização: " << (this->currentPoint - this->destinationPoint) << "\n";
-        // TODO: change here when reputation starts to change
-        arrowGO->box.x = 960 + this->destinationPoint;
-        this->speed = this->speed * 0;
-    }
-    // To avoid big jumps when beginning session
-    if (dt > 0.1)
-    {
-        dt = 0.034;
-    }
-    // Update associated box location correctly
-    // associated.box += (speed * dt);
-    arrowGO->box = arrowGO->box + (speed * dt);
-    this->currentPoint += (Vec2::Mag(speed * dt));
+    this->destinationPoint = (this->endPoint - this->startPoint) * GameData::currentRep / 100;
+    arrowGO->box.x = 960 + this->destinationPoint;
 }
 
 void ReputationArrow::Render()

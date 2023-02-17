@@ -83,14 +83,14 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 
 	// HUD Reputação
 	GameObject *hudReputationArrowGO = new GameObject();
-	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, GameData::currentRep, false));
+	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, false));
 	hudReputationArrowGO->box.SetOrigin(960, 0);
 	AddObject(hudReputationArrowGO);
 
 	// HUD Pause
 	GameObject *hudPauseGO = new GameObject();
-	//hudPauseGO->AddComponent(new GameItem(*hudPauseGO, HUD_PATH + "Pause.png"));
-	hudPauseGO->AddComponent(new Button(*hudPauseGO,"pause",1,1, HUD_PATH + "Pause.png"));
+	// hudPauseGO->AddComponent(new GameItem(*hudPauseGO, HUD_PATH + "Pause.png"));
+	hudPauseGO->AddComponent(new Button(*hudPauseGO, "pause", 1, 1, HUD_PATH + "Pause.png"));
 	hudPauseGO->box.SetOrigin(1800, 0);
 	AddObject(hudPauseGO);
 
@@ -100,12 +100,9 @@ SecondStageState::SecondStageState() : State(), backgroundMusic("assets/audio/ch
 	clienteGO->box.SetBottom(0, dialogBoxGO->box.y);
 	AddObject(clienteGO);
 
-	
-
-	gradeGO = nullptr;	
+	gradeGO = nullptr;
 
 	gradeFechada = false;
-
 }
 
 SecondStageState::~SecondStageState()
@@ -135,29 +132,36 @@ void SecondStageState::Pause()
 void SecondStageState::Resume()
 {
 	// backgroundMusic.Play();
+	if (GameData::menuRequested)
+	{
+		this->Pause();
+		popRequested = true;
+		return;
+	}
 }
 
 void SecondStageState::Update(float dt)
 {
+
 	// update camera
 	Camera::Update(dt);
 
-    std::string pressedButton;
-    std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
-    for (unsigned i = 0; i < buttons.size(); i++)
-    {
-        Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
-        if (button->isClicked)
-        {
-            pressedButton = button->name;
-            button->isClicked = false;
-        }
-    }
-	if(pressedButton == "pause")
+	std::string pressedButton;
+	std::vector<std::weak_ptr<GameObject>> buttons = this->QueryObjectsByComponent("Button");
+	for (unsigned i = 0; i < buttons.size(); i++)
 	{
-		//std::cout << "Pause apertado" << std::endl;
-        State *stage = new PauseState();
-        Game::GetInstance().Push(stage);
+		Button *button = ((Button *)(buttons[i].lock()->GetComponent("Button")));
+		if (button->isClicked)
+		{
+			pressedButton = button->name;
+			button->isClicked = false;
+		}
+	}
+	if (pressedButton == "pause")
+	{
+		// std::cout << "Pause apertado" << std::endl;
+		State *stage = new PauseState();
+		Game::GetInstance().Push(stage);
 	}
 
 	InputManager input = InputManager::GetInstance();
@@ -168,16 +172,10 @@ void SecondStageState::Update(float dt)
 		quitRequested = true;
 	}
 
-	if(GameData::menuRequested)
-	{
-		this->Pause();
-		popRequested = true;
-	}
-
 	if (input.KeyPress(ESCAPE_KEY))
 	{
-        State *stage = new PauseState();
-        Game::GetInstance().Push(stage);
+		State *stage = new PauseState();
+		Game::GetInstance().Push(stage);
 	}
 
 	if (input.MousePress(LEFT_MOUSE_BUTTON))
@@ -192,10 +190,10 @@ void SecondStageState::Update(float dt)
 
 	srand(time(NULL));
 
-	//Mecanismo para terminar o dia
-	Vec2 speed = Vec2(0,600);
+	// Mecanismo para terminar o dia
+	Vec2 speed = Vec2(0, 600);
 
-	if(GameData::endDay and !gradeFechada and not GameData::recordingGame)
+	if (GameData::endDay and !gradeFechada and not GameData::recordingGame)
 	{
 		if (gradeGO == nullptr)
 		{
@@ -206,28 +204,28 @@ void SecondStageState::Update(float dt)
 			AddObject(gradeGO);
 		}
 		stageClock->Pause();
-		if(gradeGO->box.y <= 0) 
+		if (gradeGO->box.y <= 0)
 		{
 			gradeGO->box = gradeGO->box + (speed * dt);
 		}
 		else
 		{
 			gradeFechada = true;
-			//this->Pause();
-        	State *stage3 = new ThirdStageState();
-        	Game::GetInstance().Push(stage3);
-			//popRequested = true;
+			// this->Pause();
+			State *stage3 = new ThirdStageState();
+			Game::GetInstance().Push(stage3);
+			// popRequested = true;
 		}
 	}
-	if(gradeFechada) 
+	if (gradeFechada)
 	{
 
 		popRequested = true;
 		gradeGO->box.SetOrigin(0, -1080);
-		if(gradeGO->box.y > -1080) 
+		if (gradeGO->box.y > -1080)
 		{
 			gradeGO->box.SetOrigin(0, -1080);
-			//std::cout << "pos grade: " << gradeGO->box.Center().y << std::endl;
+			// std::cout << "pos grade: " << gradeGO->box.Center().y << std::endl;
 		}
 		else
 		{
@@ -253,7 +251,7 @@ void SecondStageState::Update(float dt)
 	{
 		Wallet *wallet = ((Wallet *)(wallets[i].lock()->GetComponent("Wallet")));
 		wallet->Update(dt);
-		//texto->SetText("R$ " + std::to_string(GameData::currentMoney));
+		// texto->SetText("R$ " + std::to_string(GameData::currentMoney));
 	}
 
 	// check collidable objects
