@@ -71,6 +71,8 @@ public:
 
     static void Reset();
 
+    static void GameOver();
+
     static void LoadClients();
 
     static void changeCurrentClient();
