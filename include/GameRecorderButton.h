@@ -27,6 +27,7 @@ public:
     std::string name;
 
     bool clickable = false;
+    bool clicked = false;
 
     void Update(float dt);
     void Render();
