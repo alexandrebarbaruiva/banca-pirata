@@ -80,19 +80,19 @@ void LetterState::Update(float dt)
         AddObject(cartaGO);
 
         // std::string textocarta = "Sua mãe me disse que voce estava atras de um bico pra ganhar uma graninha \n\n extra, e olha so que sorte a sua, acabou de abrir uma vaga com o seu nome \n\n\n na banquinha do seu tio! E não tem momento melhor pra isso, por que o tio\n\n ta precisando tirar umas \u0022ferias especiais\u0022 por causa de um\n\n\n desentendimento com um amigo, voce entende, ne? Enfim, o combinado e\n\n o seguinte: voce precisa juntar R$500,00 ate o fim do mes pra esse meu\n\n amigo, fora isso, pode ficar com o resto! Dificil de recusar, nao? E a parte\n\n de administrar a banca e moleza, e so lembrar daquelas vezes que voce\n\n veio me ajudar quando era mais novo e das dicas que eu te dei.\n\n Voce consegue garoto, confio em voce.";
-        std::string linha1 = "Sua mãe me disse que você estava atras de um bico pra ganhar uma graninha ";
+        std::string linha1 = "Sua mãe me disse que você estava atrás de um bico pra ganhar uma graninha ";
         std::string linha2 = "extra, e olha só que sorte a sua, acabou de abrir uma vaga com o seu nome ";
-        std::string linha3 = "na banquinha do seu tio! E não tem momento melhor pra isso, por que o tio";
+        std::string linha3 = "na banquinha do seu tio! E não tem momento melhor pra isso, porque o tio";
         std::string linha4 = "tá precisando tirar umas \u0022férias especiais\u0022 por causa de um desentendimento";
         std::string linha5 = "com um amigo, você entende, né? Enfim, o combinado é o seguinte:";
-        std::string linha6 = "você precisa juntar R$250,00 ate o fim do mês pra esse meu amigo,";
+        std::string linha6 = "você precisa juntar R$250,00 até o fim do mês pra esse meu amigo,";
         std::string linha7 = "fora isso, pode ficar com o resto! Difícil de recusar, não? E a parte";
         std::string linha8 = "de administrar a banca é moleza, é só lembrar daquelas vezes que você";
         std::string linha9 = "veio me ajudar quando era mais novo e das dicas que eu te dei.";
         std::string linha10 = "Você consegue garoto, confio em você!";
 
-        std::string textocartaFinal1 = "PS: e muito importante que voce consiga esse dinheiro, ouviu?";
-        std::string textocartaFinal2 = "Se nao conseguir, feche a banca e nao volte mais.";
+        std::string textocartaFinal1 = "PS: é muito importante que voce consiga esse dinheiro, ouviu?";
+        std::string textocartaFinal2 = "Se não conseguir, feche a banca e não volte mais.";
 
         GameObject *textoCartaGO1 = new GameObject();
         textoCartaGO1->AddComponent(new Text(*textoCartaGO1, FONTS_PATH + "Karma Suture.otf", 40, Text::BLENDED, "Fala, garoto!", {0, 0, 0, SDL_ALPHA_OPAQUE}));
