@@ -152,7 +152,7 @@ void StageState::Update(float dt)
 		if (GameData::currentSus >= 40 and not GameData::changedMusic)
 		{
 			GameData::changedMusic = true;
-			backgroundMusic.Stop();
+			backgroundMusic.Stop(0);
 			backgroundMusic = Music(AUDIOS_PATH + "stageSus.ogg");
 			backgroundMusic.Play();
 		}

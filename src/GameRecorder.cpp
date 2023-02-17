@@ -82,8 +82,8 @@ void GameRecorder::Update(float dt)
         }
         repToAdd -= clientGameTypes.size();
 
-        GameData::moneyInDay = moneyToAdd;
-        GameData::repInDay = repToAdd;
+        GameData::moneyInDay += moneyToAdd;
+        GameData::repInDay += repToAdd;
 
 #ifdef DEBUG
         std::cout << "DINHEIRO: " << moneyToAdd << "\n";
