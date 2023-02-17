@@ -122,7 +122,7 @@ void EndDayState::Update(float dt)
 
 	GameObject *dinheiroVerde = new GameObject();
 	dinheiroVerde->AddComponent(new Text(*dinheiroVerde, FONTS_PATH + "up.ttf", 100, Text::SOLID,"+ " + std::to_string(GameData::moneyInDay), {0,255,0, SDL_ALPHA_OPAQUE}));
-	dinheiroVerde->box.SetCenter(GAME_SCREEN_WIDTH/2, 345);
+	dinheiroVerde->box.SetCenter(1050, 345);
 	AddObject(dinheiroVerde);
 
     if (GameData::moneySpent)
@@ -131,6 +131,18 @@ void EndDayState::Update(float dt)
         dinheiroVermelho->AddComponent(new Text(*dinheiroVermelho, FONTS_PATH + "up.ttf", 100, Text::SOLID, "- " + std::to_string(30), {255, 0, 0, SDL_ALPHA_OPAQUE}));
         dinheiroVermelho->box.SetCenter(GAME_SCREEN_WIDTH / 2, 435);
         AddObject(dinheiroVermelho);
+
+        GameObject *dinheiroBranco = new GameObject();
+        dinheiroBranco->AddComponent(new Text(*dinheiroBranco, FONTS_PATH + "up.ttf", 100, Text::SOLID, std::to_string(GameData::currentMoney - GameData::moneyInDay + 30), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+        dinheiroBranco->box.SetCenter(850, 345);
+        AddObject(dinheiroBranco);
+    }
+    else
+    {
+        GameObject *dinheiroBranco = new GameObject();
+        dinheiroBranco->AddComponent(new Text(*dinheiroBranco, FONTS_PATH + "up.ttf", 100, Text::SOLID, std::to_string(GameData::currentMoney - GameData::moneyInDay), {255, 255, 255, SDL_ALPHA_OPAQUE}));
+        dinheiroBranco->box.SetCenter(850, 345);
+        AddObject(dinheiroBranco);
     }
 
     GameObject *dinheiroAmarelo = new GameObject();
