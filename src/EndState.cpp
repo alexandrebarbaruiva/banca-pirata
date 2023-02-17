@@ -28,7 +28,7 @@ EndState::EndState()
      }
      else
      {
-         if (GameData::currentMoney >= 500)
+         if (GameData::currentMoney >= 250)
          {
              result = new Sprite(*bg, BASE_ASSET_PATH + "Vitoria.png");
              // backgroundMusic = Music("assets/audio/endStateWin.ogg");
