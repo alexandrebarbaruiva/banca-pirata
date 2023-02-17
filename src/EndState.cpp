@@ -74,6 +74,7 @@ void EndState::Update(float dt)
     {
         std::cout << "Menu" << std::endl;
         GameData::menuRequested = true;
+        GameData::GameOver();
         this->Pause();
         popRequested = true;
         return;

@@ -169,6 +169,28 @@ void GameData::Reset()
     GameData::nextClient = true;
 
     GameData::LoadClients();
+
+}
+
+void GameData::GameOver()
+{
+    GameData::currentMinute = 0;
+    GameData::currentHour = 8;
+    GameData::currentDay = 1;
+    GameData::currentMoney = 0;
+    GameData::currentRep = 50;
+    GameData::currentSus = 0;
+    GameData::ownedGames.clear();
+    GameData::ownedGames = {"fifa", "kirby", "mgear"};
+    GameData::playerArrested = false;
+    GameData::moneySpent = false;
+
+    GameData::clientCanLeave = false;
+    GameData::nextClient = true;
+
+    GameData::LoadClients();
+
+    GameData::Save(GameData::currentMinute,GameData::currentHour,GameData::currentDay,GameData::currentMoney,GameData::currentRep,GameData::currentSus,GameData::ownedGames);
 }
 
 void GameData::LoadClients()

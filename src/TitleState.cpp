@@ -140,7 +140,8 @@ void TitleState::Update(float dt)
         quitRequested = true;
     }
 
-    if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "startButton")
+    //if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "startButton")
+    if (pressedButton == "startButton")
     {
 
         State *stage = new LetterState();
@@ -149,7 +150,8 @@ void TitleState::Update(float dt)
         // Game::GetInstance().Push(stage);
     }
 
-    if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "continueButton")
+    //if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "continueButton")
+    if (pressedButton == "continueButton")
     {
         State *stage = new StageState(true);
         Game::GetInstance().Push(stage);
