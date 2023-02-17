@@ -25,7 +25,7 @@ LetterState::LetterState() : State() //, backgroundMusic("assets/audio/abertura.
 
 	GameObject *cartaGO = new GameObject();
 	//cartaGO->AddComponent(new Sprite(*cartaGO, "assets/img/placeholders/Carta.png", 1, 1.0));
-	cartaGO->AddComponent(new Sprite(*cartaGO ,  BASE_ASSET_PATH + "CartaAnim-Sheet_3.png", 13, 0.2, 2.8));
+	cartaGO->AddComponent(new Sprite(*cartaGO ,  BASE_ASSET_PATH + "CartaAnim-Sheet_2.png", 14, 0.2, 2.8));
 	cartaGO->box.SetOrigin(300, 0);
 	AddObject(cartaGO);
 
@@ -155,7 +155,7 @@ void LetterState::Update(float dt)
         linha10CartaGO->box.SetOrigin(610, 750);
         AddObject(linha10CartaGO);
 
-        std::string textocarta3 = "Um Abraco";
+        std::string textocarta3 = "Um Abraço";
         GameObject *textoCartaGO3 = new GameObject();
         textoCartaGO3->AddComponent(new Text(*textoCartaGO3, FONTS_PATH + "Karma Suture.otf", 30, Text::BLENDED, textocarta3, {0, 0, 0, SDL_ALPHA_OPAQUE}));
         textoCartaGO3->box.SetOrigin(610, 800);

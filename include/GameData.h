@@ -36,6 +36,7 @@ public:
     static int repInDay;
     static bool endDay;
     static bool recordingGame;
+    static bool moneySpent;
 
     static std::vector<std::string> ownedGames;
     static bool menuRequested;

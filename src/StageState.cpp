@@ -95,7 +95,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic(AUDIOS_PATH + "
 	// Lojeiro
 	GameObject *lojeiroGO = new GameObject();
 	lojeiroGO->AddComponent(new GameItem(*lojeiroGO, SCREEN1_PATH + "lojeiro.png", 1, 1));
-	lojeiroGO->box.SetBottom(1290, 810);
+	lojeiroGO->box.SetBottom(1200, 1052);
 	AddObject(lojeiroGO);
 
 	gradeGO = nullptr;
@@ -165,6 +165,31 @@ void StageState::Update(float dt)
 		}
 
 		InputManager input = InputManager::GetInstance();
+		//botoes para demonstração
+		if(input.KeyPress(SDLK_o))
+		{
+			GameData::currentMoney += 100;
+		}
+		if(input.KeyPress(SDLK_l))
+		{
+			GameData::currentMoney -= 100;
+		}
+		if(input.KeyPress(SDLK_i))
+		{
+			GameData::currentSus += 20;
+		}
+		if(input.KeyPress(SDLK_k))
+		{
+			GameData::currentSus -= 20;
+		}
+		if(input.KeyPress(SDLK_u))
+		{
+			GameData::currentRep += 10;
+		}
+		if(input.KeyPress(SDLK_j))
+		{
+			GameData::currentRep -= 10;
+		}
 		// check if quit was requested
 		if (input.QuitRequested())
 		{
@@ -301,6 +326,7 @@ void StageState::Update(float dt)
 			gradeGO->box = gradeGO->box + (speed * dt);
 		}
 		std::cout << "Acabou o jogo" << std::endl;
+		GameData::playerArrested = true;
 		popRequested = true;
 		State *stage = new EndState();
 		Game::GetInstance().Push(stage);

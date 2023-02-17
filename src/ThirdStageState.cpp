@@ -426,6 +426,7 @@ void ThirdStageState::Update(float dt)
 					//TODO adicionar jogas ao save
 					GameData::ownedGames.emplace_back(game->name);
 					GameData::currentMoney -= 30;
+					GameData::moneySpent = true;
 				}
 			}
             powerbutton->isClicked = false;
