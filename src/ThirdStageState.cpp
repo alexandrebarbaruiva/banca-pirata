@@ -30,7 +30,7 @@
 #include "PauseState.h"
 #include "EndDayState.h"
 
-ThirdStageState::ThirdStageState() : State(), backgroundMusic("assets/audio/chill.ogg")
+ThirdStageState::ThirdStageState() : State(), backgroundMusic(AUDIOS_PATH + "thirdStage.ogg")
 {
 #ifdef DEBUG
 	std::cout << "Loaded Second Screen\n";

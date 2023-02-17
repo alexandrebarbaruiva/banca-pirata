@@ -135,7 +135,7 @@ Game &Game::GetInstance()
 {
     if (instance == nullptr)
     {
-        new Game("Banca Pirata", GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+        new Game("Importados Tycoon", GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
     }
 
     return *instance;
