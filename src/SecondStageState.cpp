@@ -204,7 +204,7 @@ void SecondStageState::Update(float dt)
 
 			// Grade fechando a loja
 			gradeGO = new GameObject();
-			gradeGO->AddComponent(new Sprite(*gradeGO, "assets/img/placeholders/Grade_Anim_Start.png", 1, 1.0));
+			gradeGO->AddComponent(new Sprite(*gradeGO, BASE_ASSET_PATH + "Grade_Anim_Start.png", 1, 1.0));
 			gradeGO->box.SetOrigin(0, -1080);
 			AddObject(gradeGO);
 		}
