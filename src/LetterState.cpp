@@ -85,7 +85,7 @@ void LetterState::Update(float dt)
         std::string linha3 = "na banquinha do seu tio! E não tem momento melhor pra isso, por que o tio";
         std::string linha4 = "tá precisando tirar umas \u0022férias especiais\u0022 por causa de um desentendimento";
         std::string linha5 = "com um amigo, você entende, né? Enfim, o combinado é o seguinte:";
-        std::string linha6 = "você precisa juntar R$500,00 ate o fim do mês pra esse meu amigo,";
+        std::string linha6 = "você precisa juntar R$250,00 ate o fim do mês pra esse meu amigo,";
         std::string linha7 = "fora isso, pode ficar com o resto! Difícil de recusar, não? E a parte";
         std::string linha8 = "de administrar a banca é moleza, é só lembrar daquelas vezes que você";
         std::string linha9 = "veio me ajudar quando era mais novo e das dicas que eu te dei.";
