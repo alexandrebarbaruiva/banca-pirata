@@ -10,6 +10,7 @@
  */
 #include "GameRecorder.h"
 #include "GameData.h"
+#include "Sound.h"
 
 GameRecorder::GameRecorder(GameObject &associated, std::string sprite, float scaleX, float scaleY, int frameCount, float frameTime, float secondsToSelfDestruct) : Component(associated)
 {
@@ -25,6 +26,13 @@ GameRecorder::GameRecorder(GameObject &associated, std::string sprite, float sca
 
 GameRecorder::~GameRecorder()
 {
+    GameData::currentMoney += (GameData::moneyInDay * GameData::currentRep / 100);
+    GameData::currentRep += GameData::repInDay;
+    if (GameData::currentRep > 100)
+    {
+        GameData::currentRep = 100;
+    }
+
     State *state = &Game::GetInstance().GetCurrentState();
     state->RequestPop();
     GameData::recordingGame = false;
@@ -45,10 +53,13 @@ void GameRecorder::Update(float dt)
         }
         std::vector<std::string> clientGameTypes = GameData::currentClientGameTypes;
 
+        bool playCop = false;
+
         if (GameData::currentClient.substr(0, 3) == "pol" and ((selectedGame[0] != selectedGame[1]) or
                                                                (selectedGame[0] != selectedGame[2]) or
                                                                (selectedGame[1] != selectedGame[2])))
         {
+            playCop = true;
             std::cout << "GANHOU SUSPEITA, EITAAA\n";
             GameData::currentSus += 20;
         }
@@ -79,13 +90,11 @@ void GameRecorder::Update(float dt)
         std::cout << "REPUTAÇÂO: " << repToAdd << "\n";
         std::cout << "ERROS: " << clientGameTypes.size() << "\n";
 #endif
-
-        GameData::currentMoney += (moneyToAdd * GameData::currentRep / 100);
-
-        GameData::currentRep += repToAdd;
-        if (GameData::currentRep > 100)
+        if (playCop)
         {
-            GameData::currentRep = 100;
+            GameObject *susSoundGO = new GameObject();
+            Sound *susSound = new Sound(*susSoundGO, AUDIOS_PATH + "susRise.ogg");
+            susSound->Play();
         }
     }
 }

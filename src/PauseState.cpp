@@ -50,7 +50,7 @@ PauseState::PauseState() : State()
 
     // HUD Reputação
     GameObject *hudReputationArrowGO = new GameObject();
-    hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, GameData::currentRep));
+    hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO));
     hudReputationArrowGO->box.SetOrigin(960, 0);
     AddObject(hudReputationArrowGO);
 
@@ -178,6 +178,7 @@ void PauseState::Update(float dt)
         std::cout << "Menu" << std::endl;
         GameData::menuRequested = true;
         popRequested = true;
+        return;
     }
     if (pressedButton == "sair")
     {

@@ -13,7 +13,6 @@
 #include "GameData.h"
 #include "EndDayState.h"
 
-
 TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
 {
     // Background
@@ -24,13 +23,36 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
     bg->box.y = 0;
     this->AddObject(bg);
 
+    // GameObject *titleTex = new GameObject();
+    // titleTex->AddComponent(new Text(*titleTex,  FONTS_PATH + "up.ttf", 150, Text::BLENDED, "Importados Tycoon", {255, 0, 0, SDL_ALPHA_OPAQUE}));
+    // titleTex->box.SetCenter(GAME_SCREEN_WIDTH / 2, 200);
+    // this->AddObject(titleTex);
+
+    // GameObject *titleTex2 = new GameObject();
+    // titleTex2->AddComponent(new Text(*titleTex2,  FONTS_PATH + "up.ttf", 155, Text::BLENDED, "Importados Tycoon", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    // titleTex2->box.SetCenter(GAME_SCREEN_WIDTH / 2, 200);
+    // this->AddObject(titleTex2);
+
     GameObject *titleTex = new GameObject();
-    titleTex->AddComponent(new Text(*titleTex,  FONTS_PATH + "up.ttf", 200, Text::BLENDED, "Banca Pirata", {255, 0, 0, SDL_ALPHA_OPAQUE}));
+    titleTex->AddComponent(new Text(*titleTex, FONTS_PATH + "up.ttf", 180, Text::BLENDED, "Importados", {223, 113, 38, SDL_ALPHA_OPAQUE}));
     titleTex->box.SetCenter(GAME_SCREEN_WIDTH / 2, 200);
     this->AddObject(titleTex);
+    GameObject *titleTexB = new GameObject();
+    titleTexB->AddComponent(new Text(*titleTexB, FONTS_PATH + "up.ttf", 190, Text::BLENDED, "Importados", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    titleTexB->box.SetCenter(GAME_SCREEN_WIDTH / 2, 200);
+    this->AddObject(titleTexB);
+
+    GameObject *titleTex2 = new GameObject();
+    titleTex2->AddComponent(new Text(*titleTex2, FONTS_PATH + "up.ttf", 180, Text::BLENDED, "Tycoon", {223, 113, 38, SDL_ALPHA_OPAQUE}));
+    titleTex2->box.SetCenter(GAME_SCREEN_WIDTH / 2, 340);
+    this->AddObject(titleTex2);
+    GameObject *titleTex2B = new GameObject();
+    titleTex2B->AddComponent(new Text(*titleTex2B, FONTS_PATH + "up.ttf", 190, Text::BLENDED, "Tycoon", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    titleTex2B->box.SetCenter(GAME_SCREEN_WIDTH / 2, 340);
+    this->AddObject(titleTex2B);
 
     // Start Button
-    Vec2 buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 500);
+    Vec2 buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 640);
 
     GameObject *startButton = new GameObject();
     startButton->AddComponent(new Button(*startButton, "startButton"));
@@ -43,7 +65,7 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
     this->AddObject(startText);
 
     // Continue Button
-    buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 640);
+    buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 780);
 
     GameObject *continueButton = new GameObject();
     continueButton->AddComponent(new Button(*continueButton, "continueButton"));
@@ -51,22 +73,9 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
     this->AddObject(continueButton);
 
     GameObject *continueText = new GameObject();
-    continueText->AddComponent(new Text(*continueText,  FONTS_PATH + "up.ttf", 70, Text::BLENDED, "Continue", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    continueText->AddComponent(new Text(*continueText, FONTS_PATH + "up.ttf", 70, Text::BLENDED, "Continue", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     continueText->box.SetCenter(buttonPosition);
     this->AddObject(continueText);
-
-    // Settings Button
-    buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 780);
-
-    GameObject *settingsButton = new GameObject();
-    settingsButton->AddComponent(new Button(*settingsButton, "settingsButton"));
-    settingsButton->box.SetCenter(buttonPosition);
-    this->AddObject(settingsButton);
-
-    GameObject *settingsText = new GameObject();
-    settingsText->AddComponent(new Text(*settingsText,  FONTS_PATH + "up.ttf", 70, Text::BLENDED, "Settings", {255, 255, 255, SDL_ALPHA_OPAQUE}));
-    settingsText->box.SetCenter(buttonPosition);
-    this->AddObject(settingsText);
 
     // Exit Button
     buttonPosition = Vec2(GAME_SCREEN_WIDTH / 2, 920);
@@ -77,7 +86,7 @@ TitleState::TitleState() : State(), backgroundMusic("assets/audio/abertura.ogg")
     this->AddObject(exitButton);
 
     GameObject *exitText = new GameObject();
-    exitText->AddComponent(new Text(*exitText,  FONTS_PATH + "up.ttf", 70, Text::BLENDED, "Exit", {255, 255, 255, SDL_ALPHA_OPAQUE}));
+    exitText->AddComponent(new Text(*exitText, FONTS_PATH + "up.ttf", 70, Text::BLENDED, "Exit", {255, 255, 255, SDL_ALPHA_OPAQUE}));
     exitText->box.SetCenter(buttonPosition);
     this->AddObject(exitText);
 }
@@ -136,8 +145,8 @@ void TitleState::Update(float dt)
 
         State *stage = new LetterState();
         Game::GetInstance().Push(stage);
-        //State *stage = new StageState();
-        //Game::GetInstance().Push(stage);
+        // State *stage = new StageState();
+        // Game::GetInstance().Push(stage);
     }
 
     if (InputManager::GetInstance().KeyPress(SPACE_KEY) or pressedButton == "continueButton")
@@ -148,7 +157,6 @@ void TitleState::Update(float dt)
 
     if (pressedButton == "settingsButton")
     {
-
     }
 
     if (GameData::menuRequested)

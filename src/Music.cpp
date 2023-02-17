@@ -39,7 +39,7 @@ void Music::Play(int times)
     {
         SDL_Log("Cant play music: %s", SDL_GetError());
     }
-    Mix_VolumeMusic(30);
+    Mix_VolumeMusic(40);
 }
 
 void Music::Stop(int msToStop)

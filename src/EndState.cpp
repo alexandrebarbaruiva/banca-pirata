@@ -76,6 +76,7 @@ void EndState::Update(float dt)
         GameData::menuRequested = true;
         this->Pause();
         popRequested = true;
+        return;
     }
     //if (InputManager::GetInstance().KeyPress(ESCAPE_KEY) or InputManager::GetInstance().QuitRequested())
     //{

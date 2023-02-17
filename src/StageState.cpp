@@ -69,7 +69,7 @@ StageState::StageState(bool loadGame) : State(), backgroundMusic(AUDIOS_PATH + "
 
 	// HUD Reputação
 	GameObject *hudReputationArrowGO = new GameObject();
-	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO, GameData::currentRep));
+	hudReputationArrowGO->AddComponent(new ReputationArrow(*hudReputationArrowGO));
 	hudReputationArrowGO->box.SetOrigin(960, 0);
 	AddObject(hudReputationArrowGO);
 
@@ -133,6 +133,12 @@ void StageState::Pause()
 void StageState::Resume()
 {
 	// backgroundMusic.Play();
+	if (GameData::menuRequested)
+	{
+		this->Pause();
+		popRequested = true;
+		return;
+	}
 }
 
 void StageState::Update(float dt)
@@ -165,28 +171,28 @@ void StageState::Update(float dt)
 		}
 
 		InputManager input = InputManager::GetInstance();
-		//botoes para demonstração
-		if(input.KeyPress(SDLK_o))
+		// botoes para demonstração
+		if (input.KeyPress(SDLK_o))
 		{
 			GameData::currentMoney += 100;
 		}
-		if(input.KeyPress(SDLK_l))
+		if (input.KeyPress(SDLK_l))
 		{
 			GameData::currentMoney -= 100;
 		}
-		if(input.KeyPress(SDLK_i))
+		if (input.KeyPress(SDLK_i))
 		{
 			GameData::currentSus += 20;
 		}
-		if(input.KeyPress(SDLK_k))
+		if (input.KeyPress(SDLK_k))
 		{
 			GameData::currentSus -= 20;
 		}
-		if(input.KeyPress(SDLK_u))
+		if (input.KeyPress(SDLK_u))
 		{
 			GameData::currentRep += 10;
 		}
-		if(input.KeyPress(SDLK_j))
+		if (input.KeyPress(SDLK_j))
 		{
 			GameData::currentRep -= 10;
 		}
@@ -194,12 +200,6 @@ void StageState::Update(float dt)
 		if (input.QuitRequested())
 		{
 			quitRequested = true;
-		}
-
-		if (GameData::menuRequested)
-		{
-			this->Pause();
-			popRequested = true;
 		}
 
 		if (input.KeyPress(ESCAPE_KEY))
