@@ -40,7 +40,7 @@ std::string GameData::currentClient;
 int GameData::currentClientPos;
 std::vector<std::string> GameData::currentClientGameTypes;
 
-std::vector<std::string> GameData::clientNames{"emo1", "emo2", "emo3", "exe1", "exe2", "exe3", "pol1", "pol2", "pol3", "pol4"};
+std::vector<std::string> GameData::clientNames{"emo1", "emo2", "emo3", "exe1", "exe2", "exe3", "pol1", "pol2", "pol3", "pol4", "vel1", "vel2"};
 std::vector<std::string> GameData::allGames = {
     "dance",
     "fifa",
